@@ -1,0 +1,6 @@
+application/config/config.php
+application/config/development/*
+application/config/production/*
+application/config/database.php
+application/logs/*
+application/etc/*

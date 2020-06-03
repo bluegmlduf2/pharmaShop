@@ -1,0 +1,3 @@
+http://localhost:8080/nutritionChk/static/css/style.css
+
+http://localhost:8080/nutritionChk -->root
