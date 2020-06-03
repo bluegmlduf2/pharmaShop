@@ -22,13 +22,13 @@ class main extends CI_Controller {
 	}
 
 	/**
-	 * 스킬 및 캐리어 호출
+	 * 상품목록
 	 */
-	public function skill() {
+	public function shop() {
 		$default_data=array('title'=> "Wally's Portfolio");
 
 		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/skill', $data);
+		$this->load->view('page/shop', $data);
 		$this->load->view('layout/footer', $default_data);
 	}
 		/**

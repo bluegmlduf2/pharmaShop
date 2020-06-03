@@ -22,7 +22,7 @@
             <nav class="site-navigation text-right text-md-center" role="navigation">
               <ul class="site-menu js-clone-nav d-none d-lg-block">
                 <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="shop.html">Store</a></li>
+                <li><a href="/pharmaShop/main/shop">Store</a></li>
                 <li class="has-children">
                   <a href="#">Dropdown</a>
                   <ul class="dropdown">
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div class="site-blocks-cover" style="background-image: url('../application/libraries/images/hero_1.jpg');">
+    <div class="site-blocks-cover" style="background-image: url('/pharmaShop/static/libraries/images/hero_1.jpg');">
       <div class="container">
         <div class="row">
           <div class="col-lg-7 mx-auto order-lg-2 align-self-center">
@@ -127,35 +127,35 @@
         <div class="row">
           <div class="col-sm-6 col-lg-4 text-center item mb-4">
             <span class="tag">Sale</span>
-            <a href="shop-single.html"> <img src="../application/libraries/images/product_01.png" alt="Image"></a>
+            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_01.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">Bioderma</a></h3>
             <p class="price"><del>95.00</del> &mdash; $55.00</p>
           </div>
           <div class="col-sm-6 col-lg-4 text-center item mb-4">
-            <a href="shop-single.html"> <img src="../application/libraries/images/product_02.png" alt="Image"></a>
+            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_02.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">Chanca Piedra</a></h3>
             <p class="price">$70.00</p>
           </div>
           <div class="col-sm-6 col-lg-4 text-center item mb-4">
-            <a href="shop-single.html"> <img src="../application/libraries/images/product_03.png" alt="Image"></a>
+            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_03.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
             <p class="price">$120.00</p>
           </div>
 
           <div class="col-sm-6 col-lg-4 text-center item mb-4">
 
-            <a href="shop-single.html"> <img src="../application/libraries/images/product_04.png" alt="Image"></a>
+            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_04.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">Cetyl Pure</a></h3>
             <p class="price"><del>45.00</del> &mdash; $20.00</p>
           </div>
           <div class="col-sm-6 col-lg-4 text-center item mb-4">
-            <a href="shop-single.html"> <img src="../application/libraries/images/product_05.png" alt="Image"></a>
+            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_05.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">CLA Core</a></h3>
             <p class="price">$38.00</p>
           </div>
           <div class="col-sm-6 col-lg-4 text-center item mb-4">
             <span class="tag">Sale</span>
-            <a href="shop-single.html"> <img src="../application/libraries/images/product_06.png" alt="Image"></a>
+            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_06.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">Poo Pourri</a></h3>
             <p class="price"><del>$89</del> &mdash; $38.00</p>
           </div>
@@ -181,25 +181,25 @@
             <div class="nonloop-block-3 owl-carousel">
 
               <div class="text-center item mb-4">
-                <a href="shop-single.html"> <img src="../application/libraries/images/product_03.png" alt="Image"></a>
+                <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_03.png" alt="Image"></a>
                 <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
                 <p class="price">$120.00</p>
               </div>
 
               <div class="text-center item mb-4">
-                <a href="shop-single.html"> <img src="../application/libraries/images/product_01.png" alt="Image"></a>
+                <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_01.png" alt="Image"></a>
                 <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
                 <p class="price">$120.00</p>
               </div>
 
               <div class="text-center item mb-4">
-                <a href="shop-single.html"> <img src="../application/libraries/images/product_02.png" alt="Image"></a>
+                <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_02.png" alt="Image"></a>
                 <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
                 <p class="price">$120.00</p>
               </div>
 
               <div class="text-center item mb-4">
-                <a href="shop-single.html"> <img src="../application/libraries/images/product_04.png" alt="Image"></a>
+                <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_04.png" alt="Image"></a>
                 <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
                 <p class="price">$120.00</p>
               </div>
@@ -223,7 +223,7 @@
         
               <div class="testimony">
                 <blockquote>
-                  <img src="../application/libraries/images/person_1.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                  <img src="/pharmaShop/static/libraries/images/person_1.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
                   <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat unde.&rdquo;</p>
                 </blockquote>
 
@@ -232,7 +232,7 @@
         
               <div class="testimony">
                 <blockquote>
-                  <img src="../application/libraries/images/person_2.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                  <img src="/pharmaShop/static/libraries/images/person_2.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
                   <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
                     obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
                     unde.&rdquo;</p>
@@ -243,7 +243,7 @@
         
               <div class="testimony">
                 <blockquote>
-                  <img src="../application/libraries/images/person_3.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                  <img src="/pharmaShop/static/libraries/images/person_3.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
                   <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
                     obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
                     unde.&rdquo;</p>
@@ -254,7 +254,7 @@
         
               <div class="testimony">
                 <blockquote>
-                  <img src="../application/libraries/images/person_4.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                  <img src="/pharmaShop/static/libraries/images/person_4.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
                   <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
                     obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
                     unde.&rdquo;</p>
@@ -269,11 +269,11 @@
       </div>
     </div>
 
-    <div class="site-section bg-secondary bg-image" style="background-image: url('../application/libraries/images/bg_2.jpg');">
+    <div class="site-section bg-secondary bg-image" style="background-image: url('/pharmaShop/static/libraries/images/bg_2.jpg');">
       <div class="container">
         <div class="row align-items-stretch">
           <div class="col-lg-6 mb-5 mb-lg-0">
-            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('../application/libraries/images/bg_1.jpg');">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/pharmaShop/static/libraries/images/bg_1.jpg');">
               <div class="banner-1-inner align-self-center">
                 <h2>Pharma Products</h2>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
@@ -282,7 +282,7 @@
             </a>
           </div>
           <div class="col-lg-6 mb-5 mb-lg-0">
-            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('./static/test/bg_2.jpg');">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/pharmaShop/static/libraries/images/bg_2.jpg');">
               <div class="banner-1-inner ml-auto  align-self-center">
                 <h2>Rated by Experts</h2>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
