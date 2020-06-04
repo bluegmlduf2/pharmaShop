@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class main extends CI_Controller {
+class Main extends CI_Controller {
 	/**
 	 * onload
 	 */
@@ -26,10 +26,46 @@ class main extends CI_Controller {
 	 */
 	public function shop() {
 		$default_data=array('title'=> "Wally's Portfolio");
+		
+		$this->load->model('Shop_model');
+		
+		$data = $this->input->post('data', true);
+		//$json_curPage = json_decode( $data,true );
+		$json_curPage = 6;
 
-		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/shop', $data);
-		$this->load->view('layout/footer', $default_data);
+		//게시물
+		$postCnt=$this->Shop_model->GetPageCnt();//총게시물수
+		$pageShowitemCnt=6;//한화면당 노출 상품수 
+		$pageCnt=ceil($postCnt/$pageShowitemCnt);// 총페이지수 실수가 존재할 경우 반올림한다
+		$startPost=$json_curPage*$pageShowitemCnt;//시작게시물
+		$endPost=$pageShowitemCnt;//종료게시물
+		
+		//블록
+		$block=5;//기본블록수
+		$curBlock=ceil($json_curPage/$block);//현재블록
+		$blockCnt=ceil($postCnt/$blcok);//마지막블록
+		$startBlock=($curBlock*5)-$block;//시작블록페이지
+		$lastBlock=$curBlock*$block;//마지막블록페이지
+
+		if($curBlock==$blockCnt)
+			$lastBlock = $pageCnt;
+		else{
+			$lastBlock= $curBlock*$block;
+		}
+		
+		//시작~종료 사이의 게시물
+		log_message("error",$curBlock);
+		log_message("error",$startBlock);
+		log_message("error",$lastBlock);
+		$json_Post= $this->Shop_model->GetPage($startPost,$endPost);
+		$json_output = json_encode($json_Post, JSON_UNESCAPED_UNICODE);
+		log_message("error",$json_output); 
+		echo json_encode(array('data' => $json_output), JSON_UNESCAPED_UNICODE);
+
+		//화면으로 보내주는값 (게시물,현재블록,시작블록페이지,종료블록페이지)
+		//$json_output = json_encode($json_Post,$curBlock,$startBlock,$lastBlock, JSON_UNESCAPED_UNICODE);
+		//log_message("error",$json_output); 
+		//echo $json_output;
 	}
 		/**
 	 * 나의 작업 현황 화면 호출
