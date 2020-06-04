@@ -5,6 +5,7 @@
   <script src="/pharmaShop/static/libraries/js/owl.carousel.min.js"></script>
   <script src="/pharmaShop/static/libraries/js/jquery.magnific-popup.min.js"></script>
   <script src="/pharmaShop/static/libraries/js/aos.js"></script>
+  <script src="/pharmaShop/static/libraries/js/pharma_form.js"></script>
 
   <script src="/pharmaShop/static/libraries/js/main.js"></script>
   
