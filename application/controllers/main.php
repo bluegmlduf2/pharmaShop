@@ -17,23 +17,36 @@ class Main extends CI_Controller {
 		$default_data=array('title'=> "pharmaShop");
 
 		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/index', $data);
-		$this->load->view('layout/footer', $default_data);
+		$this->load->view('page/index');
+		$this->load->view('layout/footer');
 	}
 		/**
-	 * 메인화면
+	 * 상품목록 화면
 	 */
 	public function shop() {
 		$default_data=array('title'=> "pharmaShop");
 
 		$this->load->view('layout/header', $default_data);
 		$this->load->view('page/shop');
-		$this->load->view('layout/footer', $default_data);
+		$this->load->view('layout/footer');
+	}
+
+		/**
+	 * 상품상세 화면
+	 */
+	public function shopSingle() {
+		$default_data=array('title'=> "pharmaShop");
+		$data=array('title'=> "pharmaShop");
+		log_message("error",$this->uri->segment(3));
+
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/shopSingle',$data);
+		$this->load->view('layout/footer');
 	}
 
 
 	/**
-	 * 상품목록
+	 * 상품목록 리스트
 	 */
 	public function shopList() {
 		$default_data=array('title'=> "Wally's Portfolio");
@@ -48,20 +61,23 @@ class Main extends CI_Controller {
 		$postCnt=$this->Shop_model->GetPageCnt();//총게시물수
 		$pageShowitemCnt=12;//한화면당 노출 상품수 
 		$pageCnt=ceil($postCnt/$pageShowitemCnt);// 총페이지수 실수가 존재할 경우 반올림한다
-		$startPost=$json_curPage*$pageShowitemCnt;//시작게시물
+		$startPost=($json_curPage*$pageShowitemCnt)-$pageShowitemCnt;//시작게시물
 		$endPost=$pageShowitemCnt;//종료게시물
-		
+
 		//블록
 		$block=5;//기본블록수
 		$curBlock=ceil($json_curPage/$block);//현재블록
-		$blockCnt=ceil($postCnt/$block);//마지막블록
+		$blockCnt=ceil($postCnt/$pageShowitemCnt);//마지막블록 
 		$startBlock=($curBlock*5)-$block;//시작블록페이지
 		$lastBlock=$curBlock*$block;//마지막블록페이지
 
-		if($curBlock==$blockCnt)
-			$lastBlock = $pageCnt;
-		else{
-			$lastBlock= $curBlock*$block;
+		//마지막 블록 유무
+		$lastYN=false;
+
+		//마지막 블록일시 블록값 설정
+		if($blockCnt<=$lastBlock){
+			$lastBlock = $blockCnt;
+			$lastYN=true;
 		}
 		
 		//시작~종료 사이의 게시물
@@ -74,7 +90,7 @@ class Main extends CI_Controller {
 
 		echo json_encode(array(
 		'post' => $json_Post
-		,'curBlock' => $curBlock
+		,'lastYN' => $lastYN
 		,'startBlock' => $startBlock
 		,'lastBlock' => $lastBlock), JSON_UNESCAPED_UNICODE);
 
