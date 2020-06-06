@@ -23,7 +23,7 @@ class Shop_model extends CI_Model {
     {
         log_message("error","model ##############");
         $result = $this->db->query(
-            'SELECT ITEM_CD,ITEM_NM,ITEM_KIND,ITEM_CONT,ITEM_SALE,ITEM_IMAGE
+            'SELECT ITEM_CD,ITEM_NM,ITEM_KIND,ITEM_CONT,ITEM_SALE,ITEM_IMAGE,ITEM_PRICE
             FROM ITEM_TBL
             LIMIT '.$startPost.','.$endPost.'')->result();
         log_message('error', $this->db->last_query());

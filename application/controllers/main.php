@@ -46,7 +46,7 @@ class Main extends CI_Controller {
 
 		//게시물
 		$postCnt=$this->Shop_model->GetPageCnt();//총게시물수
-		$pageShowitemCnt=6;//한화면당 노출 상품수 
+		$pageShowitemCnt=12;//한화면당 노출 상품수 
 		$pageCnt=ceil($postCnt/$pageShowitemCnt);// 총페이지수 실수가 존재할 경우 반올림한다
 		$startPost=$json_curPage*$pageShowitemCnt;//시작게시물
 		$endPost=$pageShowitemCnt;//종료게시물

@@ -92,8 +92,8 @@
           </div>
         </div>
     
-        <div class="row">
-          <div class="col-sm-6 col-lg-4 text-center item mb-4">
+        <div class="row itemList">
+          <!-- <div class="col-sm-6 col-lg-4 text-center item mb-4">
             <span class="tag">Sale</span>
             <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_01.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">Bioderma</a></h3>
@@ -161,7 +161,7 @@
             <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_06.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">Poo Pourri</a></h3>
             <p class="price"><del>$89</del> &mdash; $38.00</p>
-          </div>
+          </div> -->
         </div>
         <div class="row mt-5">
           <div class="col-md-12 text-center">
