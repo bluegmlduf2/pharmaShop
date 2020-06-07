@@ -36,8 +36,26 @@ class Main extends CI_Controller {
 	 */
 	public function shopSingle() {
 		$default_data=array('title'=> "pharmaShop");
-		$data=array('title'=> "pharmaShop");
-		log_message("error",$this->uri->segment(3));
+		$this->load->model('Shop_Single_model');
+		$item_detail= $this->Shop_Single_model->GetSingleItem($this->uri->segment(3));
+
+		// foreach($json_Post as $key=>$value){
+		// 	$value->ITEM_CD
+        //     ,I.ITEM_NM
+        //     ,I.ITEM_KIND
+        //     ,I.ITEM_CONT
+        //     ,I.ITEM_SALE
+        //     ,I.ITEM_SALE
+        //     ,I.ITEM_IMAGE
+        //     ,I.ITEM_PRICE
+        //     ,I.ITEM_TAKE
+        //     ,M.MEDICINE_CD
+        //     ,M.MEDICINE_NAME
+        //     ,M.MEDICINE_EFF
+		// }
+		$data = array(
+			'item_detail' => $item_detail
+		);
 
 		$this->load->view('layout/header', $default_data);
 		$this->load->view('page/shopSingle',$data);

@@ -1,12 +1,8 @@
-  <script src="/pharmaShop/static/libraries/js/jquery-3.3.1.min.js"></script>
-  <script src="/pharmaShop/static/libraries/js/jquery-ui.js"></script>
   <script src="/pharmaShop/static/libraries/js/popper.min.js"></script>
   <script src="/pharmaShop/static/libraries/js/bootstrap.min.js"></script>
   <script src="/pharmaShop/static/libraries/js/owl.carousel.min.js"></script>
   <script src="/pharmaShop/static/libraries/js/jquery.magnific-popup.min.js"></script>
   <script src="/pharmaShop/static/libraries/js/aos.js"></script>
-  <script src="/pharmaShop/static/libraries/js/pharma_form.js"></script>
-
   <script src="/pharmaShop/static/libraries/js/main.js"></script>
   
   <div class="site-section bg-secondary bg-image" style="background-image: url('/pharmaShop/static/libraries/images/bg_2.jpg');">

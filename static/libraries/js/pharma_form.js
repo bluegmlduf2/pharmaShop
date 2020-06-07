@@ -5,17 +5,7 @@ var lastBlock="";
 //OnLoad 초기화
 $(function () {
 	pageFunc(1);
-	selectorAddEvent();
 });
-
-function selectorAddEvent(){
-	// $('.selectClass').bind('click',function(){
-	// 	// $(this).parent('.itemSelect').removeClass('active');
-	// 	$(this).parent().addClass('active');
-	// 	pageFunc($(this).text());
-	// })
-}
-
 
 function pageFunc(curPage){
 	var obj = {
@@ -60,7 +50,7 @@ function pageFunc(curPage){
 
 				//세일 여부
 				if(value.ITEM_SALE!=null){
-					var salePrice=parseInt(((value.ITEM_PRICE/100)*value.ITEM_SALE));
+					var salePrice=parseInt(((value.ITEM_PRICE/100)*(100-value.ITEM_SALE)));
 					listHtml+="<p class='price'><del>$ "+value.ITEM_PRICE+"</del> &mdash;$ "+salePrice+"</p></div>";
 				}else{
 					listHtml+="<p class='price'>$ "+value.ITEM_PRICE+"</p></div>";
