@@ -18,7 +18,7 @@
 						?>
 						<?php?>
 					</del> 
-					<strong class="text-primary h4">
+					<strong class="text-primary h4" id="priceVal">
 						$<?php 
 							if(empty($item_detail[0]->ITEM_SALE)){
 								echo $item_detail[0]->ITEM_PRICE;
@@ -33,12 +33,12 @@
 					<div class="mb-5">
 						<div class="input-group mb-3" style="max-width: 220px;">
 							<div class="input-group-prepend">
-								<button class="btn btn-outline-primary js-btn-minus plusMinusBtn" type="button">&minus;</button>
+								<button class="btn btn-outline-primary js-btn-minus" id="minusBtn" type="button">&minus;</button>
 							</div>
 							<input type="text" class="form-control text-center" id="cntVal" value="1" placeholder=""
 								aria-label="Example text with button addon" aria-describedby="button-addon1">
 							<div class="input-group-append">
-								<button class="btn btn-outline-primary js-btn-plus plusMinusBtn" type="button">&plus;</button>
+								<button class="btn btn-outline-primary js-btn-plus" id="plusBtn" type="button">&plus;</button>
 							</div>
 						</div>
 

@@ -133,17 +133,4 @@ class Main extends CI_Controller {
 		$this->load->view('page/contact', $data);
 		$this->load->view('layout/footer', $default_data);
 	}
-
-			/**
-	 * 테스트 화면 호출
-	 */
-	public function test() {
-		$default_data=array('title'=> "Wally's Portfolio");
-
-		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/testpage', $data);
-
-	}
-	
-
 }

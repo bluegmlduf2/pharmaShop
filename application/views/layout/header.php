@@ -63,14 +63,14 @@
 
                   </ul>
                 </li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="/pharmaShop/main/about">About</a></li>
+                <li><a href="/pharmaShop/main/cart">Contact</a></li>
               </ul>
             </nav>
           </div>
           <div class="icons">
             <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
-            <a href="cart.html" class="icons-btn d-inline-block bag">
+            <a href="/pharmaShop/main/cart" class="icons-btn d-inline-block bag">
               <span class="icon-shopping-bag"></span>
               <span class="number">2</span>
             </a>
@@ -84,7 +84,7 @@
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Store</strong></div>
+          <div class="col-md-12 mb-0"><a href="/pharmaShop/main/index">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Store</strong></div>
         </div>
       </div>
     </div>
