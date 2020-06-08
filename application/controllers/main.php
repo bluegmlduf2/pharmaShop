@@ -39,20 +39,6 @@ class Main extends CI_Controller {
 		$this->load->model('Shop_Single_model');
 		$item_detail= $this->Shop_Single_model->GetSingleItem($this->uri->segment(3));
 
-		// foreach($json_Post as $key=>$value){
-		// 	$value->ITEM_CD
-        //     ,I.ITEM_NM
-        //     ,I.ITEM_KIND
-        //     ,I.ITEM_CONT
-        //     ,I.ITEM_SALE
-        //     ,I.ITEM_SALE
-        //     ,I.ITEM_IMAGE
-        //     ,I.ITEM_PRICE
-        //     ,I.ITEM_TAKE
-        //     ,M.MEDICINE_CD
-        //     ,M.MEDICINE_NAME
-        //     ,M.MEDICINE_EFF
-		// }
 		$data = array(
 			'item_detail' => $item_detail
 		);
@@ -64,7 +50,7 @@ class Main extends CI_Controller {
 
 
 	/**
-	 * 상품목록 리스트
+	 * 상품목록 리스트 데이터
 	 */
 	public function shopList() {
 		$default_data=array('title'=> "Wally's Portfolio");
@@ -112,13 +98,6 @@ class Main extends CI_Controller {
 		,'startBlock' => $startBlock
 		,'lastBlock' => $lastBlock), JSON_UNESCAPED_UNICODE);
 
-		//화면으로 보내주는값 (게시물,현재블록,시작블록페이지,종료블록페이지)
-		//$json_output = json_encode($json_Post,$curBlock,$startBlock,$lastBlock, JSON_UNESCAPED_UNICODE);
-		//log_message("error",$json_output); 
-		//echo $json_output;
-		// $this->load->view('layout/header', $default_data);
-		// $this->load->view('page/shop', $data);
-		// $this->load->view('layout/footer', $default_data);
 	}
 		/**
 	 * 나의 작업 현황 화면 호출
@@ -131,6 +110,19 @@ class Main extends CI_Controller {
 		$this->load->view('layout/footer', $default_data);
 	}
 
+	/**
+	 * 카트 화면 호출
+	 */
+	public function cart() {
+		$default_data=array('title'=> "Wally's Portfolio");
+			
+		log_message("error",$this->uri->segment(3));
+
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/cart', $data);
+		$this->load->view('layout/footer', $default_data);
+	}
+	
 		/**
 	 * 연락처 화면 호출
 	 */
