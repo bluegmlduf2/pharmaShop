@@ -145,3 +145,5 @@
         </div>
       </div>
     </div>
+    
+    <script src="/pharmaShop/static/libraries/js/pharma_cart.js"></script>

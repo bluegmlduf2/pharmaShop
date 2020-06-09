@@ -1,9 +1,9 @@
-  <script src="/pharmaShop/static/libraries/js/popper.min.js"></script>
-  <script src="/pharmaShop/static/libraries/js/bootstrap.min.js"></script>
-  <script src="/pharmaShop/static/libraries/js/owl.carousel.min.js"></script>
-  <script src="/pharmaShop/static/libraries/js/jquery.magnific-popup.min.js"></script>
-  <script src="/pharmaShop/static/libraries/js/aos.js"></script>
-  <script src="/pharmaShop/static/libraries/js/main.js"></script>
+  <script src="/pharmaShop/static/libraries/js/lib/popper.min.js"></script>
+  <script src="/pharmaShop/static/libraries/js/lib/bootstrap.min.js"></script>
+  <script src="/pharmaShop/static/libraries/js/lib/owl.carousel.min.js"></script>
+  <script src="/pharmaShop/static/libraries/js/lib/jquery.magnific-popup.min.js"></script>
+  <script src="/pharmaShop/static/libraries/js/lib/aos.js"></script>
+  <script src="/pharmaShop/static/libraries/js/lib/main.js"></script>
   
   <div class="site-section bg-secondary bg-image" style="background-image: url('/pharmaShop/static/libraries/images/bg_2.jpg');">
       <div class="container">
