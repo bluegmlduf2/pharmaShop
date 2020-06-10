@@ -10,7 +10,7 @@
 					<h2 class="text-black"><?php echo $item_detail[0]->ITEM_NM; ?></h2>
 					<p><?php echo $item_detail[0]->ITEM_CONT;?></p>
 					<p>
-					<del>
+					<del id='delSale'>
 						<?php 
 							if(!empty($item_detail[0]->ITEM_SALE)){
 								echo "$".$item_detail[0]->ITEM_PRICE;

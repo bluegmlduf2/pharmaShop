@@ -2,7 +2,7 @@
 //js_array-->from shopSingle.php
 $(function () {
 	var cnt=1;
-	var rePrice;//수정필요:할인된 가격변경시 할인금액도 변경되어야함..
+	var rePrice;
 	
 	//Count,priceCalculate
 	$('#plusBtn ,#minusBtn').click(function(){
@@ -15,10 +15,12 @@ $(function () {
 		}
 
 		//url의 count 파라메터 수정
-		$('#addCart').attr('href','/pharmaShop/main/cart/'+cnt);
+		//$('#addCart').attr('href','/pharmaShop/main/cart/'+cnt);
+		$('#addCart').attr('href','/pharmaShop/main/cart/');
 		
 		if(js_array[0].ITEM_SALE!=null){
 			 rePrice=(js_array[0].ITEM_PRICE*(100-js_array[0].ITEM_SALE))/100;
+			 $('#delSale').text("$"+js_array[0].ITEM_PRICE*cnt);
 		}else{
 			 rePrice=js_array[0].ITEM_PRICE;
 		}
@@ -38,15 +40,18 @@ $(function () {
 			//할인율이 적용된 금액 보내기
 			arr.push(rePrice);
 
-			if(index==0&&localStorage.getItem(value.ITEM_CD)==null){
+			var itemCd=value.ITEM_CD;
+
+			if(index==0&&localStorage.getItem(itemCd)==null){
 				arr.unshift(cnt);
-				localStorage.setItem(value.ITEM_CD,JSON.stringify(arr));
+				localStorage.setItem(itemCd,JSON.stringify(arr));
 			}else if(index==0){
-				var nCnt=localStorage.getItem(value.ITEM_CD);
-				var en=nCnt.indexOf(',');
-				var reVal=nCnt.substr(0,en);
-				arr.unshift(Number(cnt)+Number(reVal));
-				localStorage.setItem(value.ITEM_CD,JSON.stringify(arr));
+				var nCnt=arr[0]+cnt;
+				arr[0]=nCnt;
+				// var en=nCnt.indexOf(',');
+				// var reVal=nCnt.substr(0,en);
+				// arr.unshift(Number(cnt)+Number(reVal));
+				localStorage.setItem(itemCd,JSON.stringify(arr));
 			}
 		});
 	});
