@@ -18,6 +18,7 @@
   
   <script src="/pharmaShop/static/libraries/js/lib/jquery-3.3.1.min.js"></script>
   <script src="/pharmaShop/static/libraries/js/lib/jquery-ui.js"></script>
+  <script src="/pharmaShop/static/libraries/js/pharma_common.js"></script>
 
 </head>
 	<body>

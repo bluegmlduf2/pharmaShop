@@ -14,8 +14,8 @@
                     <th class="product-remove">Remove</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
+                <tbody id="cartItemList">
+                  <!-- <tr>
                     <td class="product-thumbnail">
                       <img src="" alt="Image" class="img-fluid">
                     </td>
@@ -38,9 +38,9 @@
                     </td>
                     <td>$49.00</td>
                     <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
-                  </tr>
+                  </tr> -->
     
-                  <tr>
+                  <!-- <tr>
                     <td class="product-thumbnail">
                       <img src="" alt="Image" class="img-fluid">
                     </td>
@@ -63,7 +63,7 @@
                     </td>
                     <td>$49.00</td>
                     <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
                 <!-- Navigator -->
@@ -121,7 +121,7 @@
                     <span class="text-black">Subtotal</span>
                   </div>
                   <div class="col-md-6 text-right">
-                    <strong class="text-black">$230.00</strong>
+                    <strong class="text-black" id='subTot'>$230.00</strong>
                   </div>
                 </div>
                 <div class="row mb-5">
@@ -129,7 +129,7 @@
                     <span class="text-black">Total</span>
                   </div>
                   <div class="col-md-6 text-right">
-                    <strong class="text-black">$230.00</strong>
+                    <strong class="text-black"id='tot'>$230.00</strong>
                   </div>
                 </div>
     
