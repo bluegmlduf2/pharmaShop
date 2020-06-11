@@ -2,6 +2,8 @@
 $(function () {
     initFunc(1);
 });
+
+//click함수를 못찾아서 분리
 function initFunc(nRow){
     var reVal=initCartRow(nRow);
     
@@ -35,17 +37,15 @@ function initFunc(nRow){
 }
 //Init Cart List
 function initCartRow(pageNum){
-    var curPage=pageNum;//?????
-    var postCnt=0;//?????
-    var pageShowitemCnt=5;//???? ?? ??? 
+    var curPage=pageNum;//현재페이지
+    var postCnt=0;//
+    var pageShowitemCnt=5;//페이지당 아이템 보여주는 갯수 
 
-    //???
-    var pageCnt=Math.ceil(postCnt/pageShowitemCnt);// ????? ??? ??? ?? ?????
-    var startPost=(curPage*pageShowitemCnt)-pageShowitemCnt;//?????
-    var endPost=curPage*pageShowitemCnt;//?????
+    var startPost=(curPage*pageShowitemCnt)-pageShowitemCnt;//페이지의 시작 게시물
+    var endPost=curPage*pageShowitemCnt;//페이지의 종료 게시물
 
     var arr=new Array();
-    //? rowCount ??????
+    //시작~종료 게시물 담기
     for(var i=0;i<localStorage.length;i++){
         var chkVal=Number(localStorage.key(i));
         if(Number.isInteger(chkVal)){;
@@ -54,16 +54,16 @@ function initCartRow(pageNum){
         }
     }
 
-    var block=5;//?????
-    var curBlock=Math.ceil(curPage/block);//????
-    var blockCnt=Math.ceil(postCnt/pageShowitemCnt);//????? 
-    var startBlock=(curBlock*5)-block;//???????
-    var lastBlock=curBlock*block;//????????
-
-    //??? ?? ??
+    //블록
+    var block=5;//기본블록수
+    var curBlock=Math.ceil(curPage/block);//현재블록
+    var blockCnt=Math.ceil(postCnt/pageShowitemCnt);//마지막블록 
+    var startBlock=(curBlock*5)-block;//시작블록페이지
+    var lastBlock=curBlock*block;//마지막블록페이지
+    //마지막 블록 유무
     var lastYN=false;
 
-    //??? ???? ??? ??
+    //마지막블록 일시 블록 값 설정
     if(blockCnt<=lastBlock){
         lastBlock = blockCnt;
         lastYN=true;
@@ -127,9 +127,32 @@ function addCartRow(reRow){
     calculateTotal();
 }
 
+//cartSelectList
+function addCartSelList(reSb,reLb){
+    var addRow="";
+    var rLength=0;
+
+    if(reSb!=0){
+        addRow+="<li><a href='#' onclick='initFunc("+(reSb-1)+")'>&lt;</a></li>";
+    }
+
+    for(var i=(reSb+1);i<=reLb;i++){                    
+        addRow+="<li><a href='#' onclick='initFunc("+i+")'>"+i+"</a></li>";
+        rLength++;
+    }
+
+    if(rLength>=5){
+        addRow+="<li><a href='#' onclick='initFunc("+(reLb+1)+")'>&gt;</a></li>";
+    }
+
+    $('.itemSelect').empty();
+    $('.itemSelect').append(addRow);
+}
+
 //Total Calculate
 function calculateTotal(){
     var arr=new Array();
+    var totalCost=0;
 
     for(var i=0;i<localStorage.length;i++){
         var chkVal=Number(localStorage.key(i));
@@ -138,36 +161,17 @@ function calculateTotal(){
         }
     }
     
-    var totCls=JSON.parse(localStorage.getItem(chkVal));
-    var totalCost=0;
-    
     arr.forEach(function(e){
-       var totalCost;
         totalCost+=ChkDataType(Number(e[0]*e[12]));
     });
+    
+    $('#subTot').text("$"+ChkDataType(totalCost));
+    $('#tot').text("$"+ChkDataType(totalCost));
+    // for(var i=50;i<60;i++){
+    //     localStorage.setItem(i,JSON.stringify(arr[1]));       
+    // }
 }
 
-//cartSelectList
-function addCartSelList(reSb,reLb){
 
-    var addRow="";
-    var rLength=0;
-
-    if(reSb!=0){
-        addRow+="<li><a href=''>&lt;</a></li>";
-    }
-
-    for(var i=(reSb+1);i<=reLb;i++){                    
-        addRow+="<li><a href='#' onclick='initFunc("+i+")'>"+i+"</a></li>";
-        rLength++;
-    }
-
-    if(rLength>5){
-        addRow+="<li><a href=''>&gt;</a></li>";
-    }
-
-    $('.itemSelect').empty();
-    $('.itemSelect').append(addRow);
-}
 
 
