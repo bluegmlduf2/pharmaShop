@@ -85,7 +85,7 @@ function initCartRow(pageNum){
     }
     
     addCartRow(arrInput);
-    addCartSelList(startBlock,lastBlock);
+    addCartSelList(startBlock,lastBlock,curPage);
 
     return {
         reRow:arrInput,
@@ -137,19 +137,26 @@ function addCartRow(reRow){
 }
 
 //cartSelectList
-function addCartSelList(reSb,reLb){
+function addCartSelList(reSb,reLb,curPage){
     var addRow="";
     var rLength=0;
 
+    //<
     if(reSb!=0){
         addRow+="<li><a href='#' onclick='initFunc("+(reSb-1)+")'>&lt;</a></li>";
     }
 
-    for(var i=(reSb+1);i<=reLb;i++){                    
-        addRow+="<li><a href='#' onclick='initFunc("+i+")'>"+i+"</a></li>";
+    //1,2,3,4,5..
+    for(var i=(reSb+1);i<=reLb;i++){        
+        if(i==curPage){
+            addRow+="<li><a href='#' style='font:bold;color:red; onclick='initFunc("+i+")'>"+i+"</a></li>";
+        }else{
+            addRow+="<li><a href='#' onclick='initFunc("+i+")'>"+i+"</a></li>";
+        }
         rLength++;
     }
 
+    //>
     if(rLength>=5){
         addRow+="<li><a href='#' onclick='initFunc("+(reLb+1)+")'>&gt;</a></li>";
     }
