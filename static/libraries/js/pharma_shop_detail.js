@@ -18,15 +18,8 @@ $(function () {
 		//$('#addCart').attr('href','/pharmaShop/main/cart/'+cnt);
 		$('#addCart').attr('href','/pharmaShop/main/cart/');
 		
-		if(js_array[0].ITEM_SALE!=null){
-			 rePrice=(js_array[0].ITEM_PRICE*(100-js_array[0].ITEM_SALE))/100;
-			 $('#delSale').text("$"+js_array[0].ITEM_PRICE*cnt);
-		}else{
-			 rePrice=js_array[0].ITEM_PRICE;
-		}
-		//숫자,마침표만 입력가능
-		rePrice=String(rePrice).replace(/[^.0-9]/g,'');
-		$('#priceVal').text("$"+ChkDataType(cnt*rePrice));
+		//할인율적용미적용 가격구하기
+		calculateCost(cnt);
 	});
 
 	//addCart,ifHaveASameKey
@@ -37,23 +30,37 @@ $(function () {
 				arr.push(b);
 			});
 
-			//할인율이 적용된 금액 보내기
+			calculateCost(1);
+			//할인율적용미적용 가격 넣기
 			arr.push(rePrice);
 
 			var itemCd=value.ITEM_CD;
-
+			
 			if(index==0&&localStorage.getItem(itemCd)==null){
 				arr.unshift(cnt);
 				localStorage.setItem(itemCd,JSON.stringify(arr));
-			}else if(index==0){
-				var nCnt=arr[0]+cnt;
-				arr[0]=nCnt;
+			}else if(index==0&&localStorage.getItem(itemCd)!=null){
+				var curCnt=JSON.parse(localStorage.getItem(itemCd))[0];
+				var nCnt=curCnt+cnt;
 				// var en=nCnt.indexOf(',');
 				// var reVal=nCnt.substr(0,en);
-				// arr.unshift(Number(cnt)+Number(reVal));
+				 arr.unshift(nCnt);
 				localStorage.setItem(itemCd,JSON.stringify(arr));
 			}
 		});
 	});
 	
+	//세일적용 가격 / 미적용가격
+	function calculateCost(cnt){
+		if(js_array[0].ITEM_SALE!=null){
+			rePrice=(js_array[0].ITEM_PRICE*(100-js_array[0].ITEM_SALE))/100;
+			$('#delSale').text("$"+js_array[0].ITEM_PRICE*cnt);
+	   }else{
+			rePrice=js_array[0].ITEM_PRICE;
+	   }
+	   //숫자,마침표만 입력가능
+	   rePrice=String(rePrice).replace(/[^.0-9]/g,'');
+	   $('#priceVal').text("$"+ChkDataType(cnt*rePrice));
+	}
+
 });

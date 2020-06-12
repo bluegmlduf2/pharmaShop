@@ -17,24 +17,27 @@ function initFunc(nRow){
         var cnt;
 
         if(cName=='plusBtn'){
-             cnt=arr[0]+1;
+            cnt=arr[0]+1;
             arr[0]=cnt;
         }else if(cName=='minusBtn'){
             if(arr[0]>1){
                 cnt=arr[0]-1;
                 arr[0]=cnt;
             }else{
-                cnt=arr[0];
+                alert('최소 하나의 수량을 선택해야합니다.');
+                return;
             }
         }
-        
         $('#cnt').val(cnt);
+
+        //$('#cnt').val(cnt);
         $(this).parents('#trRow').children('#totalTd').text("$"+ChkDataType(cnt*Number(arr[12])));
         localStorage.setItem(itemCd,JSON.stringify(arr));
         
         calculateTotal();
     });
 }
+
 //Init Cart List
 function initCartRow(pageNum){
     var curPage=pageNum;//현재페이지
@@ -45,6 +48,7 @@ function initCartRow(pageNum){
     var endPost=curPage*pageShowitemCnt;//페이지의 종료 게시물
 
     var arr=new Array();
+
     //시작~종료 게시물 담기
     for(var i=0;i<localStorage.length;i++){
         var chkVal=Number(localStorage.key(i));
@@ -53,6 +57,11 @@ function initCartRow(pageNum){
             arr.push(JSON.parse(localStorage.getItem(chkVal)));
         }
     }
+
+    //오름차순
+    arr.sort(function(a,b){
+        return Number(a[1]) < Number(b[1]) ? -1 : Number(a[1]) > Number(b[1]) ? 1 : 0;
+    });
 
     //블록
     var block=5;//기본블록수
@@ -69,9 +78,9 @@ function initCartRow(pageNum){
         lastYN=true;
     }
 
+    //시작포스트와 끝포스트담기
     var arrInput=new Array();
     for(var i=startPost;i<endPost;i++){ 
-   
         arrInput.push(arr[i]);
     }
     
@@ -107,12 +116,12 @@ function addCartRow(reRow){
             +"<td>"
             +"<div class='input-group mb-3' style='max-width: 120px;'>"
             +"<div class='input-group-prepend'>"
-            +"<button class='btn btn-outline-primary js-btn-minus' type='button' id='minusBtn'>&minus;</button>"
+            +"<button class='btn btn-outline-primary' type='button' id='minusBtn'>&minus;</button>"
             +"</div>"
             +"<input type='text' class='form-control text-center' id='cnt' value='"+reRow[i][0]+"' placeholder=''"
             +"aria-label='Example text with button addon' aria-describedby='button-addon1'>"
             +"<div class='input-group-append'>"
-            +"<button class='btn btn-outline-primary js-btn-plus' type='button' id='plusBtn'>&plus;</button>"
+            +"<button class='btn btn-outline-primary' type='button' id='plusBtn'>&plus;</button>"
             +"</div>"
             +"</div>"
             +"</td>"
