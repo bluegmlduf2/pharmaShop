@@ -9,8 +9,6 @@ function initFunc(nRow){
     
     //Count,priceCalculate
     $('#plusBtn ,#minusBtn').click(function(){
-        
-        
         var cName=$(this).attr('id');
         var itemCd=$(this).parents('#trRow').children('#itemCd').val()
         var arr=JSON.parse(localStorage.getItem(itemCd));
@@ -28,9 +26,7 @@ function initFunc(nRow){
                 return;
             }
         }
-        $('#cnt').val(cnt);
-
-        //$('#cnt').val(cnt);
+        $(this).parents('#trRow').find('#cnt').val(cnt);
         $(this).parents('#trRow').children('#totalTd').text("$"+ChkDataType(cnt*Number(arr[12])));
         localStorage.setItem(itemCd,JSON.stringify(arr));
         
@@ -126,7 +122,7 @@ function addCartRow(reRow){
             +"</div>"
             +"</td>"
             +"<td id='totalTd' class='totCls'>$"+ChkDataType(reRow[i][12]*reRow[i][0])+"</td>"
-            +"<td><a href='#' class='btn btn-primary height-auto btn-sm'>X</a></td>"
+            +"<td><a href='#' onclick='removeFunc(this)' class='btn btn-primary height-auto btn-sm'>X</a></td>"
             +"<input type='hidden' value='"+reRow[i][1]+"' id='itemCd'>"
             +"</tr>";
         }
@@ -165,28 +161,88 @@ function addCartSelList(reSb,reLb,curPage){
     $('.itemSelect').append(addRow);
 }
 
-//Total Calculate
-function calculateTotal(){
-    var arr=new Array();
-    var totalCost=0;
+// //Total Calculate
+// function calculateTotal(coupon){
+//     var arr=new Array();
+//     var totalCost=0;
 
-    for(var i=0;i<localStorage.length;i++){
-        var chkVal=Number(localStorage.key(i));
-        if(Number.isInteger(chkVal)){;
-            arr.push(JSON.parse(localStorage.getItem(chkVal)));
-        }
+//     for(var i=0;i<localStorage.length;i++){
+//         var chkVal=Number(localStorage.key(i));
+//         if(Number.isInteger(chkVal)){;
+//             arr.push(JSON.parse(localStorage.getItem(chkVal)));
+//         }
+//     }
+    
+//     arr.forEach(function(e){
+//         totalCost+=ChkDataType(Number(e[0]*e[12]));
+//     });
+
+//     if(coupon!=undefined){ 
+//         $('#subSale').text('-$'+coupon);        
+//         $('#subTot').text("$"+ChkDataType(totalCost));
+//         totalCost-=coupon;
+//         $('#tot').text("$"+ChkDataType(totalCost));
+//         return;
+//     }
+
+//     $('#subTot').text("$"+ChkDataType(totalCost));
+//     $('#subSale').text('');
+//     $('#tot').text("$"+ChkDataType(totalCost));
+// }
+
+// //remove cart Row
+// function removeFunc(obj){
+//     if(confirm('삭제하시겠습니까?')){
+//         localStorage.removeItem($(obj).parents('#trRow').find('#itemCd').val());
+//         initFunc(1);    
+//     }
+// }
+
+// //apply Coupon
+// function applyCoupon(){
+//     $.ajax({
+//         type: "POST",
+//         url: "/pharmaShop/main/coupon/",
+//         data: {
+//             "data": JSON.stringify($('#c_code').val())
+//         },
+//         async: false,
+//         dataType: "json",
+//         success: function (result) {
+//             if(result.COUPON_USE==1){
+//                 alert('이미 사용된 쿠폰입니다');
+//                 $('#c_code').val('');
+//                 calculateTotal();
+//                 return;
+//             }
+//             if(result.CNT==0){
+//                 alert('존재하지않는 쿠폰입니다.');
+//                 $('#c_code').val('');
+//                 calculateTotal();
+//                 return;
+//             }
+
+//             alert('쿠폰이 적용되었습니다.');
+//             calculateTotal(result.COUPON_AMT);
+//         },
+//         error: function (request, status, error) {
+//             //console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+//             alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
+//                 error);
+//         }
+//     });
+// }
+
+//checkOut page
+function checkOut(){
+    if($('#c_code').val()!=undefined){
+        window.location='/pharmaShop/main/checkout/'+$('#c_code').val();
+    }else{
+        window.location='/pharmaShop/main/checkout/';
     }
-    
-    arr.forEach(function(e){
-        totalCost+=ChkDataType(Number(e[0]*e[12]));
-    });
-    
-    $('#subTot').text("$"+ChkDataType(totalCost));
-    $('#tot').text("$"+ChkDataType(totalCost));
-    // for(var i=50;i<60;i++){
-    //     localStorage.setItem(i,JSON.stringify(arr[1]));       
-    // }
 }
+
+
 
 
 

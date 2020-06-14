@@ -20,7 +20,8 @@ class Main extends CI_Controller {
 		$this->load->view('page/index');
 		$this->load->view('layout/footer');
 	}
-		/**
+
+	/**
 	 * 상품목록 화면
 	 */
 	public function shop() {
@@ -31,7 +32,7 @@ class Main extends CI_Controller {
 		$this->load->view('layout/footer');
 	}
 
-		/**
+	/**
 	 * 상품상세 화면
 	 */
 	public function shopSingle() {
@@ -48,7 +49,55 @@ class Main extends CI_Controller {
 		$this->load->view('layout/footer');
 	}
 
+	/**
+	 * 체크아웃 화면
+	 */
+	public function checkout() {
+		$default_data=array('title'=> "pharmaShop");
+		if($this->uri->segment(3)!=null){
+			$coupon_cd=array('couponCd'=> $this->uri->segment(3));
+		}
+		log_message("error",$this->uri->segment(3));
 
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/checkout', $coupon_cd);
+		$this->load->view('layout/footer');
+	}
+	
+	/**
+	 * 나의 작업 현황 화면 호출
+	 */
+	public function work() {
+		$default_data=array('title'=> "Wally's Portfolio");
+
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/work', $data);
+		$this->load->view('layout/footer', $default_data);
+	}
+
+	/**
+	 * 카트 화면 호출
+	 */
+	public function cart() {
+		$default_data=array('title'=> "Wally's Portfolio");
+			
+		log_message("error",$this->uri->segment(3));
+
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/cart', $data);
+		$this->load->view('layout/footer', $default_data);
+	}
+	
+	/**
+	 * 연락처 화면 호출
+	 */
+	public function contact() {
+		$default_data=array('title'=> "Wally's Portfolio");
+
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/contact', $data);
+		$this->load->view('layout/footer', $default_data);
+	}
 	/**
 	 * 상품목록 리스트 데이터
 	 */
@@ -99,38 +148,22 @@ class Main extends CI_Controller {
 		,'lastBlock' => $lastBlock), JSON_UNESCAPED_UNICODE);
 
 	}
-		/**
-	 * 나의 작업 현황 화면 호출
-	 */
-	public function work() {
-		$default_data=array('title'=> "Wally's Portfolio");
-
-		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/work', $data);
-		$this->load->view('layout/footer', $default_data);
-	}
-
-	/**
-	 * 카트 화면 호출
-	 */
-	public function cart() {
-		$default_data=array('title'=> "Wally's Portfolio");
-			
-		log_message("error",$this->uri->segment(3));
-
-		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/cart', $data);
-		$this->load->view('layout/footer', $default_data);
-	}
 	
-		/**
-	 * 연락처 화면 호출
+	/**
+	 * 쿠폰 확인
 	 */
-	public function contact() {
-		$default_data=array('title'=> "Wally's Portfolio");
+	public function coupon() {
+		$this->load->model('Coupon_model');
+		
+		$data = $this->input->post('data', true);
+		$json_data = json_decode( $data,true);
 
-		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/contact', $data);
-		$this->load->view('layout/footer', $default_data);
+		$json_result= $this->Coupon_model->GetCouponCnt($json_data);
+
+		echo json_encode($json_result, JSON_UNESCAPED_UNICODE);
+
+		log_message("error",$json_curPage);
+		//log_message("error",$this->uri->segment(3));
 	}
+
 }

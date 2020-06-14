@@ -15,72 +15,16 @@
                   </tr>
                 </thead>
                 <tbody id="cartItemList">
-                  <!-- <tr>
-                    <td class="product-thumbnail">
-                      <img src="" alt="Image" class="img-fluid">
-                    </td>
-                    <td class="product-name">
-                      <h2 class="h5 text-black">Ibuprofen</h2>
-                    </td>
-                    <td>$55.00</td>
-                    <td>
-                      <div class="input-group mb-3" style="max-width: 120px;">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                        </div>
-                        <input type="text" class="form-control text-center" value="1" placeholder=""
-                          aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                        </div>
-                      </div>
-    
-                    </td>
-                    <td>$49.00</td>
-                    <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
-                  </tr> -->
-    
-                  <!-- <tr>
-                    <td class="product-thumbnail">
-                      <img src="" alt="Image" class="img-fluid">
-                    </td>
-                    <td class="product-name">
-                      <h2 class="h5 text-black">Bioderma</h2>
-                    </td>
-                    <td>$49.00</td>
-                    <td>
-                      <div class="input-group mb-3" style="max-width: 120px;">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                        </div>
-                        <input type="text" class="form-control text-center" value="1" placeholder=""
-                          aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                        </div>
-                      </div>
-    
-                    </td>
-                    <td>$49.00</td>
-                    <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
-                  </tr> -->
+                <!-- CartRow -->
                 </tbody>
               </table>
-                <!-- Navigator -->
                 <div class="col-md-12 text-center">
                   <div class="site-block-27">
                     <ul class="itemSelect">
-                      <!-- <li><a href="#">&lt;</a></li>
-                      <li class="active"><span>1</span></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#">5</a></li>
-                      <li><a href="#">&gt;</a></li> -->
+                        <!-- Navigator List -->
                     </ul>
                   </div>
                 </div>
-             <!-- Navigator -->
             </div>
           </form>
         </div>
@@ -88,11 +32,11 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row mb-5">
-              <div class="col-md-6 mb-3 mb-md-0">
+              <!-- <div class="col-md-6 mb-3 mb-md-0">
                 <button class="btn btn-primary btn-md btn-block">Update Cart</button>
-              </div>
+              </div> -->
               <div class="col-md-6">
-                <button class="btn btn-outline-primary btn-md btn-block">Continue Shopping</button>
+                <button class="btn btn-outline-primary btn-md btn-block"  onclick="location.href='/pharmaShop/main/shop'">Continue Shopping</button>
               </div>
             </div>
             <div class="row">
@@ -101,10 +45,10 @@
                 <p>Enter your coupon code if you have one.</p>
               </div>
               <div class="col-md-8 mb-3 mb-md-0">
-                <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
+                <input type="text" class="form-control py-3" id="c_code" placeholder="Coupon Code">
               </div>
               <div class="col-md-4">
-                <button class="btn btn-primary btn-md px-4">Apply Coupon</button>
+                <button class="btn btn-primary btn-md px-4" onclick="applyCoupon()">Apply Coupon</button>
               </div>
             </div>
           </div>
@@ -124,6 +68,14 @@
                     <strong class="text-black" id='subTot'></strong>
                   </div>
                 </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <span class="text-black">Sale</span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <strong class="text-black" id='subSale'></strong>
+                  </div>
+                </div>
                 <div class="row mb-5">
                   <div class="col-md-6">
                     <span class="text-black">Total</span>
@@ -135,7 +87,7 @@
     
                 <div class="row">
                   <div class="col-md-12">
-                    <button class="btn btn-primary btn-lg btn-block" onclick="window.location='checkout.html'">Proceed To
+                    <button class="btn btn-primary btn-lg btn-block" onclick="checkOut(true)">Proceed To
                       Checkout</button>
                   </div>
                 </div>
