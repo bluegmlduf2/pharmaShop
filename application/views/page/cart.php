@@ -48,7 +48,7 @@
                 <input type="text" class="form-control py-3" id="c_code" placeholder="Coupon Code">
               </div>
               <div class="col-md-4">
-                <button class="btn btn-primary btn-md px-4" onclick="applyCoupon()">Apply Coupon</button>
+                <button class="btn btn-primary btn-md px-4" onclick="applyCoupon(true)">Apply Coupon</button>
               </div>
             </div>
           </div>

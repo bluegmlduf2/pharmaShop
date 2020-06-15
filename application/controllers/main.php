@@ -166,4 +166,24 @@ class Main extends CI_Controller {
 		//log_message("error",$this->uri->segment(3));
 	}
 
+	/**
+	 * 주문 입력
+	 */
+	public function insertOrderList() {
+		//쿠폰처리
+		//주문입력
+		//주문상세입력
+		$this->load->model('Coupon_model');
+		
+		$data = $this->input->post('data', true);
+		$json_data = json_decode( $data,true);
+
+		$json_result= $this->Coupon_model->GetCouponCnt($json_data);
+
+		echo json_encode($json_result, JSON_UNESCAPED_UNICODE);
+
+		log_message("error",$json_curPage);
+		//log_message("error",$this->uri->segment(3));
+	}
+
 }

@@ -94,7 +94,6 @@ function pageFunc(curPage){
 				$('.nextBlock').css('visibility','visible');
 				$('.backBlock').css('visibility','visible');
 			}
-
 		},
 		error: function (request, status, error) {
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);

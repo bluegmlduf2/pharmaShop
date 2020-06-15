@@ -22,7 +22,7 @@ function initFunc(nRow){
                 cnt=arr[0]-1;
                 arr[0]=cnt;
             }else{
-                alert('최소 하나의 수량을 선택해야합니다.');
+                swal("Please Select item at least one");
                 return;
             }
         }
@@ -161,77 +161,24 @@ function addCartSelList(reSb,reLb,curPage){
     $('.itemSelect').append(addRow);
 }
 
-// //Total Calculate
-// function calculateTotal(coupon){
-//     var arr=new Array();
-//     var totalCost=0;
-
-//     for(var i=0;i<localStorage.length;i++){
-//         var chkVal=Number(localStorage.key(i));
-//         if(Number.isInteger(chkVal)){;
-//             arr.push(JSON.parse(localStorage.getItem(chkVal)));
-//         }
-//     }
-    
-//     arr.forEach(function(e){
-//         totalCost+=ChkDataType(Number(e[0]*e[12]));
-//     });
-
-//     if(coupon!=undefined){ 
-//         $('#subSale').text('-$'+coupon);        
-//         $('#subTot').text("$"+ChkDataType(totalCost));
-//         totalCost-=coupon;
-//         $('#tot').text("$"+ChkDataType(totalCost));
-//         return;
-//     }
-
-//     $('#subTot').text("$"+ChkDataType(totalCost));
-//     $('#subSale').text('');
-//     $('#tot').text("$"+ChkDataType(totalCost));
-// }
-
-// //remove cart Row
-// function removeFunc(obj){
-//     if(confirm('삭제하시겠습니까?')){
-//         localStorage.removeItem($(obj).parents('#trRow').find('#itemCd').val());
-//         initFunc(1);    
-//     }
-// }
-
-// //apply Coupon
-// function applyCoupon(){
-//     $.ajax({
-//         type: "POST",
-//         url: "/pharmaShop/main/coupon/",
-//         data: {
-//             "data": JSON.stringify($('#c_code').val())
-//         },
-//         async: false,
-//         dataType: "json",
-//         success: function (result) {
-//             if(result.COUPON_USE==1){
-//                 alert('이미 사용된 쿠폰입니다');
-//                 $('#c_code').val('');
-//                 calculateTotal();
-//                 return;
-//             }
-//             if(result.CNT==0){
-//                 alert('존재하지않는 쿠폰입니다.');
-//                 $('#c_code').val('');
-//                 calculateTotal();
-//                 return;
-//             }
-
-//             alert('쿠폰이 적용되었습니다.');
-//             calculateTotal(result.COUPON_AMT);
-//         },
-//         error: function (request, status, error) {
-//             //console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-//             alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
-//                 error);
-//         }
-//     });
-// }
+//remove cart Row
+function removeFunc(obj){
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+          localStorage.removeItem($(obj).parents('#trRow').find('#itemCd').val());
+          initFunc(1);    
+        }
+      });
+}
 
 //checkOut page
 function checkOut(){

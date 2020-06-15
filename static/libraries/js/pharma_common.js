@@ -1,16 +1,13 @@
-	/**
-	 * 실수형(소수점1자리이하)와 정수형 구분해서 반환
-	 */
-	function ChkDataType (args){
-		var result= null;
-		//alert(typeof(args));
-		if (Number.isInteger(args)){
-			result=args;
-		}else{
-			result = args.toFixed(1)//실수형일때 소수점 1자리까지 표기
-		}
-		return Number(result);
-	}
+//float , number check
+function ChkDataType (args){
+    var result= null;
+    if (Number.isInteger(args)){
+        result=args;
+    }else{
+        result = args.toFixed(1)//실수형일때 소수점 1자리까지 표기
+    }
+    return Number(result);
+}
 
 //Total Calculate
 function calculateTotal(coupon){
@@ -53,19 +50,19 @@ function applyCoupon(chk){
         dataType: "json",
         success: function (result) {
             if(result.COUPON_USE==1){
-                alert('이미 사용된 쿠폰입니다');
+                swal('Sorry! it is used coupon');
                 $('#c_code').val('');
                 calculateTotal();
                 return;
             }
             if(result.CNT==0){
-                alert('존재하지않는 쿠폰입니다.');
+                swal('Please check the coupon Number.');
                 $('#c_code').val('');
                 calculateTotal();
                 return;
             }
             if(chk){
-                alert('쿠폰이 적용되었습니다.');
+                swal("Applied coupon", "Check the sale price!", "success");
             }
             calculateTotal(result.COUPON_AMT);
         },

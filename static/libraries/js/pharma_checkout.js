@@ -27,6 +27,12 @@ $(function () {
           
         }
     });
+
+    //just input number
+    $(document).on("keyup", "input:text[numberOnly]", function () {
+        $(this).val($(this).val().replace(/[^-0-9]/gi, ""));
+    });
+
 });
 
 //Item List
@@ -42,7 +48,7 @@ function itemList(coupon){
         }
     }
 
-    //오름차순
+    //order by
     arr.sort(function(a,b){
         return Number(a[1]) < Number(b[1]) ? -1 : Number(a[1]) > Number(b[1]) ? 1 : 0;
     });
@@ -70,6 +76,114 @@ function itemList(coupon){
     }
 
     $('#prodList').prepend(addRow);
+}
+
+//place order
+function placeOrder(){
+
+    //저장정보 json형태로 넘김
+    var obj ={
+    "c_country": $('#c_country').val(),
+    "c_fname": $('#c_fname').val(),
+    "c_lname": $('#c_lname').val(),
+    "c_companyname": $('#c_companyname').val(),//option
+    "c_address": $('#c_address').val(),
+    "c_address_opt": $('#c_address_opt').val(),//option
+    "c_state_country": $('#c_state_country').val(),
+    "c_postal_zip": $('#c_postal_zip').val(),
+    "c_email_address": $('#c_email_address').val(),
+    "c_phone": $('#c_phone').val(),
+    "c_order_notes": $('#c_order_notes').val(),//option
+    //총금액
+    //쿠폰있으면 쿠폰번호
+    //아이템코드,수량(JSON)
+    };
+
+    obj = JSON.stringify(obj);//json객체 -> json문자열
+
+    //input value validation check and insert value
+    if (validationChk(obj)) {
+        //insert value
+        swal({
+            title: "Info",
+            text: "Would you order?",
+            icon: "info",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            buttons: true
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "POST",
+                    url: "/pharmaShop/main/insertOrderList",
+                    data: {
+                        "data": obj
+                    },
+                    async: false,
+                    dataType: "json",
+                    success: function (result) {
+                        //로컬스토리지 카트리스트 비우기 묻기 
+                        swal("Poof! Your imaginary file has been deleted!",'주문번호~', {
+                            icon: "success",
+                          });
+                    },
+                    error: function (request, status, error) {
+                        //console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+                        alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
+                            error);
+                    }
+                });
+            }
+        });
+    }  	  
+}
+
+//validation Check
+function validationChk(obj) {
+    var chk = true;
+    var output = "";
+    var arrCol=[
+        '[ Country ]\n',
+        '[ First Name ]\n',
+        '[ Last Name ]\n',
+        '[ Company Name ]\n',//option
+        '[ Address ]\n',
+        '[ Address (Option) ]\n',//option
+        '[ State / Country ]\n',
+        '[ Posta / Zip ]\n',
+        '[ Email Address ]\n',
+        '[ Phone ]\n',
+        '[ c_order_notes ]'//option
+    ];
+
+    var contact = JSON.parse(obj);//json문자열 ->js객체
+    var i=0;
+    //국가선택체크
+    if(contact.c_country==1){
+        output+="[ Country ]\n";
+        chk = false;
+    }
+
+    //공백확인
+    $.each(contact, function (index, item) {
+
+        if(index!="c_country"&&index!="c_companyname"&&index!="c_address_opt"&&index!="c_order_notes"){
+            if (item == "") {
+                //$("#idNm").focus(); 
+                output += arrCol[i];
+                chk = false;
+            }     
+        }
+        i++
+    });
+
+    //에러메세지 출력
+    if (output != "") {
+        swal("** Please Check input Value **", output);
+    }
+
+    return chk;
 }
 
 

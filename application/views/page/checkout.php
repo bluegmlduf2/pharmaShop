@@ -49,7 +49,7 @@
               </div>
     
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
+                <input type="text" class="form-control" id='c_address_opt' placeholder="Apartment, suite, unit etc. (optional)">
               </div>
     
               <div class="form-group row">
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-md-6">
                   <label for="c_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
+                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip" numberonly="true">
                 </div>
               </div>
     
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-md-6">
                   <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number">
+                  <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number" numberonly="true">
                 </div>
               </div>
     
@@ -278,7 +278,7 @@
                   </div>
     
                   <div class="form-group">
-                    <button class="btn btn-primary btn-lg btn-block">Place
+                    <button class="btn btn-primary btn-lg btn-block" id='btnOrder' onclick='placeOrder()'>Place
                       Order</button>
                   </div>
     
