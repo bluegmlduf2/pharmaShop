@@ -161,29 +161,53 @@ class Main extends CI_Controller {
 		$json_result= $this->Coupon_model->GetCouponCnt($json_data);
 
 		echo json_encode($json_result, JSON_UNESCAPED_UNICODE);
-
-		log_message("error",$json_curPage);
-		//log_message("error",$this->uri->segment(3));
 	}
 
 	/**
 	 * 주문 입력
 	 */
 	public function insertOrderList() {
-		//쿠폰처리
-		//주문입력
-		//주문상세입력
+		$this->db = $this->load->database('default', true);
 		$this->load->model('Coupon_model');
+		$this->load->model('Order_model');
 		
 		$data = $this->input->post('data', true);
 		$json_data = json_decode( $data,true);
+		try{
+			if(!empty($json_data['c_code'])){
+				$coupon_yn=$this->Coupon_model->GetCouponCnt($json_data['c_code']);
+				if($coupon_yn[0]->CNT!=1){
+					echo json_encode(array('result'=>'_error','message'=>'Please Check the coupon'));
+					return;
+				}else{
+					//쿠폰사용처리
+					$this->Coupon_model->updateCoupon($json_data['c_code']);
+				}
+			}else{
+				$json_data['c_code']="NULL";
+				//여기서 $this를 붙여서 에러가 났는데.. $this는 현재객체(클래스)를 가르킨다.
+				//만약 $this->$json_data['c_code']라고 하면 Main클래스의 $json_data멤버변수(프라퍼티)를 찾는다
+			}
+			//log_message("error",print_r($json_data['item_list']));
 
-		$json_result= $this->Coupon_model->GetCouponCnt($json_data);
+			$this->db->trans_start();
+			$order_cd=$this->Order_model->insertOrderList($json_data);
+			$this->Order_model->insertOrderDetailList($json_data['item_list'],$order_cd);
+			//쿠폰사용처리추가
 
-		echo json_encode($json_result, JSON_UNESCAPED_UNICODE);
+			if($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+			}else{
+				$this->db->trans_complete();
+			}
 
-		log_message("error",$json_curPage);
-		//log_message("error",$this->uri->segment(3));
+			$this->db->close();
+			echo json_encode(array('result'=>$order_cd));
+		}catch(Exception $e){
+			$this->db->close();
+			log_message("error",$e);
+			//echo json_encode(array('result'=>'_error','message'=>$e+' Please Contact Administator'));
+		}
 	}
 
 }

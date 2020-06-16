@@ -30,8 +30,25 @@ $(function () {
 
     //just input number
     $(document).on("keyup", "input:text[numberOnly]", function () {
+        //swal('Please input only Number');
         $(this).val($(this).val().replace(/[^-0-9]/gi, ""));
     });
+
+
+    
+    $('#btn111').click(function(){
+        $('#c_country').val('3'),
+        $('#c_fname').val('2');
+        $('#c_lname').val('3');
+        $('#c_companyname').val('4');
+        $('#c_address').val('5');
+        $('#c_address_opt').val('6');
+        $('#c_state_country').val('7');
+        $('#c_postal_zip').val('8');
+        $('#c_email_address').val('9');
+        $('#c_phone').val('10');
+        $('#c_order_notes').val('11');
+    })
 
 });
 
@@ -81,22 +98,37 @@ function itemList(coupon){
 //place order
 function placeOrder(){
 
+    var arr=new Array();
+
+    //시작~종료 게시물 담기
+    for(var i=0;i<localStorage.length;i++){
+        var chkVal=Number(localStorage.key(i));
+        if(Number.isInteger(chkVal)){;
+            arr.push(JSON.parse(localStorage.getItem(chkVal)));
+        }
+    }
+
+    //order by
+    arr.sort(function(a,b){
+        return Number(a[1]) < Number(b[1]) ? -1 : Number(a[1]) > Number(b[1]) ? 1 : 0;
+    });
+
     //저장정보 json형태로 넘김
     var obj ={
-    "c_country": $('#c_country').val(),
-    "c_fname": $('#c_fname').val(),
-    "c_lname": $('#c_lname').val(),
-    "c_companyname": $('#c_companyname').val(),//option
-    "c_address": $('#c_address').val(),
-    "c_address_opt": $('#c_address_opt').val(),//option
-    "c_state_country": $('#c_state_country').val(),
-    "c_postal_zip": $('#c_postal_zip').val(),
-    "c_email_address": $('#c_email_address').val(),
-    "c_phone": $('#c_phone').val(),
-    "c_order_notes": $('#c_order_notes').val(),//option
-    //총금액
-    //쿠폰있으면 쿠폰번호
-    //아이템코드,수량(JSON)
+        "c_country": $('#c_country').val(),
+        "c_fname": $('#c_fname').val(),
+        "c_lname": $('#c_lname').val(),
+        "c_companyname": $('#c_companyname').val(),//option
+        "c_address": $('#c_address').val(),
+        "c_address_opt": $('#c_address_opt').val(),//option
+        "c_state_country": $('#c_state_country').val(),
+        "c_postal_zip": $('#c_postal_zip').val(),
+        "c_email_address": $('#c_email_address').val(),
+        "c_phone": $('#c_phone').val(),
+        "c_order_notes": $('#c_order_notes').val(),//option
+        "tot":$('#tot').text().substring(1),//총금액
+        "c_code":$('#c_code').val()==undefined?null:$('#c_code').val(),
+        "item_list":arr
     };
 
     obj = JSON.stringify(obj);//json객체 -> json문자열
@@ -123,15 +155,31 @@ function placeOrder(){
                     async: false,
                     dataType: "json",
                     success: function (result) {
-                        //로컬스토리지 카트리스트 비우기 묻기 
-                        swal("Poof! Your imaginary file has been deleted!",'주문번호~', {
+                        //주문번호 
+                        swal("Successfully Ordered! \n Check Your Order Number!",'OrderNumber Is : '+result, {
                             icon: "success",
                           });
+                        //로컬스토리지 비우기 확인
+                        swal({
+                            title: "Info",
+                            text: "Would you delete Cart List?",
+                            icon: "info",
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            buttons: true
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                localStorage.clear();
+                                swal("Successfully Deleted");
+                            }
+                        });   
+                        location.reload();               
                     },
                     error: function (request, status, error) {
                         //console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-                        alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
-                            error);
+                        swal("code:" + request.status + ", message: " + request.responseText + ", error:" +
+                            error+"\n"+"\n     ---Please Contact Administrator ---");
                     }
                 });
             }
@@ -168,7 +216,13 @@ function validationChk(obj) {
     //공백확인
     $.each(contact, function (index, item) {
 
-        if(index!="c_country"&&index!="c_companyname"&&index!="c_address_opt"&&index!="c_order_notes"){
+        if(index!="c_country"
+        &&index!="c_companyname"
+        &&index!="c_address_opt"
+        &&index!="c_order_notes"
+        &&index!="tot"
+        &&index!="c_code"
+        &&index!="item_list"){
             if (item == "") {
                 //$("#idNm").focus(); 
                 output += arrCol[i];

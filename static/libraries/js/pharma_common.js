@@ -49,13 +49,13 @@ function applyCoupon(chk){
         async: false,
         dataType: "json",
         success: function (result) {
-            if(result.COUPON_USE==1){
+            if(result[0].COUPON_USE==1){
                 swal('Sorry! it is used coupon');
                 $('#c_code').val('');
                 calculateTotal();
                 return;
             }
-            if(result.CNT==0){
+            if(result[0].CNT==0){
                 swal('Please check the coupon Number.');
                 $('#c_code').val('');
                 calculateTotal();
@@ -64,7 +64,7 @@ function applyCoupon(chk){
             if(chk){
                 swal("Applied coupon", "Check the sale price!", "success");
             }
-            calculateTotal(result.COUPON_AMT);
+            calculateTotal(result[0].COUPON_AMT);
         },
         error: function (request, status, error) {
             //console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
