@@ -55,8 +55,8 @@ $(function () {
                 success: function (result) {
                     if(result.order_cd[0].CNT==1){
                         swal("Thanks!", "Successfully Checked!", "success");
-                        debugger
-                        location.herf="/pharmaShop/main/orderList/"+value;
+                        var rUrl="/pharmaShop/main/orderList/"+value;
+                        location.href=rUrl;
                     }else{
                         swal("Sorry Check the OrderNumber!", result.message, "error");
                     }
