@@ -52,4 +52,14 @@ class Order_model extends CI_Model {
             ,".$row[0].")");
         }
     }
+
+    public function GetOrderCnt($oNum)
+    {
+        $result = $this->db->query('SELECT COUNT(*) AS CNT FROM ORDER_TBL WHERE ORDER_CD='.$oNum.'')->result();
+        log_message('error', $this->db->last_query());
+        $this->db->close();
+        //첫번째 배열객체(행)에서 멤버변수 
+        return $result;
+    }
+
 }

@@ -66,7 +66,7 @@
                   </ul>
                 </li>
                 <li><a href="/pharmaShop/main/about">About</a></li>
-                <li><a href="/pharmaShop/main/cart">Contact</a></li>
+                <li><a href="/pharmaShop/main/checkout">Order</a></li>
               </ul>
             </nav>
           </div>

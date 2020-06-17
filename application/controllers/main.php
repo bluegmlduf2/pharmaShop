@@ -89,13 +89,13 @@ class Main extends CI_Controller {
 	}
 	
 	/**
-	 * 연락처 화면 호출
+	 * 주문리스트화면 
 	 */
-	public function contact() {
+	public function orderList() {
 		$default_data=array('title'=> "Wally's Portfolio");
 
 		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/contact', $data);
+		$this->load->view('page/orderList', $data);
 		$this->load->view('layout/footer', $default_data);
 	}
 	/**
@@ -202,7 +202,7 @@ class Main extends CI_Controller {
 			}
 
 			$this->db->close();
-			echo json_encode(array('result'=>$order_cd));
+			echo json_encode(array('order_cd'=>$order_cd));
 		}catch(Exception $e){
 			$this->db->close();
 			log_message("error",$e);
@@ -210,4 +210,26 @@ class Main extends CI_Controller {
 		}
 	}
 
+		/**
+	 * 주문 번호 체크
+	 */
+	public function CheckOrderList() {
+		$this->load->model('Order_model');
+		$data = $this->input->post('data', true);
+		$json_data = json_decode( $data,true);
+
+		try{	
+			$order_cnt=$this->Order_model->GetOrderCnt($json_data['order_cd']);
+
+			if($order_cnt[0]->CNT!=1){
+				echo json_encode(array('order_cd'=>'_error','message'=>'Please Check the OrderNumber'));
+			}else{
+				echo json_encode(array('order_cd'=>$order_cnt));
+			}
+		}catch(Exception $e){
+			$this->db->close();
+			log_message("error",$e);
+			//echo json_encode(array('result'=>'_error','message'=>$e+' Please Contact Administator'));
+		}
+	}
 }

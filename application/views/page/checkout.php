@@ -281,7 +281,7 @@
                     <button class="btn btn-primary btn-lg btn-block" id='btnOrder' onclick='placeOrder()'>Place
                       Order</button>
 
-                      <button class="btn btn-primary btn-lg btn-block" id='btn111' >111</button>
+                      <button class="btn btn-primary btn-lg btn-block" id='btnChkOrder' >Check My Order</button>
                   </div>
     
                 </div>
