@@ -93,9 +93,13 @@ class Main extends CI_Controller {
 	 */
 	public function orderList() {
 		$default_data=array('title'=> "Wally's Portfolio");
+		$this->load->model('Order_model');
+
+		$json_result= $this->Order_model->GetOrderList($this->uri->segment(3));
+		$orderList=array('orderList'=> json_encode($json_result, JSON_UNESCAPED_UNICODE));
 
 		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/orderList', $data);
+		$this->load->view('page/orderList', $orderList);
 		$this->load->view('layout/footer', $default_data);
 	}
 	/**

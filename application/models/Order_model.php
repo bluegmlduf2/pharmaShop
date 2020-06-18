@@ -62,4 +62,35 @@ class Order_model extends CI_Model {
         return $result;
     }
 
+    public function GetOrderList($oNum)
+    {
+        $result = $this->db->query('
+        SELECT 
+            OT.ORDER_CD
+            ,OT.ORDER_NATION
+            ,OT.ORDER_NM
+            ,OT.ORDER_CONTRY
+            ,OT.ORDER_COMPANY
+            ,OT.ORDER_ADDR
+            ,OT.ORDER_POST
+            ,OT.ORDER_EMAIL
+            ,OT.ORDER_PHONE
+            ,OT.COUPON_CD
+            ,OT.ORDER_AMOUNT
+            ,OT.ORDER_DATE
+            ,OT.ORDER_WANT
+            ,IT.ITEM_NM
+            ,OD.ITEM_CNT
+            ,CAST(((IT.ITEM_PRICE*OD.ITEM_CNT)/100)*IFNULL(100-IT.ITEM_SALE,100) AS SIGNED INTEGER) AS AMT
+        FROM ORDER_TBL AS OT
+        JOIN ORDER_DETAIL_TBL AS OD ON OT.ORDER_CD = OD.ORDER_CD
+        JOIN ITEM_TBL AS IT ON OD.ITEM_CD=IT.ITEM_CD
+        JOIN COUPON_TBL AS CT ON OT.COUPON_CD=CT.COUPON_NUM
+        WHERE OT.ORDER_CD='.$oNum.'')->result();
+
+        log_message('error', $this->db->last_query());
+
+        $this->db->close();
+        return $result;
+    }
 }

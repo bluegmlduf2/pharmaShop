@@ -59,34 +59,7 @@ $(function () {
                         location.href=rUrl;
                     }else{
                         swal("Sorry Check the OrderNumber!", result.message, "error");
-                    }
-                    //콜백함수-->동기적으로 동작 location.reload();가 비동기적으로 실행되버리기때문
-                    //var syncFunc=function(lastCall){
-        
-                        //주문번호 
-                        //swal("Successfully Ordered!", "Check Your Order Number!  \n Youu OrderNumber Is : ", "success");
-
-                        // //로컬스토리지 비우기 확인
-                        // swal({
-                        //     title: "Successfully Ordered!",
-                        //     text: "Check Your Order Number! [ "+result.result+" ]  \n  Would you delete Cart List?",
-                        //     icon: "success",
-                        //     confirmButtonColor: '#3085d6',
-                        //     cancelButtonColor: '#d33',
-                        //     buttons: true
-                        // })
-                        // .then((willDelete) => {
-                        //     if (willDelete) {
-                        //         localStorage.clear();
-                        //         swal("Successfully Deleted");
-                        //         location.reload();
-                        //     }else{
-                        //         location.reload();
-                        //     }
-                        // });  
-                        // //최종 실행 location.reload();
-                        // lastCall();
-                    //}                                 
+                    }               
                 },
                 error: function (request, status, error) {
                     //console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
@@ -267,6 +240,7 @@ function validationChk(obj) {
 
     var contact = JSON.parse(obj);//json문자열 ->js객체
     var i=0;
+    
     //국가선택체크
     if(contact.c_country==1){
         output+="[ Country ]\n";
