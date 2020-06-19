@@ -3,12 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
 class Order_model extends CI_Model {
  
+
     public function __construct()
     {
         parent::__construct();
         $this->db = $this->load->database('default', true);
     }
    
+
     public function insertOrderList($data)
     {
         $this->db->query("INSERT INTO ORDER_TBL(
@@ -40,6 +42,7 @@ class Order_model extends CI_Model {
         return $this->db->insert_id();
     }
 
+
     public function insertOrderDetailList($data,$order_cd)
     {
         foreach( $data as $row ) {
@@ -53,6 +56,7 @@ class Order_model extends CI_Model {
         }
     }
 
+
     public function GetOrderCnt($oNum)
     {
         $result = $this->db->query('SELECT COUNT(*) AS CNT FROM ORDER_TBL WHERE ORDER_CD='.$oNum.'')->result();
@@ -61,6 +65,7 @@ class Order_model extends CI_Model {
         //첫번째 배열객체(행)에서 멤버변수 
         return $result;
     }
+
 
     public function GetOrderList($oNum)
     {
@@ -85,7 +90,7 @@ class Order_model extends CI_Model {
         FROM ORDER_TBL AS OT
         JOIN ORDER_DETAIL_TBL AS OD ON OT.ORDER_CD = OD.ORDER_CD
         JOIN ITEM_TBL AS IT ON OD.ITEM_CD=IT.ITEM_CD
-        JOIN COUPON_TBL AS CT ON OT.COUPON_CD=CT.COUPON_NUM
+        LEFT JOIN COUPON_TBL AS CT ON OT.COUPON_CD=CT.COUPON_NUM
         WHERE OT.ORDER_CD='.$oNum.'')->result();
 
         log_message('error', $this->db->last_query());
@@ -93,6 +98,7 @@ class Order_model extends CI_Model {
         $this->db->close();
         return $result;
     }
+
 
     public function updateOrderList($data)
     {
@@ -124,5 +130,49 @@ class Order_model extends CI_Model {
         }finally{
             $this->db->close();
         }            
+    }
+
+
+    public function deleteOrderList($data)
+    {
+        try{
+            $sql=$this->db->query("DELETE FROM ORDER_TBL WHERE ORDER_CD=".$data."");
+
+            //DB Error처리
+            if(!$sql){
+                // do something in error case
+                $error = $this->db->error();
+                throw new Exception( 'Error! Please Contact admin' );
+            }else{
+                log_message('error', $this->db->last_query());
+            }
+        }catch(exception $e){
+            throw new Exception( 'Error! Please Contact admin' );
+            log_message('error', $e->getMessage());
+        }finally{
+            $this->db->close();
+        } 
+    }
+
+
+    public function deleteOrderDetailList($data)
+    {
+        try{
+            $sql=$this->db->query("DELETE FROM ORDER_DETAIL_TBL WHERE ORDER_CD=".$data."");
+
+            //DB Error처리
+            if(!$sql){
+                // do something in error case
+                $error = $this->db->error();
+                throw new Exception( 'Error! Please Contact admin' );
+            }else{
+                log_message('error', $this->db->last_query());
+            }
+        }catch(exception $e){
+            throw new Exception( 'Error! Please Contact admin' );
+            log_message('error', $e->getMessage());
+        }finally{
+            $this->db->close();
+        } 
     }
 }

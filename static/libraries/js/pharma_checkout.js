@@ -37,11 +37,18 @@ $(function () {
     $('#btnChkOrder').click(function(){
         swal("Input Your Order Number:", {
             content: "input",
+            cancel: "Run away!",
           })
           .then((value) => {
+            
+            if(value==""){
+                return;
+            }
+
             var obj ={
                 "order_cd": value
             };
+            
             obj = JSON.stringify(obj);//json객체 -> json문자열
 
             $.ajax({

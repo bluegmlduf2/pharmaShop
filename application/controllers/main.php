@@ -252,7 +252,37 @@ class Main extends CI_Controller {
 		}catch(Exception $e) {
 			log_message('error', $e->getMessage());
 			$this->output->set_status_header('500');
-			//echo $data;
+		}
+	}
+
+			/**
+	 * 주문 취소
+	 */
+	public function deleteOrderList() {
+		$this->db = $this->load->database('default', true);
+		$this->load->model('Order_model');
+		$this->load->model('Coupon_model');
+
+		try{
+			$data = $this->input->post('data', true);
+			$json_data = json_decode( $data,true);
+			
+			$this->db->trans_start();
+			if(!empty($json_data['COUPON_CD'])){
+				$this->Coupon_model->updateCancelCoupon($json_data['COUPON_CD']);//쿠폰 수정
+			}
+			
+			$this->Order_model->deleteOrderDetailList($json_data['ORDER_CD']);//주문상세 삭제
+			$this->Order_model->deleteOrderList($json_data['ORDER_CD']);//주문 삭제
+
+			if($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+			}else{
+				$this->db->trans_complete();
+			}
+		}catch(Exception $e) {
+			log_message('error', $e->getMessage());
+			$this->output->set_status_header('500');
 		}
 	}
 }

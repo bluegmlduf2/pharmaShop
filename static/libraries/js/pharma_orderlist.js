@@ -5,15 +5,15 @@ $(function () {
 	$('#ORDER_NATION').val(orderList[0].ORDER_NATION);
 	$('#ORDER_NM').val(orderList[0].ORDER_NM);
 	$('#ORDER_CONTRY').val(orderList[0].ORDER_CONTRY);
-	$('#ORDER_COMPANY').val(orderList[0].ORDER_COMPANY);
+	$('#ORDER_COMPANY').val(orderList[0].ORDER_COMPANY==null?null:orderList[0].ORDER_COMPANY);
 	$('#ORDER_ADDR').val(orderList[0].ORDER_ADDR);
 	$('#ORDER_POST').val(orderList[0].ORDER_POST);
 	$('#ORDER_EMAIL').val(orderList[0].ORDER_EMAIL);
 	$('#ORDER_PHONE').val(orderList[0].ORDER_PHONE);
-	$('#COUPON_CD').val(orderList[0].COUPON_CD);
+	$('#COUPON_CD').val(orderList[0].COUPON_CD==null?null:orderList[0].COUPON_CD);
 	$('#ORDER_AMOUNT').val('$' + orderList[0].ORDER_AMOUNT);
 	$('#ORDER_DATE').val(orderList[0].ORDER_DATE);
-	$('#ORDER_WANT').val(orderList[0].ORDER_WANT);
+	$('#ORDER_WANT').val(orderList[0].ORDER_WANT==null?null:orderList[0].ORDER_WANT);
 
 	var toggle = true;
 	//제이쿼리에서 html을 생성하고 생성된 html에 이벤트를 적용하기때문에 여기에 위치해야한다
@@ -99,6 +99,7 @@ $(function () {
 								//dataType: "json",//서버에서 받을 데이터 형식을 지적한다.그러나 반환값이 없으므로 에러가 발생하므로 주석처리
 								success: function (result) {
 									swal("Thanks!", "Successfully Updated!", "success");
+									location.href='/pharmaShop/main/checkout';
 									// if (result.order_cd[0].CNT == 1) {
 									// 	swal("Thanks!", "Successfully Checked!", "success");
 									// 	var rUrl = "/pharmaShop/main/orderList/" + value;
@@ -120,15 +121,44 @@ $(function () {
 
 	//Cancel Order
 	$('#btnCancelOrder').click(function () {
-		$('#ORDER_NATION').val('1');
-		$('#ORDER_NM').val('');
-		$('#ORDER_CONTRY').val('');
-		$('#ORDER_COMPANY').val('');
-		$('#ORDER_ADDR').val('');
-		$('#ORDER_POST').val('');
-		$('#ORDER_EMAIL').val('');
-		$('#ORDER_PHONE').val('');
-		$('#ORDER_WANT').val('');
+        var obj = {
+            "ORDER_CD": $('#ORDER_CD').val(),
+			"COUPON_CD": $('#COUPON_CD').val()
+		};
+		
+		obj = JSON.stringify(obj); //json객체 -> json문자열
+
+		swal({
+			title: "Would you Cancel Order?",
+			text: "Check Your Order Number! \n 　　　　　[ " + $('#ORDER_CD').val() + " ] ",
+			icon: "info",
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			buttons: true
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				if (willDelete) {
+					$.ajax({
+						type: "POST",
+						url: "/pharmaShop/main/deleteOrderList",
+						data: {
+							"data": obj
+						},
+						async: false,
+						//dataType: "json",//서버에서 받을 데이터 형식을 지적한다.그러나 반환값이 없으므로 에러가 발생하므로 주석처리
+						success: function (result) {
+							swal("Thanks!", "Successfully Canceled!", "success");  
+							location.href='/pharmaShop/main/checkout';                
+						},
+						error: function (request, status, error) {
+							//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+							swal("　　　　　　　Error!\n\n--- Please Contact Administrator ---");
+						}				 		
+					 });
+				}
+			}
+		});
 	});
 
 	//validation Check

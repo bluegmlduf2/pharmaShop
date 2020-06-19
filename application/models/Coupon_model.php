@@ -25,4 +25,12 @@ class Coupon_model extends CI_Model {
        $this->db->query("UPDATE COUPON_TBL SET 
             COUPON_USE=1 WHERE COUPON_NUM=".$cNum."");
     }
+
+    public function updateCancelCoupon($cNum)
+    {
+        //log_message("error","model ##############");
+       $this->db->query("UPDATE COUPON_TBL SET 
+            COUPON_USE=0 WHERE COUPON_NUM=".$cNum."");
+    }
+    
 }
