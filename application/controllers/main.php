@@ -236,4 +236,23 @@ class Main extends CI_Controller {
 			//echo json_encode(array('result'=>'_error','message'=>$e+' Please Contact Administator'));
 		}
 	}
+
+
+		/**
+	 * 주문 업데이트
+	 */
+	public function updateOrderList() {
+		$this->db = $this->load->database('default', true);
+		$this->load->model('Order_model');
+		
+		try{
+			$data = $this->input->post('data', true);
+			$json_data = json_decode( $data,true);
+			$this->Order_model->updateOrderList($json_data);
+		}catch(Exception $e) {
+			log_message('error', $e->getMessage());
+			$this->output->set_status_header('500');
+			//echo $data;
+		}
+	}
 }

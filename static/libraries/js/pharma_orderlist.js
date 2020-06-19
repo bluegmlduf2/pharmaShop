@@ -88,63 +88,31 @@ $(function () {
 				})
 				.then((willDelete) => {
 					if (willDelete) {
-						// if (willDelete) {
-						// 	$.ajax({
-						// 		type: "POST",
-						// 		url: "/pharmaShop/main/updateOrderList",
-						// 		data: {
-						// 			"data": obj
-						// 		},
-						// 		async: false,
-						// 		dataType: "json",
-						// 		success: function (result) {
-						// 			// if (result.order_cd[0].CNT == 1) {
-						// 			// 	swal("Thanks!", "Successfully Checked!", "success");
-						// 			// 	var rUrl = "/pharmaShop/main/orderList/" + value;
-						// 			// 	location.href = rUrl;
-						// 			// } else {
-						// 			// 	swal("Sorry Check the OrderNumber!", result.message, "error");
-						//             // }
-
-
-
-
-						// 			//콜백함수-->동기적으로 동작 location.reload();가 비동기적으로 실행되버리기때문
-						//             /*
-						//             var syncFunc=function(lastCall){
-
-						// 			주문번호 
-						// 			swal("Successfully Ordered!", "Check Your Order Number!  \n Youu OrderNumber Is : ", "success");
-
-						// 			//로컬스토리지 비우기 확인
-						// 			swal({
-						// 			    title: "Successfully Ordered!",
-						// 			    text: "Check Your Order Number! [ "+result.result+" ]  \n  Would you delete Cart List?",
-						// 			    icon: "success",
-						// 			    confirmButtonColor: '#3085d6',
-						// 			    cancelButtonColor: '#d33',
-						// 			    buttons: true
-						// 			})
-						// 			.then((willDelete) => {
-						// 			    if (willDelete) {
-						// 			        localStorage.clear();
-						// 			        swal("Successfully Deleted");
-						// 			        location.reload();
-						// 			    }else{
-						// 			        location.reload();
-						// 			    }
-						// 			});  
-						// 			//최종 실행 location.reload();
-						// 			lastCall();
-						// 			}  */                               
-						// 		},
-						// 		error: function (request, status, error) {
-						// 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-						// 			swal("code:" + request.status + ", message: " + request.responseText + ", error:" +
-						// 				error + "\n" + "\n     ---Please Contact Administrator ---");
-						// 		}
-						// 	});
-						// }
+						if (willDelete) {
+							$.ajax({
+								type: "POST",
+								url: "/pharmaShop/main/updateOrderList",
+								data: {
+									"data": obj
+								},
+								async: false,
+								//dataType: "json",//서버에서 받을 데이터 형식을 지적한다.그러나 반환값이 없으므로 에러가 발생하므로 주석처리
+								success: function (result) {
+									swal("Thanks!", "Successfully Updated!", "success");
+									// if (result.order_cd[0].CNT == 1) {
+									// 	swal("Thanks!", "Successfully Checked!", "success");
+									// 	var rUrl = "/pharmaShop/main/orderList/" + value;
+									// 	location.href = rUrl;
+									// } else {
+									// 	swal("Sorry Check the OrderNumber!", result.message, "error");
+						            // }                       
+								},
+								error: function (request, status, error) {
+									//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+									swal("　　　　　　　Error!\n\n--- Please Contact Administrator ---");
+								}				 		
+						 	});
+						}
 					}
 				});
 		}
@@ -167,17 +135,6 @@ $(function () {
 	function validationChk(obj) {
 		var chk = true;
 		var output = "";
-		// var obj = {
-		//     "ORDER_CD":$('#ORDER_CD').val(),
-		//     "ORDER_NATION":$('#ORDER_NATION').val(),
-		//     "ORDER_NM":$('#ORDER_NM').val(),
-		//     "ORDER_CONTRY":$('#ORDER_CONTRY').val(),
-		//     "ORDER_COMPANY":$('#ORDER_COMPANY').val(),
-		//     "ORDER_ADDR":$('#ORDER_ADDR').val(),
-		//     "ORDER_POST":$('#ORDER_POST').val(),
-		//     "ORDER_EMAIL":$('#ORDER_EMAIL').val(),
-		//     "ORDER_PHONE":$('#ORDER_PHONE').val()
-		// };
 
 		//obj에 있는 값 전부다 입력해줘야함
 		var arrCol = [

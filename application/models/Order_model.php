@@ -93,4 +93,36 @@ class Order_model extends CI_Model {
         $this->db->close();
         return $result;
     }
+
+    public function updateOrderList($data)
+    {
+        try{
+            $sql=$this->db->query("UPDATE ORDER_TBL SET 
+            ORDER_NATION='".$data['ORDER_NATION']."'
+            ,ORDER_NM='".$data['ORDER_NM']."'
+            ,ORDER_COMPANY='".$data['ORDER_COMPANY']."'
+            ,ORDER_ADDR='".$data['ORDER_ADDR']."'
+            ,ORDER_CONTRY='".$data['ORDER_CONTRY']."'
+            ,ORDER_POST='".$data['ORDER_POST']."'
+            ,ORDER_EMAIL='".$data['ORDER_EMAIL']."'
+            ,ORDER_PHONE='".$data['ORDER_PHONE']."'
+            ,ORDER_WANT='".$data['ORDER_WANT']."'
+            ,ORDER_PHONE='".$data['ORDER_PHONE']."'
+            WHERE ORDER_CD=".$data['ORDER_CD']."");
+
+            //DB Error처리
+            if(!$sql){
+                // do something in error case
+                $error = $this->db->error();
+                throw new Exception( 'Error! Please Contact admin' );
+            }else{
+                log_message('error', $this->db->last_query());
+            }
+        }catch(exception $e){
+            throw new Exception( 'Error! Please Contact admin' );
+            log_message('error', $e->getMessage());
+        }finally{
+            $this->db->close();
+        }            
+    }
 }
