@@ -48,4 +48,4 @@
       </div>
     </div>
     
-    <script src="/pharmaShop/static/libraries/js/pharma_form.js"></script>
+    <script src="/pharmaShop/static/libraries/js/pharma_store.js"></script>

@@ -87,7 +87,7 @@ class Main extends CI_Controller {
 		$this->load->view('page/cart', $data);
 		$this->load->view('layout/footer', $default_data);
 	}
-	
+
 	/**
 	 * 주문리스트화면 
 	 */
@@ -102,6 +102,27 @@ class Main extends CI_Controller {
 		$this->load->view('page/orderList', $orderList);
 		$this->load->view('layout/footer', $default_data);
 	}
+
+
+		/**
+	 * 상품관리화면
+	 */
+	public function management() {
+		$default_data=array('title'=> "Wally's Portfolio");
+		//$data=array('memName'=>$this->uri->segment(3));
+		$data=array('memName'=>rawurldecode($this->uri->segment(3))); //rawurldecode() url이깨질때,디코딩필요
+		
+		
+		// $this->load->model('Order_model');
+
+		// $json_result= $this->Order_model->GetOrderList($this->uri->segment(3));
+		// $orderList=array('orderList'=> json_encode($json_result, JSON_UNESCAPED_UNICODE));
+
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/management',$data);
+		$this->load->view('layout/footer', $default_data);
+	}
+	
 	/**
 	 * 상품목록 리스트 데이터
 	 */
@@ -284,5 +305,19 @@ class Main extends CI_Controller {
 			log_message('error', $e->getMessage());
 			$this->output->set_status_header('500');
 		}
+	}
+
+		/**
+	 * 관리자 비밀번호 체크
+	 */
+	public function mngInfoCheck() {
+		$this->load->model('Member_model');
+
+		$data = $this->input->post('data', true);
+		$json_data = json_decode( $data,true);
+		
+		//$this->Member_model->mngInfoInsert($json_data);//관리자암호화입력
+		$memObj=$this->Member_model->mngInfoCheck($json_data);//관리자암호화확인
+		echo json_encode(array('memObj'=>$memObj));
 	}
 }

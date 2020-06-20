@@ -110,7 +110,8 @@ $(function () {
 								},
 								error: function (request, status, error) {
 									//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-									swal("　　　　　　　Error!\n\n--- Please Contact Administrator ---");
+									//swal("　　　　　　　Error!\n\n--- Please Contact Administrator ---");
+									swal("Error!", "--- Please Contact Administrator ---", "error");
 								}				 		
 						 	});
 						}

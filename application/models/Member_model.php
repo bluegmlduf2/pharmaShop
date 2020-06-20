@@ -12,85 +12,39 @@ class Member_model extends CI_Model {
     /***
     * 회원아이디 중복체크
     */
-    public function ChkMembers($memObj)
+    public function mngInfoCheck($memObj)
     {
+        $inputPass=$memObj['MNG_PW']; //input password
+        //$inputPass=password_hash($inputPass, PASSWORD_DEFAULT, array("cost" => 10) );//10의 코스트로 비밀번호 암호화
+  
         $result = $this->db->query("
-        SELECT COUNT(M_NM) AS CNT
-        FROM FOOD_MEMBER
-        WHERE M_NM='".$memObj['vName']."';")->result();
-    
+        SELECT E_PASS,E_NAME
+        FROM EMP_TBL
+        WHERE E_LOGINID='".$memObj['MNG_ID']."';")->result();
+
+        log_message('error', $this->db->last_query());
 
         $this->db->close();
-        return $result;
+ 
+        if (password_verify($inputPass ,$result[0]->E_PASS)) {
+            return $result[0]->E_NAME;
+        } else {
+            return null;
+        }   
     }
 
-    /***
-    * 회원정보출력
+        /***
+    * 암호화 비밀번호 입력
     */
-    public function GetMembers($memObj)
+    public function mngInfoInsert($memObj)
     {
-        $result=null;
-
-        if(!empty($memObj['vSession'])){
-            $result = $this->db->query("
-            SELECT M_CD, M_SSESION,M_NM,M_HEIGHT,M_WEIGHT,M_AGE,M_SEX,M_PURPOSE,M_LIFESTYLE
-            FROM FOOD_MEMBER
-            WHERE M_SSESION='".$memObj['vSession']."';")->result();
-        }
+        $inputPass=$memObj['MNG_PW']; //input password
+        $inputPass=password_hash($inputPass, PASSWORD_DEFAULT, array("cost" => 10) );//10의 코스트로 비밀번호 암호화
+  
+        $result = $this->db->query("
+        UPDATE EMP_TBL SET E_PASS='".$inputPass."'
+        WHERE E_LOGINID='".$memObj['MNG_ID']."';");
 
         $this->db->close();
-        return $result;
-    }
-
-    /***
-    * 회원정보입력
-    */
-    public function SetMembers($memObj)
-    {
-        try{
-            $session_id=null;
-            log_message("error","***********아규먼트테스트**********");
-            log_message("error",$memObj['vName']);
-
-            $result = $this->db->query(
-            "INSERT INTO FOOD_MEMBER(M_SSESION,M_NM,M_HEIGHT,M_WEIGHT,M_AGE,M_SEX,M_PURPOSE) 
-            VALUES('".session_id()."','".$memObj['vName']."',".$memObj['vHeight'].",".$memObj['vWeight'].",".$memObj['mArg'].",".$memObj['vSex'].",'".$memObj['vPurpose']."')");
-            
-            if($this->db->insert_id()!=0){
-                $session_id=session_id();
-            }
-           
-            $this->db->close();
-
-            log_message("error",$session_id);
-            session_destroy();
-            return $session_id;
-
-            //throw new Exception();
-        }catch (Exception $e) {
-            log_message("error","오류발생..");
-            echo $e->getMessage();
-        }
-    }
-
-
-     /***
-    * 회원정보수정
-    */
-    public function UpdateMembers($memObj)
-    {
-        try{
-            $session_id=null;
-            log_message("error","***********아규먼트테스트**********");
-            log_message("error",$memObj['vName']);
-
-            $result = $this->db->query(
-            "UPDATE FOOD_MEMBER SET M_HEIGHT='".$memObj['vHeight']."',M_WEIGHT='".$memObj['vWeight']."',M_AGE='".$memObj['mArg']."',M_SEX='".$memObj['vSex']."',M_PURPOSE='".$memObj['vPurpose']."'
-            WHERE M_SSESION='".$memObj['vSession']."'");
-
-        }catch (Exception $e) {
-            log_message("error","오류발생..");
-            echo $e->getMessage();
-        }
     }
 }
