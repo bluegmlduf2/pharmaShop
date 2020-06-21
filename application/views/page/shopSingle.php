@@ -8,6 +8,7 @@
 				</div>
 				<div class="col-md-6">
 					<h2 class="text-black"><?php echo $item_detail[0]->ITEM_NM; ?></h2>
+					<p>KIND : <?php echo $item_detail[0]->ITEM_KIND;?></p>
 					<p><?php echo $item_detail[0]->ITEM_CONT;?></p>
 					<p>
 					<del id='delSale'>

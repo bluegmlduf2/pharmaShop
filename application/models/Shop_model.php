@@ -23,8 +23,9 @@ class Shop_model extends CI_Model {
     {
         log_message("error","model ##############");
         $result = $this->db->query(
-            'SELECT ITEM_CD,ITEM_NM,ITEM_KIND,ITEM_CONT,ITEM_SALE,ITEM_IMAGE,ITEM_PRICE
-            FROM ITEM_TBL
+            'SELECT ITEM_CD,ITEM_NM,CODE_NAME AS ITEM_KIND,ITEM_CONT,ITEM_SALE,ITEM_IMAGE,ITEM_PRICE
+            FROM ITEM_TBL AS I
+            LEFT JOIN CODE_TBL AS C ON I.ITEM_KIND=C.CODE
             LIMIT '.$startPost.','.$endPost.'')->result();
         log_message('error', $this->db->last_query());
         log_message("error","model End##############");
@@ -32,5 +33,17 @@ class Shop_model extends CI_Model {
         return $result;
     }
 
+    public function GetItemList($itemCd)
+    {
+        log_message("error","model ##############");
+        $result = $this->db->query(
+            'SELECT ITEM_CD,ITEM_NM,ITEM_KIND,ITEM_CONT,ITEM_SALE,ITEM_IMAGE,ITEM_PRICE,ITEM_TAKE
+            FROM ITEM_TBL
+            WHERE ITEM_CD='.$itemCd.'')->result();
+        log_message('error', $this->db->last_query());
+        log_message("error","model End##############");
+        $this->db->close();
+        return $result;
+    }
 
 }

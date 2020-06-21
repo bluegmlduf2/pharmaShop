@@ -1,194 +1,171 @@
 //OnLoad 
 $(function () {
-    initFunc(1);
+    initKind();
+    pageFunc(1);
 });
 
-//click함수를 못찾아서 분리
-function initFunc(nRow){
-    var reVal=initCartRow(nRow);
-    
-    //Count,priceCalculate
-    $('#plusBtn ,#minusBtn').click(function(){
-        var cName=$(this).attr('id');
-        var itemCd=$(this).parents('#trRow').children('#itemCd').val()
-        var arr=JSON.parse(localStorage.getItem(itemCd));
-        var cnt;
+function pageFunc(curPage){
+	var obj = {
+		"pageNum":curPage
+	};
 
-        if(cName=='plusBtn'){
-            cnt=arr[0]+1;
-            arr[0]=cnt;
-        }else if(cName=='minusBtn'){
-            if(arr[0]>1){
-                cnt=arr[0]-1;
-                arr[0]=cnt;
-            }else{
-                swal("Please Select item at least one");
-                return;
-            }
+	obj = JSON.stringify(obj);
+
+	$.ajax({
+		type: "POST",
+		url: "/pharmaShop/main/shopList",
+		data: {
+			"data": obj
+		},
+		async: false,
+		dataType: "json",
+		success: function (result) {
+            //console.log(result['post'][0].ITEM_CD);//JS에서 객체의 멤버변수를 접근할때는 .을 사용
+			lastYN=result['lastYN'];
+			startBlock=result['startBlock'];
+			lastBlock=result['lastBlock'];
+
+			var listHtml="";
+			var selectHtml="";
+
+			$('#itemList').empty();
+			$('.itemSelect').empty();
+
+			//게시물 값 초기화 
+			$.each(result['post'],function(index,value){  
+                listHtml+="<tr id='trRow'>"
+                +"<td class='product-code'>"
+                +"<h2 class='h5 text-black'><a href='#' onclick='getitemlist(this);'>"+value.ITEM_CD+"</a></h2>"
+                +"</td>"
+                +"<td class='product-name'>"
+                +"<h2 class='h5 text-black'>"+value.ITEM_NM+"</h2>"
+                +"</td>"
+                +"<td class='product-kind'>"
+                +"<h2 class='h5 text-black'>"+value.ITEM_KIND+"</h2>"
+                +"</td>"
+                +"<td class='product-price'>"
+                +"<h2 class='h5 text-black'>"+value.ITEM_PRICE+"</h2>"
+                +"</td>"
+                +"</tr>"; 
+            });
+			$('#itemList').append(listHtml);
+
+			//블록 값 초기화
+			selectHtml+="<li><a href='#' class='backBlock'>&lt;</a></li>"
+			for(var i=startBlock+1;i<=lastBlock;i++){
+				if(curPage==i){
+					selectHtml+="<li><a href='#' class='selectClass' style='font:bold;color:red;'>"+i+"</a></li>"
+				}else{
+					selectHtml+="<li><a href='#' class='selectClass'>"+i+"</a></li>"
+				}
+			}
+			selectHtml+="<li><a href='#' class='nextBlock'>&gt;</a></li>";
+            
+            $('.itemSelect').append(selectHtml);
+			
+			//블록 값 이벤트 주기
+		   	$('.selectClass').bind('click',function(){
+				pageFunc($(this).text());
+			});
+
+			//다음 이전 태그 이벤트 주기
+			$('.backBlock,.nextBlock').bind('click',function(){
+				//alert($(this).attr('class'));
+				if($(this).attr('class')=="backBlock"){
+					pageFunc(startBlock-1);
+				}else{
+					pageFunc(lastBlock+1);
+				}
+			});
+			
+			//다음 이전 태그 숨기기
+			if(startBlock==0){
+				$('.backBlock').css('visibility','hidden');
+			}else if(lastYN==true){
+				$('.nextBlock').css('visibility','hidden');
+			}else{
+				$('.nextBlock').css('visibility','visible');
+				$('.backBlock').css('visibility','visible');
+			}
+		},
+		error: function (request, status, error) {
+			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
+				error);
+		},
+		complete: function () {
+			
         }
-        $(this).parents('#trRow').find('#cnt').val(cnt);
-        $(this).parents('#trRow').children('#totalTd').text("$"+ChkDataType(cnt*Number(arr[12])));
-        localStorage.setItem(itemCd,JSON.stringify(arr));
-        
-        calculateTotal();
-    });
+	});
 }
 
-//Init Cart List
-function initCartRow(pageNum){
-    var curPage=pageNum;//현재페이지
-    var postCnt=0;//
-    var pageShowitemCnt=5;//페이지당 아이템 보여주는 갯수 
 
-    var startPost=(curPage*pageShowitemCnt)-pageShowitemCnt;//페이지의 시작 게시물
-    var endPost=curPage*pageShowitemCnt;//페이지의 종료 게시물
-
-    var arr=new Array();
-
-    //시작~종료 게시물 담기
-    for(var i=0;i<localStorage.length;i++){
-        var chkVal=Number(localStorage.key(i));
-        if(Number.isInteger(chkVal)){;
-            postCnt++;
-            arr.push(JSON.parse(localStorage.getItem(chkVal)));
+function initKind(){
+	$.ajax({
+		type: "POST",
+		url: "/pharmaShop/main/initKind",
+		async: false,
+		dataType: "json",
+		success: function (result) {
+            console.log(result);
+            $('#itemKind').empty();
+            var listHtml='<option value="0">Select a kind</option>';
+            $.each(result['kindObj'],function(index,value){
+                listHtml+='<option value="'+value.CODE+'">'+value.CODE_NAME+'</option>';
+            });
+            $('#itemKind').append(listHtml);
+            //console.log(result['post'][0].ITEM_CD);//JS에서 객체의 멤버변수를 접근할때는 .을 사용
+		},
+		error: function (request, status, error) {
+			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
+				error);
+		},
+		complete: function () {
+			
         }
-    }
+	});
+}
 
-    //오름차순
-    arr.sort(function(a,b){
-        return Number(a[1]) < Number(b[1]) ? -1 : Number(a[1]) > Number(b[1]) ? 1 : 0;
-    });
-
-    //블록
-    var block=5;//기본블록수
-    var curBlock=Math.ceil(curPage/block);//현재블록
-    var blockCnt=Math.ceil(postCnt/pageShowitemCnt);//마지막블록 
-    var startBlock=(curBlock*5)-block;//시작블록페이지
-    var lastBlock=curBlock*block;//마지막블록페이지
-    //마지막 블록 유무
-    var lastYN=false;
-
-    //마지막블록 일시 블록 값 설정
-    if(blockCnt<=lastBlock){
-        lastBlock = blockCnt;
-        lastYN=true;
-    }
-
-    //시작포스트와 끝포스트담기
-    var arrInput=new Array();
-    for(var i=startPost;i<endPost;i++){ 
-        arrInput.push(arr[i]);
-    }
-    
-    addCartRow(arrInput);
-    addCartSelList(startBlock,lastBlock,curPage);
-
-    return {
-        reRow:arrInput,
-        reYn:lastYN,
-        reSb:startBlock,
-        reLb:lastBlock
+function getitemlist(id){
+    //함수(this)로 보낸 매개변수는 id로 처리된다
+    //console.log(id.innerText);
+    var obj = {
+		"itemCd":id.innerText
     };
-
     
-}
+    obj = JSON.stringify(obj);
 
-//AddCartList
-function addCartRow(reRow){
-    $('#cartItemList').empty();
-
-    var addRow;
-    
-    for(var i=0;i<reRow.length;i++){       
-        if(reRow[i]!=undefined){ 
-            addRow+="<tr id='trRow'>"
-            +"<td class='product-thumbnail'>"
-            +"<img src='"+reRow[i][6]+"' alt='Image' class='img-fluid'>"
-            +"</td>"
-            +"<td class='product-name'>"
-            +"<h2 class='h5 text-black'>"+reRow[i][2]+"</h2>"
-            +"</td>"
-            +"<td>$"+reRow[i][12]+"</td>"
-            +"<td>"
-            +"<div class='input-group mb-3' style='max-width: 120px;'>"
-            +"<div class='input-group-prepend'>"
-            +"<button class='btn btn-outline-primary' type='button' id='minusBtn'>&minus;</button>"
-            +"</div>"
-            +"<input type='text' class='form-control text-center' id='cnt' value='"+reRow[i][0]+"' placeholder=''"
-            +"aria-label='Example text with button addon' aria-describedby='button-addon1'>"
-            +"<div class='input-group-append'>"
-            +"<button class='btn btn-outline-primary' type='button' id='plusBtn'>&plus;</button>"
-            +"</div>"
-            +"</div>"
-            +"</td>"
-            +"<td id='totalTd' class='totCls'>$"+ChkDataType(reRow[i][12]*reRow[i][0])+"</td>"
-            +"<td><a href='#' onclick='removeFunc(this)' class='btn btn-primary height-auto btn-sm'>X</a></td>"
-            +"<input type='hidden' value='"+reRow[i][1]+"' id='itemCd'>"
-            +"</tr>";
+    $.ajax({
+		type: "POST",
+		url: "/pharmaShop/main/getItemList",
+		data: {
+			"data": obj
+		},
+		async: false,
+		dataType: "json",
+		success: function (result) {
+            $('#itemcd').val(result.itemObj[0].ITEM_CD);
+            $('#itemName').val(result.itemObj[0].ITEM_NM);
+            $('#itemKind').val(result.itemObj[0].ITEM_KIND);
+            $('#itemSale').val(result.itemObj[0].ITEM_SALE);
+            $('#itemPrice').val(result.itemObj[0].ITEM_PRICE);
+			$('#itemTake').val(result.itemObj[0].ITEM_TAKE);
+			if(result.itemObj[0].ITEM_IMAGE!=null){
+				$('#itemImage').attr('src',result.itemObj[0].ITEM_IMAGE);
+			}
+			$('#itemContent').val(result.itemObj[0].ITEM_CONT);
+		},
+		error: function (request, status, error) {
+			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
+				error);
+		},
+		complete: function () {
+			
         }
-    }
-    $('#cartItemList').append(addRow);
-    
-    calculateTotal();
+	});
 }
-
-//cartSelectList
-function addCartSelList(reSb,reLb,curPage){
-    var addRow="";
-    var rLength=0;
-
-    //<
-    if(reSb!=0){
-        addRow+="<li><a href='#' onclick='initFunc("+(reSb-1)+")'>&lt;</a></li>";
-    }
-
-    //1,2,3,4,5..
-    for(var i=(reSb+1);i<=reLb;i++){        
-        if(i==curPage){
-            addRow+="<li><a href='#' style='font:bold;color:red; onclick='initFunc("+i+")'>"+i+"</a></li>";
-        }else{
-            addRow+="<li><a href='#' onclick='initFunc("+i+")'>"+i+"</a></li>";
-        }
-        rLength++;
-    }
-
-    //>
-    if(rLength>=5){
-        addRow+="<li><a href='#' onclick='initFunc("+(reLb+1)+")'>&gt;</a></li>";
-    }
-
-    $('.itemSelect').empty();
-    $('.itemSelect').append(addRow);
-}
-
-//remove cart Row
-function removeFunc(obj){
-    swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this imaginary file!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
-          swal("Poof! Your imaginary file has been deleted!", {
-            icon: "success",
-          });
-          localStorage.removeItem($(obj).parents('#trRow').find('#itemCd').val());
-          initFunc(1);    
-        }
-      });
-}
-
-//checkOut page
-function checkOut(){
-    if($('#c_code').val()!=undefined){
-        window.location='/pharmaShop/main/checkout/'+$('#c_code').val();
-    }else{
-        window.location='/pharmaShop/main/checkout/';
-    }
-}
-
 
 
 

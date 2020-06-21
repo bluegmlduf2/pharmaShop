@@ -320,4 +320,31 @@ class Main extends CI_Controller {
 		$memObj=$this->Member_model->mngInfoCheck($json_data);//관리자암호화확인
 		echo json_encode(array('memObj'=>$memObj));
 	}
+
+			/**
+	 * 관리 아이템 리스트가져오기
+	 */
+	public function getItemList() {
+		$this->load->model('Shop_model');
+
+		$data = $this->input->post('data', true);
+		$json_data = json_decode( $data,true);
+		
+		log_message('error', $json_data);
+		log_message('error', $json_data['itemCd']);
+
+		$itemObj=$this->Shop_model->GetItemList($json_data['itemCd']);//관리 아이템 상세가져오기
+		echo json_encode(array('itemObj'=>$itemObj));
+	}
+	
+			/**
+	 * 아이템 종류 초기화
+	 */
+	public function initKind() {
+		$this->load->model('Code_model');
+		
+		//$this->Member_model->mngInfoInsert($json_data);//관리자암호화입력
+		$kindObj=$this->Code_model->initKind();//관리자암호화확인
+		echo json_encode(array('kindObj'=>$kindObj));
+	}
 }

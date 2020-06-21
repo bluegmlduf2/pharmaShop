@@ -16,7 +16,7 @@ class Shop_Single_model extends CI_Model {
             SELECT 
             I.ITEM_CD
             ,I.ITEM_NM
-            ,I.ITEM_KIND
+            ,CODE_NAME AS ITEM_KIND
             ,I.ITEM_CONT
             ,I.ITEM_SALE
             ,I.ITEM_SALE
@@ -27,6 +27,7 @@ class Shop_Single_model extends CI_Model {
             ,M.MEDICINE_NAME
             ,M.MEDICINE_EFF
             FROM ITEM_TBL AS I
+            LEFT JOIN CODE_TBL AS C ON I.ITEM_KIND=C.CODE
             JOIN ITEM_DETAIL_TBL AS ID ON I.ITEM_CD=ID.ITEM_CD
             JOIN MEDICINE_TBL AS M ON ID.MEDICINE_CD=M.MEDICINE_CD
             WHERE I.ITEM_CD='.$item_Cd.'')->result();

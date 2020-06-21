@@ -28,9 +28,7 @@ function pageFunc(curPage){
 			lastYN=result['lastYN'];
 			startBlock=result['startBlock'];
 			lastBlock=result['lastBlock'];
-			console.log(lastYN);
-			console.log(startBlock);
-			console.log(lastBlock);
+
 			var listHtml="";
 			var selectHtml="";
 
