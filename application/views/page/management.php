@@ -73,7 +73,15 @@
 				</div>	
 				<div class="col-md-6">
 					<!-- <input class="upload-name" value="Select File" disabled="disabled" >  -->
-					<input type="file" id="input-file" class="upload-hidden">
+					<form action="/pharmaShop/main/saveImage" method="post" id="form_img" enctype="multipart/form-data"  accept-charset="utf-8">
+						<div>
+							<label for="itemImage" class="text-black" style="display:block;">Image file</label>
+							<input type="file" name="image" >
+							<span class="error image"></span>
+						</div>
+						</br>
+ 		    	 		 <input type="submit" name="submit" value="Image Save">
+        			</form>
 				</div>	
 			</div>
 			<div class="form-group">

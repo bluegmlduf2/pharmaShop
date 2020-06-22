@@ -1,7 +1,32 @@
 //OnLoad 
 $(function () {
     initKind();
-    pageFunc(1);
+	pageFunc(1);
+
+	//image Save
+	$("#form_img").submit(function(e){
+		//e.preventDefault();//이벤트의 동작을 막아준다
+		var formData = new FormData($("#image")[0]);
+
+		$.ajax({
+			url : $("#form_img").attr('action'),
+			dataType : 'json',
+			type : 'POST',
+			data : formData,
+			contentType : false,
+			processData : false,
+			success: function(resp) {
+				console.log(resp);
+				$('.error').html('');
+				if(resp.status == false) {
+				  $.each(resp.message,function(i,m){
+					  $('.'+i).text(m);
+				  });
+				 }
+			}
+		});
+	});
+
 });
 
 function pageFunc(curPage){
