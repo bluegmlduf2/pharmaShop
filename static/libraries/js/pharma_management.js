@@ -3,28 +3,126 @@ $(function () {
     initKind();
 	pageFunc(1);
 
-	//image Save
+	//IMAGE SAVE
 	$("#form_img").submit(function(e){
-		//e.preventDefault();//이벤트의 동작을 막아준다
-		var formData = new FormData($("#image")[0]);
+		e.preventDefault();//강제 호출 되는 submit이벤트의 동작을 막아준다
+		if($('#image').val()!=''){
+			swal({
+				title: "Save image",
+				text: "Would you like to save image?",
+				icon: "info",
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				buttons: true
+			}).then((willDelete) => {
+				if(willDelete){
+					//image Save
+					var formData = new FormData($("#form_img")[0]);
+					$.ajax({
+						url : $("#form_img").attr('action'),
+						dataType : 'json',
+						type : 'POST',
+						data : formData,
+						contentType : false,
+						processData : false,
+						success: function(resp) {
+							swal("Thanks!", "Successfully Updated!", "success");
+							$('#itemPath').val(resp.itemPath);
+							$('#itemImage').attr('src',resp.itemPath);
+						},error: function (request, status, error) {
+							//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+							alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
+								error);
+						}
+					});
+				}
+			});
+		}else{
+			swal("Check!", "Please Select File", "info");
+			return;
+		}
+	});
 
-		$.ajax({
-			url : $("#form_img").attr('action'),
-			dataType : 'json',
-			type : 'POST',
-			data : formData,
-			contentType : false,
-			processData : false,
-			success: function(resp) {
-				console.log(resp);
-				$('.error').html('');
-				if(resp.status == false) {
-				  $.each(resp.message,function(i,m){
-					  $('.'+i).text(m);
-				  });
-				 }
+	//init
+	$('#btnInit').click(function(){
+		swal({
+			title: "Init Value",
+			text: "Would you like to Init value?",
+			icon: "info",
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			buttons: true
+		}).then((willDelete) => {
+			if(willDelete){
+				$('#itemcd').val('');
+				$('#itemName').val('');
+				$('#itemKind').val(0);
+				$('#itemSale').val('');
+				$('#itemPrice').val('');
+				$('#itemTake').val('');
+				$('#image').val('');
+				$('#itemPath').val('');
+				$('#itemContent').val('');		
 			}
-		});
+		});	
+	});
+
+
+	//Save
+	$('#btnSave').click(function(){
+		var msg='Item Code : '+$('#itemcd').val();
+
+		if($('#itemcd').val()==''){
+			msg='New Item';
+		}
+		
+		//if(validationChk()){
+			swal({
+				title: "Save image",
+				text: "Would you like to save "+msg+"?",
+				icon: "info",
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				buttons: true
+			}).then((willDelete) => {
+				if(willDelete){
+
+					var obj = {
+						"itemCd":$('#itemcd').val(),
+						"itemName":$('#itemName').val(),
+						"itemKind":$('#itemKind').val(),
+						"itemSale":$('#itemSale').val(),
+						"itemPrice":$('#itemPrice').val(),
+						"itemTake":$('#itemTake').val(),
+						"itemPath":$('#itemPath').val(),
+						"itemContent":$('#itemContent').val()
+					};
+					
+					obj = JSON.stringify(obj);
+				
+					$.ajax({
+						type: "POST",
+						url: "/pharmaShop/main/saveItemList",
+						data: {
+							"data": obj
+						},
+						async: false,
+						success: function (result) {
+							swal("Thanks!", "Successfully Updated!", "success");
+							location.reload();
+						},
+						error: function (request, status, error) {
+							//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+							alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
+								error);
+						},
+						complete: function () {
+							
+						}
+					});
+				}
+			});
+		//}
 	});
 
 });
@@ -178,6 +276,7 @@ function getitemlist(id){
 			$('#itemTake').val(result.itemObj[0].ITEM_TAKE);
 			if(result.itemObj[0].ITEM_IMAGE!=null){
 				$('#itemImage').attr('src',result.itemObj[0].ITEM_IMAGE);
+				$('#itemPath').val(result.itemObj[0].ITEM_IMAGE);
 			}
 			$('#itemContent').val(result.itemObj[0].ITEM_CONT);
 		},

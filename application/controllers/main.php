@@ -353,29 +353,47 @@ class Main extends CI_Controller {
 	 */
 	function saveImage() {
        //upload file
-	   $config['upload_path'] = 'static/libraries/images';
-	   $config['allowed_types'] = '*';
+	   $config['upload_path'] = 'static/libraries/images/';
+	   $config['allowed_types'] = 'gif|jpg|png';
 	   $config['max_filename'] = '255';
-	   $config['encrypt_name'] = TRUE;
+	   $config['encrypt_name'] = false;//true로 할 경우 파일명이 난수가 됨
 	   $config['max_size'] = '1024'; //1 MB 
+	   $config['file_name'] =$_FILES['image']['name'];
+	   
+	   $inpPath='/pharmaShop'.'/'.$config['upload_path'].$_FILES['image']['name'];
+
 
 	   if (isset($_FILES['image']['name'])) {
 		   if (0 < $_FILES['image']['error']) {
 			   echo 'Error during file upload' . $_FILES['image']['error'];
 		   } else {
 			   if (file_exists($config['upload_path'] . $_FILES['image']['name'])) {
+				   //동일한 파일 있으면 지우기
 				   echo 'File already exists :'.$config['upload_path'] . $_FILES['file']['name'];
 			   } else {
 				   $this->load->library('upload', $config);
 				   if (!$this->upload->do_upload('image')) {
 					   echo $this->upload->display_errors();
 				   } else {
-					   echo 'File successfully uploaded : '.$config['upload_path'] . $_FILES['image']['name'];
+					   //success
+					   echo json_encode(array('itemPath'=>$inpPath));
 				   }
 			   }
 		   }
 	   } else {
 		   echo 'Please choose a file';
 	   }
+	}
+
+		/**
+	 * 아이템 저장
+	 */
+	public function saveItemList() {
+		$this->load->model('Item_model');
+		
+		$data = $this->input->post('data', true);
+		$json_data = json_decode( $data,true);
+
+		$this->Item_model->saveItemList($json_data);
 	}
 }

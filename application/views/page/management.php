@@ -37,7 +37,7 @@
 					<input type="text" class="form-control" id="itemcd" disabled="disabled">
 				</div>
 				<div class="col-md-6">
-					<label for="itemName" class="text-black">Name <span class="text-danger">*</span></label>
+					<label for="itemName" class="text-black">Item Name <span class="text-danger">*</span></label>
 					<input type="text" class="form-control" id="itemName" >
 				</div>
 
@@ -75,12 +75,14 @@
 					<!-- <input class="upload-name" value="Select File" disabled="disabled" >  -->
 					<form action="/pharmaShop/main/saveImage" method="post" id="form_img" enctype="multipart/form-data"  accept-charset="utf-8">
 						<div>
-							<label for="itemImage" class="text-black" style="display:block;">Image file</label>
-							<input type="file" name="image" >
+							<label for="itemImage" class="text-black">Select image file</label><span class="text-danger">*</span>
+							<input type="file" name="image" id="image" >
 							<span class="error image"></span>
 						</div>
 						</br>
- 		    	 		 <input type="submit" name="submit" value="Image Save">
+						<label for="itemPath" class="text-black" style="display:block;">Save file Path</label>
+						<input type="text" class="form-control" id="itemPath" disabled='disabled'>
+ 		    	 		<input type="submit" name="submit" value="Image Save" style="margin-top:15px;">
         			</form>
 				</div>	
 			</div>
