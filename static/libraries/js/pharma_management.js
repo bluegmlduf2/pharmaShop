@@ -26,10 +26,15 @@ $(function () {
 						contentType : false,
 						processData : false,
 						success: function(resp) {
-							swal("Thanks!", "Successfully Updated!", "success");
-							$('#itemPath').val(resp.itemPath);
-							$('#itemImage').attr('src',resp.itemPath);
+							if(resp.msg==null){
+								swal("Thanks!", "Successfully Updated!", "success");
+								$('#itemPath').val(resp.itemPath);
+								$('#itemImage').attr('src',resp.itemPath);	
+							}else{
+								swal("** Please Check Error **", resp.msg,"error");
+							}
 						},error: function (request, status, error) {
+							//swal("** Please Check input Value **", output);
 							//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
 							alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
 								error);
@@ -42,6 +47,20 @@ $(function () {
 			return;
 		}
 	});
+
+	// ADD ITEM
+	$('#addItemBtn').on('click', function () {
+		$('#modalDetailBox').modal('show').css({
+			'margin-top': function () { //vertical centering
+				//return -($(this).height() / 2);
+				return 150;
+			},
+			'margin-left': function () { //Horizontal centering
+				return 0;
+			}
+		});;
+	});
+
 
 	//init
 	$('#btnInit').click(function(){
@@ -75,8 +94,21 @@ $(function () {
 		if($('#itemcd').val()==''){
 			msg='New Item';
 		}
+
+		var obj = {
+			"itemCd":$('#itemcd').val(),
+			"itemName":$('#itemName').val(),
+			"itemKind":$('#itemKind').val(),
+			"itemSale":$('#itemSale').val(),
+			"itemPrice":$('#itemPrice').val(),
+			"itemTake":$('#itemTake').val(),
+			"itemPath":$('#itemPath').val(),
+			"itemContent":$('#itemContent').val()
+		};
 		
-		//if(validationChk()){
+		obj = JSON.stringify(obj);
+
+		if(validationChk(obj)){
 			swal({
 				title: "Save image",
 				text: "Would you like to save "+msg+"?",
@@ -86,20 +118,6 @@ $(function () {
 				buttons: true
 			}).then((willDelete) => {
 				if(willDelete){
-
-					var obj = {
-						"itemCd":$('#itemcd').val(),
-						"itemName":$('#itemName').val(),
-						"itemKind":$('#itemKind').val(),
-						"itemSale":$('#itemSale').val(),
-						"itemPrice":$('#itemPrice').val(),
-						"itemTake":$('#itemTake').val(),
-						"itemPath":$('#itemPath').val(),
-						"itemContent":$('#itemContent').val()
-					};
-					
-					obj = JSON.stringify(obj);
-				
 					$.ajax({
 						type: "POST",
 						url: "/pharmaShop/main/saveItemList",
@@ -115,18 +133,22 @@ $(function () {
 							//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
 							alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
 								error);
-						},
-						complete: function () {
-							
 						}
 					});
 				}
 			});
-		//}
+		}
 	});
 
+	// 모달 안의 취소 버튼에 이벤트를 건다. 
+	//이벤트를 설정해주는것이기 때문에 이벤트 호출 dom객체가 호출 된 이벤트를 해당 dom에 설정해준다
+	$('#closeModalDetailBtn').on('click', function () {
+		$('#search_cd').val('');
+		$('#modalDetailBox').modal('hide');
+	});
 });
 
+//page count
 function pageFunc(curPage){
 	var obj = {
 		"pageNum":curPage
@@ -215,14 +237,11 @@ function pageFunc(curPage){
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
 			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
 				error);
-		},
-		complete: function () {
-			
-        }
+		}
 	});
 }
 
-
+//item kind init
 function initKind(){
 	$.ajax({
 		type: "POST",
@@ -230,7 +249,7 @@ function initKind(){
 		async: false,
 		dataType: "json",
 		success: function (result) {
-            console.log(result);
+			//kind
             $('#itemKind').empty();
             var listHtml='<option value="0">Select a kind</option>';
             $.each(result['kindObj'],function(index,value){
@@ -243,13 +262,11 @@ function initKind(){
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
 			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
 				error);
-		},
-		complete: function () {
-			
-        }
+		}
 	});
 }
 
+//ITEM DETAIL LIST
 function getitemlist(id){
     //함수(this)로 보낸 매개변수는 id로 처리된다
     //console.log(id.innerText);
@@ -279,6 +296,34 @@ function getitemlist(id){
 				$('#itemPath').val(result.itemObj[0].ITEM_IMAGE);
 			}
 			$('#itemContent').val(result.itemObj[0].ITEM_CONT);
+
+			//itemDetailList
+
+			$('#itemDetailList').empty();
+
+			var addRow;
+
+			for(var i=0;i<result.itemObj.length;i++){       
+				addRow+="<tr id='trRow'>"
+				+"<td class='medicine-cd'>"
+				+"<h2 class='h5 text-black' id='mCD'>"+result.itemObj[i].MEDICINE_CD+"</h2>"
+				+"</td>"
+				+"<td class='medicine-name'>"
+				+"<h2 class='h5 text-black'>"+result.itemObj[i].MEDICINE_NAME+"</h2>"
+				+"</td>"
+				+"<td class='medicine-effect'>"
+				+"<h2 class='h5 text-black'>"+result.itemObj[i].MEDICINE_EFF+"</h2>"
+				+"</td>"
+				+"<td class='medicine-remove'>"
+				+"<div style='position:relative;'>"
+				+"<button class='btn btn-outline-primary' type='button' onclick='removeDetailItem(this)' id='removeBtn' style='position:absolute; margin-left:25px; margin-top:-5px;'>X</button>"
+				+"</div>"
+				+"</td>"
+				+"</tr>";
+			}
+			
+			$('#itemDetailList').append(addRow);
+
 		},
 		error: function (request, status, error) {
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
@@ -289,6 +334,81 @@ function getitemlist(id){
 			
         }
 	});
+}
+
+
+//validation Check
+function validationChk(obj) {
+    var chk = true;
+    var output = "";
+    var arrCol=[
+        '[ Cd ]\n',
+        '[ item Name ]\n',
+        '[ Kind ]\n',
+        '[ Sale ]\n',//option
+        '[ Price ]\n',
+        '[ Take ]\n',//option
+        '[ imagePath ]\n',
+        '[ Content ]'
+    ];
+
+    var contact = JSON.parse(obj);//json문자열 ->js객체
+    var i=0;
+    
+    //국가선택체크
+    if(contact.itemKind==0){
+        output+="[ Kind ]\n";
+        chk = false;
+    }
+
+    //공백확인
+    $.each(contact, function (index, item) {
+
+        if(index!="itemSale"
+        &&index!="itemTake"
+        &&index!="itemContent"
+        &&index!="itemCd"){
+            if (item == "") {
+                //$("#idNm").focus(); 
+                output += arrCol[i];
+                chk = false;
+            }     
+        }
+        i++
+    });
+
+    //에러메세지 출력
+    if (output != "") {
+        swal("** Please Check input Value **", output);
+    }
+
+    return chk;
+}
+
+//just input number
+$(document).on("keyup", "input:text[numberOnly]", function () {
+	//swal('Please input only Number');
+	$(this).val($(this).val().replace(/[^.0-9]/gi, ""));
+});
+
+//removeDetailItems
+function removeDetailItem(id){
+	swal({
+		title: "Delete Detail Item",
+		text: "Would you like to delete item directly?",
+		icon: "info",
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		buttons: true
+	}).then((willDelete) => {
+		if(willDelete){
+			var trNode=id.parentNode.parentNode.parentNode;
+			//var deleteRowText=trNode.childNodes[0].innerText;
+			var deleteRow=trNode;
+			$(deleteRow).remove();//HtmlElement-->JqueryObject
+		}
+	});	
+	
 }
 
 

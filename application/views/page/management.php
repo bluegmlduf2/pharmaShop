@@ -51,13 +51,13 @@
 				</div>
 				<div class="col-md-6">
 					<label for="itemSale" class="text-black">Sale(%)</label>
-					<input type="text" class="form-control" id="itemSale" >
+					<input type="text" class="form-control" id="itemSale" numberonly="true" maxlength="2">
 				</div>
 			</div>
 			<div class="form-group row">
 				<div class="col-md-6">
 					<label for="itemPrice" class="text-black">Price($)<span class="text-danger">*</span></label>
-					<input type="text" class="form-control" id="itemPrice" >
+					<input type="text" class="form-control" id="itemPrice" numberonly="true">
 				</div>			
 				<div class="col-md-6">
 					<label for="itemTake" class="text-black">Take</label>
@@ -91,10 +91,83 @@
 				<textarea id="itemContent" cols="30" rows="5" class="form-control"
 					placeholder="Write your notes here..."></textarea>
 			</div>
+            <div class="form-group row">
+				<div class="col-md-12">
+					<label for="itemListTbl" class="text-black">ItemDetailList</label>&nbsp
+					<button class='btn btn-outline-primary' type='button' id='addItemBtn'>Add Item</button>
+					<table table class="table table-bordered" id='itemListTbl' style='margin-top:15px;'>
+						<thead>
+						<tr>
+							<th class="medicine-cd">Medicine Code</th>
+							<th class="medicine-name">Medicine Name</th>
+							<th class="medicine-effect">MEdicine Effect</th>
+							<th class="medicine-remove">Remove</th>
+						</tr>
+						</thead>
+						<tbody id="itemDetailList">
+						<!-- itemDetailList -->
+						</tbody>
+					</table>
+			  </div>
+            </div>
 			<div class="btn btn-primary btn-sm px-2" type="button" id='btnInit'>INIT VALUE</div>&nbsp
 			<div class="btn btn-primary btn-sm px-2" type="button" id='btnSave'>SAVE</div>
 		</div>
 	</div>
 </div>
+
+<!-- 레이어팝업 -->
+<div id="modalDetailBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Search Medicine</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">close</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12">
+                <!-- <label for="MNG_ID" class="text-black">ID</label>
+                <input type="text" class="form-control" id="MNG_ID"> -->
+				<table table class="table table-bordered" id='itemDetailListHead' style='margin-top:15px;'>
+						<thead>
+							<tr>
+								<th class="medicine-detail-cd">Code</th>
+								<th class="medicine-detail-name">Name</th>
+								<th class="medicine-detail-effect">Effect</th>
+							</tr>
+						</thead>
+						<tbody id="itemDetailListBody">
+							<div class="form-group row">
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="search_cd">
+								</div>
+								<div class="col-md-3">	
+									<button type="button" class="btn btn-primary" id="searchBtn">Search</button>
+								</div>
+							</div>
+							<tr id='trDetailRow'>
+								<td class='medicine-detail-cd'>
+									<h2 class='h5 text-black' id='mCD'>111</h2>
+								</td>
+								<td class='medicine-detail-name'>
+									<h2 class='h5 text-black'>222</h2>
+								</td>
+								<td class='medicine-detail-effect'>
+									<h2 class='h5 text-black'>333</h2>
+								</td>
+							</tr>
+						</tbody>
+				</table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="confirmDetailBtn">Ok</button>
+            <button type="button" class="btn btn-default" id="closeModalDetailBtn">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
 
 <script src="/pharmaShop/static/libraries/js/pharma_management.js"></script>

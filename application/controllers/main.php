@@ -365,11 +365,12 @@ class Main extends CI_Controller {
 
 	   if (isset($_FILES['image']['name'])) {
 		   if (0 < $_FILES['image']['error']) {
-			   echo 'Error during file upload' . $_FILES['image']['error'];
+				$msg='Error during file upload' . $_FILES['image']['error'];
+				echo json_encode(array('itemPath'=>$inpPath,'msg'=>$msg));
 		   } else {
 			   if (file_exists($config['upload_path'] . $_FILES['image']['name'])) {
-				   //동일한 파일 있으면 지우기
-				   echo 'File already exists :'.$config['upload_path'] . $_FILES['file']['name'];
+				   $msg='File already exists :'.$inpPath;
+				   echo json_encode(array('itemPath'=>$inpPath,'msg'=>$msg));
 			   } else {
 				   $this->load->library('upload', $config);
 				   if (!$this->upload->do_upload('image')) {
@@ -381,7 +382,8 @@ class Main extends CI_Controller {
 			   }
 		   }
 	   } else {
-		   echo 'Please choose a file';
+			$msg='Please choose a file';
+			echo json_encode(array('itemPath'=>$inpPath,'msg'=>$msg));
 	   }
 	}
 
