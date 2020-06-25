@@ -12,7 +12,7 @@ class Medicine_model extends CI_Model {
     public function getMedicineList($row)
     {
         //log_message("error","model ##############");
-        $result = $this->db->query('SELECT MEDICINE_CD,MEDICINE_NAME,MEDICINE_EFF FROM MEDICINE_TBL WHERE MEDICINE_NAME LIKE "%'.$row.'%"')->result();
+        $result = $this->db->query('SELECT MEDICINE_CD,MEDICINE_NAME,MEDICINE_EFF FROM MEDICINE_TBL WHERE MEDICINE_NAME LIKE "%'.$row.'%"' )->result();
         log_message('error', $this->db->last_query());
         $this->db->close();
         //첫번째 배열객체(행)에서 멤버변수 

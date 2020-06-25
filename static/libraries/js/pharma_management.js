@@ -132,7 +132,8 @@ $(function () {
 			"itemPrice":$('#itemPrice').val(),
 			"itemTake":$('#itemTake').val(),
 			"itemPath":$('#itemPath').val(),
-			"itemContent":$('#itemContent').val()
+			"itemContent":$('#itemContent').val(),
+			"ItemDetailList":jsonTblObj
 		};
 		
 		obj = JSON.stringify(obj);
@@ -151,8 +152,7 @@ $(function () {
 						type: "POST",
 						url: "/pharmaShop/main/saveItemList",
 						data: {
-							"data": obj,
-							"dataDetail":jsonTblObj
+							"data": obj
 						},
 						async: false,
 						success: function (result) {
@@ -380,17 +380,24 @@ function validationChk(obj) {
         '[ Price ]\n',
         '[ Take ]\n',//option
         '[ imagePath ]\n',
-        '[ Content ]'
+		'[ Content ]\n',
+		'[ ItemDetailList ]'
     ];
 
     var contact = JSON.parse(obj);//json문자열 ->js객체
     var i=0;
-    
+		
     //국가선택체크
     if(contact.itemKind==0){
         output+="[ Kind ]\n";
         chk = false;
-    }
+	}
+	
+	//상세약품체크
+	if($('#itemListTbl>tbody>tr').children().length==0){
+		output+="[ ItemDetailList ]\n";
+		chk = false;
+	}
 
     //공백확인
     $.each(contact, function (index, item) {
@@ -504,6 +511,11 @@ function choiceItem(id){
 //detail Search
 function detailSearch(){
 	var detailId=document.getElementById('search_cd').value;
+	debugger
+	if(detailId==''){
+		swal("Please type", "Type MedicineName","error");
+		return;
+	}
 
 	$.ajax({
 		type: "POST",

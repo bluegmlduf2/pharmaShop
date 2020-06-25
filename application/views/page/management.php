@@ -137,7 +137,7 @@
 						</thead>
 							<div class="form-group row">
 								<div class="col-md-9">
-									<input type="text" class="form-control" id="search_cd">
+									<input type="text" class="form-control" id="search_cd" placeholder="Search MedicineName..">
 								</div>
 								<div class="col-md-3">	
 									<button type="button" class="btn btn-primary" id="searchBtn" onclick="detailSearch()">Search</button>
