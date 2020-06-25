@@ -398,4 +398,18 @@ class Main extends CI_Controller {
 
 		$this->Item_model->saveItemList($json_data);
 	}
+
+			/**
+	 * 아이템 상세 리스트 가져오기
+	 */
+	public function getMedicineList() {
+		$this->load->model('Medicine_model');
+		
+		$data = $this->input->post('data', true);
+
+		$returnData=$this->Medicine_model->getMedicineList($data);
+		echo json_encode(array('medicineList'=>$returnData));
+	}
+	
+	
 }

@@ -82,6 +82,7 @@ $(function () {
 				$('#image').val('');
 				$('#itemPath').val('');
 				$('#itemContent').val('');		
+				$('#itemDetailListBody').empty();
 			}
 		});	
 	});
@@ -94,6 +95,34 @@ $(function () {
 		if($('#itemcd').val()==''){
 			msg='New Item';
 		}
+		
+		var main=new Array();		
+		var cnt=0;
+		var sub;
+
+		//htmlTable->json
+		//json형태 --> 객체{배열[객체{}{}..]}
+		$('#itemListTbl>tbody>tr').children().each(function(i,e){
+			//$(this) 와 e (태그객체)는 같다
+			
+			if($(this).attr('class')=='medicine-cd'){
+				sub=new Object();
+				sub['MEDICINE_CD']=$(this).children('#mCD').text();
+			}
+			if($(this).attr('class')=='medicine-name'){
+				sub['MEDICINE_NAME']=$(this).children('#mNameMedi').text();
+			}
+			if($(this).attr('class')=='medicine-effect'){
+				sub['MEDICINE_EFF']=$(this).children('#mEff').text();
+			}
+			if($(this).attr('class')=='medicine-remove'){
+				main[cnt] = sub;
+				cnt++
+			}
+		});
+		var jsonTblObj={list:main};
+
+		jsonTblObj=JSON.stringify(jsonTblObj);
 
 		var obj = {
 			"itemCd":$('#itemcd').val(),
@@ -122,7 +151,8 @@ $(function () {
 						type: "POST",
 						url: "/pharmaShop/main/saveItemList",
 						data: {
-							"data": obj
+							"data": obj,
+							"dataDetail":jsonTblObj
 						},
 						async: false,
 						success: function (result) {
@@ -145,6 +175,7 @@ $(function () {
 	$('#closeModalDetailBtn').on('click', function () {
 		$('#search_cd').val('');
 		$('#modalDetailBox').modal('hide');
+		$('#itemDetailListBody').empty();
 	});
 });
 
@@ -309,10 +340,10 @@ function getitemlist(id){
 				+"<h2 class='h5 text-black' id='mCD'>"+result.itemObj[i].MEDICINE_CD+"</h2>"
 				+"</td>"
 				+"<td class='medicine-name'>"
-				+"<h2 class='h5 text-black'>"+result.itemObj[i].MEDICINE_NAME+"</h2>"
+				+"<h2 class='h5 text-black' id='mNameMedi'>"+result.itemObj[i].MEDICINE_NAME+"</h2>"
 				+"</td>"
 				+"<td class='medicine-effect'>"
-				+"<h2 class='h5 text-black'>"+result.itemObj[i].MEDICINE_EFF+"</h2>"
+				+"<h2 class='h5 text-black' id='mEff'>"+result.itemObj[i].MEDICINE_EFF+"</h2>"
 				+"</td>"
 				+"<td class='medicine-remove'>"
 				+"<div style='position:relative;'>"
@@ -395,7 +426,7 @@ $(document).on("keyup", "input:text[numberOnly]", function () {
 function removeDetailItem(id){
 	swal({
 		title: "Delete Detail Item",
-		text: "Would you like to delete item directly?",
+		text: "Would you like to delete item?",
 		icon: "info",
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
@@ -408,10 +439,115 @@ function removeDetailItem(id){
 			$(deleteRow).remove();//HtmlElement-->JqueryObject
 		}
 	});	
-	
 }
 
 
+//modalitemchoice
+function choiceItem(id){
+	swal({
+		title: "Select Medicine",
+		text: "Would you like to Select this Medicine?",
+		icon: "info",
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		buttons: true
+	}).then((willDelete) => {
+		if(willDelete){
+			var addRow;
+			var mCd=id.innerText;
+			var trTag=id.parentNode.parentNode.parentNode;
+			var chkArr=[];//기존에 가지고있던 약품코드
+			var chkval=true; //swal때문에 return이 안먹음
+
+			$('#itemListTbl>tbody>tr').children().each(function(i,e){
+				//$(this) 와 e (태그객체)는 같다
+				if($(this).attr('class')=='medicine-cd'){
+					chkArr.push($(this).children('#mCD').text());
+				}
+			});
+
+			chkArr.forEach(function(v,i,ar){
+				if(v==mCd){
+					swal('Sorry!','['+mCd+'] is already registered','error');
+					chkval=false;
+				}else{
+					chkval=true;
+				}
+			});
+
+			//기존 약품에 동적추가
+			if(chkval){
+				addRow+="<tr id='trRow'>"
+				+"<td class='medicine-cd'>"
+				+"<h2 class='h5 text-black' id='mCD'>"+mCd+"</h2>"
+				+"</td>"
+				+"<td class='medicine-name'>"
+				+"<h2 class='h5 text-black'>"+trTag.childNodes[1].firstChild.innerText+"</h2>"
+				+"</td>"
+				+"<td class='medicine-effect'>"
+				+"<h2 class='h5 text-black'>"+trTag.childNodes[2].firstChild.innerText+"</h2>"
+				+"</td>"
+				+"<td class='medicine-remove'>"
+				+"<div style='position:relative;'>"
+				+"<button class='btn btn-outline-primary' type='button' onclick='removeDetailItem(this)' id='removeBtn' style='position:absolute; margin-left:25px; margin-top:-5px;'>X</button>"
+				+"</div>"
+				+"</td>"
+				+"</tr>";
+
+				$('#itemListTbl > tbody:last-child').append(addRow);//id가 itemListTbl의 > 자식의 tbody의 마지막 태그
+				$('#closeModalDetailBtn').trigger('click');
+			}
+		}
+	});	
+}
+
+//detail Search
+function detailSearch(){
+	var detailId=document.getElementById('search_cd').value;
+
+	$.ajax({
+		type: "POST",
+		url: "/pharmaShop/main/getMedicineList",
+		data: {
+			"data": detailId
+		},
+		async: false,
+		dataType: "json",
+		success: function (result) {
+			$('#itemDetailListBody').empty();
+
+			var addRow;
+
+			for(var i=0;i<result.medicineList.length;i++){       
+				addRow+="<tr id='trDetailRow'>"
+				+"<td class='medicine-detail-cd'>"
+				+"<h2 class='h5 text-black' id='mCD'>"
+				+"<a class='d-block' data-toggle='collapse' role='button' aria-expanded='false' aria-controls='collapsepaypal' href='#' onclick='choiceItem(this)'>"
+				+result.medicineList[i].MEDICINE_CD
+				+"</a>"
+				+"</h2>"
+				+"</td>"
+				+"<td class='medicine-detail-name'>"
+				+"<h2 class='h5 text-black' id='mName'>"+result.medicineList[i].MEDICINE_NAME+"</h2>"
+				+"</td>"
+				+"<td class='medicine-detail-effect'>"
+				+"<h2 class='h5 text-black' id='mEffe'>"+result.medicineList[i].MEDICINE_EFF+"</h2>"
+				+"</td>"
+				+"</tr>";
+			}
+			
+			$('#itemDetailListBody').append(addRow);
+		},
+		error: function (request, status, error) {
+			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
+				error);
+		},
+		complete: function () {
+			
+        }
+	});
+}
 
 
 

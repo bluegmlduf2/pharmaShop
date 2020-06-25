@@ -122,7 +122,6 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id="myModalLabel">Search Medicine</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">close</span></button>
           </div>
           <div class="modal-body">
             <div class="col-md-12">
@@ -136,32 +135,22 @@
 								<th class="medicine-detail-effect">Effect</th>
 							</tr>
 						</thead>
-						<tbody id="itemDetailListBody">
 							<div class="form-group row">
 								<div class="col-md-9">
 									<input type="text" class="form-control" id="search_cd">
 								</div>
 								<div class="col-md-3">	
-									<button type="button" class="btn btn-primary" id="searchBtn">Search</button>
+									<button type="button" class="btn btn-primary" id="searchBtn" onclick="detailSearch()">Search</button>
 								</div>
 							</div>
-							<tr id='trDetailRow'>
-								<td class='medicine-detail-cd'>
-									<h2 class='h5 text-black' id='mCD'>111</h2>
-								</td>
-								<td class='medicine-detail-name'>
-									<h2 class='h5 text-black'>222</h2>
-								</td>
-								<td class='medicine-detail-effect'>
-									<h2 class='h5 text-black'>333</h2>
-								</td>
-							</tr>
+						<tbody id="itemDetailListBody">
+							<!-- medicine list -->
 						</tbody>
 				</table>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="confirmDetailBtn">Ok</button>
+            <!-- <button type="button" class="btn btn-primary" id="confirmDetailBtn">Ok</button> -->
             <button type="button" class="btn btn-default" id="closeModalDetailBtn">Cancel</button>
           </div>
         </div>
