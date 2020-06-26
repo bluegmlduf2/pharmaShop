@@ -392,11 +392,29 @@ class Main extends CI_Controller {
 	 */
 	public function saveItemList() {
 		$this->load->model('Item_model');
-		
-		$data = $this->input->post('data', true);
-		$json_data = json_decode( $data,true);
+		try{
+			$data = $this->input->post('data', true);
+			$json_data = json_decode( $data,true);
 
-		$this->Item_model->saveItemList($json_data);
+			$this->db->trans_start();
+			
+			$this->Item_model->deleteItemDetailList($json_data);
+			$this->Item_model->saveItemDetailList($json_data);
+			$this->Item_model->saveItemList($json_data);
+
+			if($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+			}else{
+				$this->db->trans_complete();
+			}
+
+			$this->db->close();
+		}catch(Exception $e){
+			$this->db->close();
+			log_message("error",$e);
+			$this->output->set_status_header('500');
+			//echo json_encode(array('result'=>'_error','message'=>$e+' Please Contact Administator'));
+		}
 	}
 
 			/**

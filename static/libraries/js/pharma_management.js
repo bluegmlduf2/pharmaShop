@@ -36,8 +36,7 @@ $(function () {
 						},error: function (request, status, error) {
 							//swal("** Please Check input Value **", output);
 							//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-							alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
-								error);
+							swal("Error!", "--- Please Contact Administrator ---", "error");
 						}
 					});
 				}
@@ -122,7 +121,7 @@ $(function () {
 		});
 		var jsonTblObj={list:main};
 
-		jsonTblObj=JSON.stringify(jsonTblObj);
+		//jsonTblObj=JSON.stringify(jsonTblObj);
 
 		var obj = {
 			"itemCd":$('#itemcd').val(),
@@ -140,7 +139,7 @@ $(function () {
 
 		if(validationChk(obj)){
 			swal({
-				title: "Save image",
+				title: "Save Item",
 				text: "Would you like to save "+msg+"?",
 				icon: "info",
 				confirmButtonColor: '#3085d6',
@@ -161,8 +160,7 @@ $(function () {
 						},
 						error: function (request, status, error) {
 							//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-							alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
-								error);
+							swal("Error!", "--- Please Contact Administrator ---", "error");
 						}
 					});
 				}
@@ -266,8 +264,7 @@ function pageFunc(curPage){
 		},
 		error: function (request, status, error) {
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
-				error);
+			swal("Error!", "--- Please Contact Administrator ---", "error");
 		}
 	});
 }
@@ -291,8 +288,7 @@ function initKind(){
 		},
 		error: function (request, status, error) {
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
-				error);
+			swal("Error!", "--- Please Contact Administrator ---", "error");
 		}
 	});
 }
@@ -358,8 +354,7 @@ function getitemlist(id){
 		},
 		error: function (request, status, error) {
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
-				error);
+			swal("Error!", "--- Please Contact Administrator ---", "error");
 		},
 		complete: function () {
 			
@@ -511,7 +506,7 @@ function choiceItem(id){
 //detail Search
 function detailSearch(){
 	var detailId=document.getElementById('search_cd').value;
-	debugger
+
 	if(detailId==''){
 		swal("Please type", "Type MedicineName","error");
 		return;
@@ -552,8 +547,7 @@ function detailSearch(){
 		},
 		error: function (request, status, error) {
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
-			alert("code:" + request.status + ", message: " + request.responseText + ", error:" +
-				error);
+			swal("Error!", "--- Please Contact Administrator ---", "error");
 		},
 		complete: function () {
 			
