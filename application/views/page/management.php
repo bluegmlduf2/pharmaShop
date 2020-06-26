@@ -93,8 +93,8 @@
 			</div>
             <div class="form-group row">
 				<div class="col-md-12">
-					<label for="itemListTbl" class="text-black">ItemDetailList</label>&nbsp
-					<button class='btn btn-outline-primary' type='button' id='addItemBtn'>Add Item</button>
+					<div style='float:left;margin:auto;'><label for="itemListTbl" class="text-black">ItemDetailList</label></div>&nbsp
+					<div style='float:right;margin:auto;'><button class='btn btn-outline-primary' type='button' id='addItemBtn'>Add Item</button></div>
 					<table table class="table table-bordered" id='itemListTbl' style='margin-top:15px;'>
 						<thead>
 						<tr>
@@ -110,8 +110,13 @@
 					</table>
 			  </div>
             </div>
-			<div class="btn btn-primary btn-sm px-2" type="button" id='btnInit'>INIT VALUE</div>&nbsp
-			<div class="btn btn-primary btn-sm px-2" type="button" id='btnSave'>SAVE</div>
+			<div style='float:left;'>
+				<div class="btn btn-primary btn-sm px-2" type="button" id='btnInit'>INIT VALUE</div>
+			</div>
+			<div style='float:right;'>
+				<div class="btn btn-primary btn-sm px-2" type="button" id='btnSave'>SAVE</div>
+				<div class="btn btn-primary btn-sm px-2" type="button" id='btnDelete'>DELETE</div>
+			</div>
 		</div>
 	</div>
 </div>

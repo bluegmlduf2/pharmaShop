@@ -417,6 +417,53 @@ class Main extends CI_Controller {
 		}
 	}
 
+
+			/**
+	 * 아이템 삭제
+	 */
+	public function deleteItemList() {
+		$this->load->model('Item_model');
+		$this->load->model('Order_model');
+
+		try{
+
+			$data = $this->input->post('data', true);
+			$json_data = json_decode( $data,true);
+
+			$this->db->trans_start();
+			
+			$order_cnt=$this->Order_model->GetDetailOrderCnt($json_data);
+
+			if($order_cnt[0]->CNT==0){
+				$this->Item_model->deleteItemDetailList($json_data);
+				$this->Item_model->deleteItemList($json_data);
+			}else{
+				throw new Exception( 'it is ordered item! please Chek orderDetailList' ); //msg설정을 오버라이딩한 예외처리
+			}
+
+			if($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+			}else{
+				$this->db->trans_complete();
+			}
+			
+			$this->db->close();
+			$this->output->set_status_header('200');
+		}catch(Exception $e){
+			$this->db->close();
+			log_message("error",$e);
+			$this->output->set_status_header('500');
+			echo $e->getMessage();
+		}
+	}
+
+  public function errorMessage() {
+    //error message
+    $errorMsg = 'Error on line '.$this->getLine().' in '.$this->getFile()
+    .': <b>'.$this->getMessage().'</b> is not a valid E-Mail address';
+    return $errorMsg;
+  }
+
 			/**
 	 * 아이템 상세 리스트 가져오기
 	 */

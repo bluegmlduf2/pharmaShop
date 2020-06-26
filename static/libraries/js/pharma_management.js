@@ -80,8 +80,9 @@ $(function () {
 				$('#itemTake').val('');
 				$('#image').val('');
 				$('#itemPath').val('');
+				$('#itemImage').attr('src','/pharmaShop/static/libraries/images/noimage.png');
 				$('#itemContent').val('');		
-				$('#itemDetailListBody').empty();
+				$('#itemDetailList').empty();
 			}
 		});	
 	});
@@ -174,6 +175,54 @@ $(function () {
 		$('#search_cd').val('');
 		$('#modalDetailBox').modal('hide');
 		$('#itemDetailListBody').empty();
+	});
+
+	//detail delete
+	$('#btnDelete').click(function(){
+		var reItemCd=$('#itemcd').val();
+
+		if(reItemCd==''){
+			swal("Please select", "Delete item","error");
+			return;
+		}
+
+		var obj = {
+			"itemCd":reItemCd
+		};
+		
+		obj = JSON.stringify(obj);
+
+		swal({
+			title: "Delete Item",
+			text: "Would you like to Delete [ "+reItemCd+" ] ?",
+			icon: "info",
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			buttons: true
+		}).then((willDelete) => {
+			if(willDelete){
+				$.ajax({
+					type: "POST",
+					url: "/pharmaShop/main/deleteItemList",
+					data: {
+						"data": obj
+					},
+					async: false,
+					dataType: "json",
+					success: function (result) {
+						swal("Thanks!", "Successfully Updated!", "success");
+						location.reload();
+					},
+					error: function (request, status, error) {
+						//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
+						swal("Error!", request.responseText, "error");						
+					},
+					complete: function () {
+						
+					}
+				});
+			}
+		});
 	});
 });
 
@@ -554,6 +603,4 @@ function detailSearch(){
         }
 	});
 }
-
-
 

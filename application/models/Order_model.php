@@ -67,6 +67,16 @@ class Order_model extends CI_Model {
     }
 
 
+    public function GetDetailOrderCnt($oNum)
+    {
+        $result = $this->db->query('SELECT COUNT(*) AS CNT FROM ORDER_DETAIL_TBL WHERE ITEM_CD='.$oNum['itemCd'].'')->result();
+        log_message('error', $this->db->last_query());
+        $this->db->close();
+        //첫번째 배열객체(행)에서 멤버변수 
+        return $result;
+    }
+
+
     public function GetOrderList($oNum)
     {
         $result = $this->db->query('

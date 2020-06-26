@@ -88,6 +88,31 @@ class Item_model extends CI_Model {
         } 
     }
 
+
+    public function deleteItemList($data)
+    {
+        try{
+            $sql=$this->db->query("DELETE FROM ITEM_TBL WHERE
+            ITEM_CD=".$data['itemCd'].";");
+    
+            //DB Error처리
+            if(!$sql){
+                // do something in error case
+                $error = $this->db->error();
+                throw new Exception( 'Error! Please Contact admin' );
+            }else{
+                log_message('error', $this->db->last_query());
+            }
+
+        }catch(Exception $e){
+            throw new Exception( 'Error! Please Contact admin' );
+            log_message('error', $e->getMessage());
+        }finally{
+            $this->db->close();
+        } 
+    }
+
+
     public function saveItemDetailList($data)
     {
         try{
