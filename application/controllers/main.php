@@ -157,20 +157,30 @@ class Main extends CI_Controller {
 			$lastBlock = $blockCnt;
 			$lastYN=true;
 		}
+
+		//>버튼의 표시여부
+		$cnt=$lastBlock*$pageShowitemCnt;
+		$nextBtn=false;
 		
+		if($cnt<$postCnt){
+			$nextBtn=true;
+		}
+		// log_message("error",$postCnt);
+		// log_message("error",$cnt);
+		// log_message("error",$nextBtn);
+
 		//시작~종료 사이의 게시물
-		log_message("error",$curBlock);
-		log_message("error",$startBlock);
-		log_message("error",$lastBlock);
+		// log_message("error",$curBlock);
+		// log_message("error",$startBlock);
+		// log_message("error",$lastBlock);
 		$json_Post= $this->Shop_model->GetPage($startPost,$endPost);
-		//$json_output = json_encode($json_Post, JSON_UNESCAPED_UNICODE);
-		log_message("error",$json_output); 
 
 		echo json_encode(array(
 		'post' => $json_Post
 		,'lastYN' => $lastYN
 		,'startBlock' => $startBlock
-		,'lastBlock' => $lastBlock), JSON_UNESCAPED_UNICODE);
+		,'lastBlock' => $lastBlock
+		,'nextBtn'=>$nextBtn), JSON_UNESCAPED_UNICODE);
 
 	}
 	
@@ -398,22 +408,34 @@ class Main extends CI_Controller {
 
 			$this->db->trans_start();
 			
-			$this->Item_model->deleteItemDetailList($json_data);
-			$this->Item_model->saveItemDetailList($json_data);
-			$this->Item_model->saveItemList($json_data);
+			//아이템 상세정보 삭제
+			if(!empty($json_data['itemCd'])){
+				$this->Item_model->deleteItemDetailList($json_data);
+			}
 
+			//아이템  리스트삭제
+			$lastInsertId=$this->Item_model->saveItemList($json_data);
+			
+			//update & Insert에 따라 PK를 넣어주는지 여부
+			if(!empty($lastInsertId)){
+				$json_data['itemCd']=$lastInsertId;
+			}
+
+			//아이템 상세 리스트 삭제
+			$this->Item_model->saveItemDetailList($json_data);
+			
 			if($this->db->trans_status() === FALSE){
 				$this->db->trans_rollback();
 			}else{
 				$this->db->trans_complete();
 			}
 
-			$this->db->close();
 		}catch(Exception $e){
-			$this->db->close();
 			log_message("error",$e);
 			$this->output->set_status_header('500');
 			//echo json_encode(array('result'=>'_error','message'=>$e+' Please Contact Administator'));
+		}finally{
+			$this->db->close();
 		}
 	}
 

@@ -208,7 +208,7 @@ $(function () {
 						"data": obj
 					},
 					async: false,
-					dataType: "json",
+					//dataType: "json",//반환값이 없을때 사용하면 에러
 					success: function (result) {
 						swal("Thanks!", "Successfully Updated!", "success");
 						location.reload();
@@ -300,15 +300,25 @@ function pageFunc(curPage){
 					pageFunc(lastBlock+1);
 				}
 			});
-			
-			//다음 이전 태그 숨기기
+
+			// > 버튼 <버튼 숨기기
 			if(startBlock==0){
+				//첫번째 페이지 일 경우 < 버튼 숨기기
 				$('.backBlock').css('visibility','hidden');
 			}else if(lastYN==true){
+				//마지막 페이지 일 경우 > 버튼 숨기기
 				$('.nextBlock').css('visibility','hidden');
 			}else{
+				//그 이외의 경우 보여주기
 				$('.nextBlock').css('visibility','visible');
 				$('.backBlock').css('visibility','visible');
+			}
+			
+			//게시물 수가 5페이지 미만일시 >버튼 보여주지 않음
+			if(result['nextBtn']){
+				$('.nextBlock').css('visibility','visible');
+			}else{
+				$('.nextBlock').css('visibility','hidden');
 			}
 		},
 		error: function (request, status, error) {

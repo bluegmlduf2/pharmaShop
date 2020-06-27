@@ -27,8 +27,11 @@ class Item_model extends CI_Model {
                 ,ITEM_TAKE='".$row["itemTake"]."'
                 WHERE ITEM_CD='".$row['itemCd']."';");
             }else{
+                //sale Null 처리
+                log_message('error',$row["itemSale"]);
+                $itemSale=!empty($row["itemSale"])?$row["itemSale"]:'NULL';
                 //insert
-                $this->db->query('INSERT INTO ITEM_TBL(
+                $sql=$this->db->query('INSERT INTO ITEM_TBL(
                     ITEM_NM
                     ,ITEM_KIND
                     ,ITEM_CONT
@@ -40,7 +43,7 @@ class Item_model extends CI_Model {
                     "'.$row["itemName"].'"
                     ,"'.$row["itemKind"].'"
                     ,"'.$row["itemContent"].'"
-                    ,'.$row["itemSale"].'
+                    ,'.$itemSale.'
                     ,"'.$row["itemPath"].'"
                     ,'.$row["itemPrice"].'
                     ,"'.$row["itemTake"].'"
@@ -55,13 +58,12 @@ class Item_model extends CI_Model {
             }else{
                 log_message('error', $this->db->last_query());
             }
-
-            $this->db->close();
+            
         }catch(exception $e){
             throw new Exception( 'Error! Please Contact admin' );
             log_message('error', $e->getMessage());
         }finally{
-            $this->db->close();
+            return $this->db->insert_id();
         } 
     }
 

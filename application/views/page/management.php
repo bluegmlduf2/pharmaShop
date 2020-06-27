@@ -10,7 +10,7 @@
                     <th class="product-code">Code</th>
                     <th class="product-name">Name</th>
                     <th class="product-kind">Kind</th>
-                    <th class="product-price">Price</th>
+                    <th class="product-price">Price ($)</th>
                   </tr>
                 </thead>
                 <tbody id="itemList">
@@ -111,11 +111,11 @@
 			  </div>
             </div>
 			<div style='float:left;'>
-				<div class="btn btn-primary btn-sm px-2" type="button" id='btnInit'>INIT VALUE</div>
+				<div class="btn btn-primary btn-md px-2" type="button" id='btnInit'>INIT VALUE</div>
 			</div>
 			<div style='float:right;'>
-				<div class="btn btn-primary btn-sm px-2" type="button" id='btnSave'>SAVE</div>
-				<div class="btn btn-primary btn-sm px-2" type="button" id='btnDelete'>DELETE</div>
+				<div class="btn btn-primary btn-md px-2" type="button" id='btnDelete'>DELETE</div>
+				<div class="btn btn-primary btn-md px-2" type="button" id='btnSave'>SAVE</div>			
 			</div>
 		</div>
 	</div>

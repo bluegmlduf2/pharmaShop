@@ -83,6 +83,19 @@ function pageFunc(curPage){
 				}
 			});
 			
+			console.log(result['nextBtn']);
+			//debugger
+			var chkCnt=0;
+			var chkBool=false;
+
+			//게시물 수가 5페이지 미만일시 >버튼 보여주지 않음
+			// for(var i=startBlock;i<=lastBlock;i++){
+			// 	chkCnt++
+			// } 
+			// if(result['post'].length<12||chkCnt<6){
+			// 	chkBool=true;
+			// }
+
 			//다음 이전 태그 숨기기
 			if(startBlock==0){
 				$('.backBlock').css('visibility','hidden');
@@ -91,6 +104,20 @@ function pageFunc(curPage){
 			}else{
 				$('.nextBlock').css('visibility','visible');
 				$('.backBlock').css('visibility','visible');
+			}
+
+			//게시물 수가 5페이지 미만일시 >버튼 보여주지 않음
+			// if(chkBool){
+			// 	$('.nextBlock').css('visibility','hidden');
+			// }else{
+			// 	$('.nextBlock').css('visibility','visible');
+			// }
+			
+			//게시물 수가 5페이지 미만일시 >버튼 보여주지 않음
+			if(result['nextBtn']){
+				$('.nextBlock').css('visibility','visible');
+			}else{
+				$('.nextBlock').css('visibility','hidden');
 			}
 		},
 		error: function (request, status, error) {
