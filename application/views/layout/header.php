@@ -53,10 +53,11 @@
                 <!-- <li class="active"><a href="/pharmaShop/main/shop">Store</a></li> -->
 								<li><a href="/pharmaShop/main/shop">Store</a></li>
 								<li class="has-children">
-									<a href="#">Dropdown</a>
+									<a href="#">Category</a>
 									<ul class="dropdown">
-										<li><a href="#">Supplements</a></li>
-										<li class="has-children">
+										<li><a href="/pharmaShop/main/shop/1">Supplements</a></li>
+										<li><a href="/pharmaShop/main/shop/2">Vitamins</a></li>
+										<!-- <li class="has-children">
 											<a href="#">Vitamins</a>
 											<ul class="dropdown">
 												<li><a href="#">Supplements</a></li>
@@ -64,9 +65,9 @@
 												<li><a href="#">Diet &amp; Nutrition</a></li>
 												<li><a href="#">Tea &amp; Coffee</a></li>
 											</ul>
-										</li>
-										<li><a href="#">Diet &amp; Nutrition</a></li>
-										<li><a href="#">Tea &amp; Coffee</a></li>
+										</li> -->
+										<li><a href="/pharmaShop/main/shop/3">Diet &amp; Nutrition</a></li>
+										<li><a href="/pharmaShop/main/shop/4">Tea &amp; Coffee</a></li>
 
 									</ul>
 								</li>

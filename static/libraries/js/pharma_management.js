@@ -195,7 +195,7 @@ $(function () {
 		swal({
 			title: "Delete Item",
 			text: "Would you like to Delete [ "+reItemCd+" ] ?",
-			icon: "info",
+			icon: "warning",
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
 			buttons: true
@@ -488,7 +488,7 @@ function removeDetailItem(id){
 	swal({
 		title: "Delete Detail Item",
 		text: "Would you like to delete item?",
-		icon: "info",
+		icon: "warning",
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		buttons: true

@@ -26,9 +26,19 @@ class Main extends CI_Controller {
 	 */
 	public function shop() {
 		$default_data=array('title'=> "pharmaShop");
+		
+		$data;
+
+		if($this->uri->segment(3)!=null){
+			$data = array(
+				'kindCd' =>$this->uri->segment(3)
+			);
+		}
+
+		log_message("error",$this->uri->segment(3));
 
 		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/shop');
+		$this->load->view('page/shop',$data);
 		$this->load->view('layout/footer');
 	}
 
@@ -133,10 +143,11 @@ class Main extends CI_Controller {
 		
 		$data = $this->input->post('data', true);
 		$json_curPage = json_decode( $data,true)['pageNum'];
+		$json_kindCd = json_decode( $data,true)['kindCd'];
 		//$json_curPage = 6;
 
 		//게시물
-		$postCnt=$this->Shop_model->GetPageCnt();//총게시물수
+		$postCnt=$this->Shop_model->GetPageCnt($json_kindCd);//총게시물수
 		$pageShowitemCnt=12;//한화면당 노출 상품수 
 		$pageCnt=ceil($postCnt/$pageShowitemCnt);// 총페이지수 실수가 존재할 경우 반올림한다
 		$startPost=($json_curPage*$pageShowitemCnt)-$pageShowitemCnt;//시작게시물
@@ -173,7 +184,7 @@ class Main extends CI_Controller {
 		// log_message("error",$curBlock);
 		// log_message("error",$startBlock);
 		// log_message("error",$lastBlock);
-		$json_Post= $this->Shop_model->GetPage($startPost,$endPost);
+		$json_Post= $this->Shop_model->GetPage($startPost,$endPost,$json_kindCd);
 
 		echo json_encode(array(
 		'post' => $json_Post

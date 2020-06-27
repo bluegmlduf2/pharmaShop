@@ -9,24 +9,41 @@ class Shop_model extends CI_Model {
         $this->db = $this->load->database('default', true);
     }
    
-    public function GetPageCnt()
+    public function GetPageCnt($kindCd)
     {
+        $result;
         //log_message("error","model ##############");
-        $result = $this->db->query('SELECT count(*) as pageCnt FROM ITEM_TBL AS I')->result();
+        //$kindCd->0 전체검색
+        if($kindCd==0){
+            $result = $this->db->query('SELECT count(*) as pageCnt FROM ITEM_TBL AS I')->result();
+        }else{
+            $result= $this->db->query('SELECT count(*) as pageCnt FROM ITEM_TBL AS I WHERE I.ITEM_KIND='.$kindCd.'')->result();
+        }
         log_message('error', $this->db->last_query());
         $this->db->close();
         //첫번째 배열객체에서 멤버변수 
         return $result[0]->pageCnt;
     }
 
-    public function GetPage($startPost,$endPost)
+    public function GetPage($startPost,$endPost,$kindCd)
     {
+        $result;
         log_message("error","model ##############");
-        $result = $this->db->query(
-            'SELECT ITEM_CD,ITEM_NM,CODE_NAME AS ITEM_KIND,ITEM_CONT,ITEM_SALE,ITEM_IMAGE,ITEM_PRICE
-            FROM ITEM_TBL AS I
-            LEFT JOIN CODE_TBL AS C ON I.ITEM_KIND=C.CODE
-            LIMIT '.$startPost.','.$endPost.'')->result();
+        //$kindCd->0 전체검색
+        if($kindCd==0){
+            $result = $this->db->query(
+                'SELECT ITEM_CD,ITEM_NM,CODE_NAME AS ITEM_KIND,ITEM_CONT,ITEM_SALE,ITEM_IMAGE,ITEM_PRICE
+                FROM ITEM_TBL AS I
+                LEFT JOIN CODE_TBL AS C ON I.ITEM_KIND=C.CODE
+                LIMIT '.$startPost.','.$endPost.'')->result();
+        }else{
+            $result = $this->db->query(
+                'SELECT ITEM_CD,ITEM_NM,CODE_NAME AS ITEM_KIND,ITEM_CONT,ITEM_SALE,ITEM_IMAGE,ITEM_PRICE
+                FROM ITEM_TBL AS I
+                LEFT JOIN CODE_TBL AS C ON I.ITEM_KIND=C.CODE
+                WHERE I.ITEM_KIND='.$kindCd.'
+                 LIMIT '.$startPost.','.$endPost.'')->result();
+        }
         log_message('error', $this->db->last_query());
         log_message("error","model End##############");
         $this->db->close();

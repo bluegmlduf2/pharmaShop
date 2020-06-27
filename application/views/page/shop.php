@@ -47,5 +47,5 @@
         </div>
       </div>
     </div>
-    
+    <script> var kindCd = <?php echo empty($kindCd)?0:$kindCd ?>;</script>
     <script src="/pharmaShop/static/libraries/js/pharma_store.js"></script>

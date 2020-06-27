@@ -38,6 +38,9 @@
               <div class="col-md-6">
                 <button class="btn btn-outline-primary btn-md btn-block"  onclick="location.href='/pharmaShop/main/shop'">Continue Shopping</button>
               </div>
+              <div class="col-md-6">
+                <button class="btn btn-outline-primary btn-md btn-block"  onclick="deleteCartList()">Delete All CartList</button>
+              </div>
             </div>
             <div class="row">
               <div class="col-md-12">

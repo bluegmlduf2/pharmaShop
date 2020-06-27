@@ -14,6 +14,8 @@ class Item_model extends CI_Model {
         try{
             $sql;
 
+            //sale Null 처리
+            $itemSale=!empty($row["itemSale"])?$row["itemSale"]:'NULL';
             if(!empty($row['itemCd'])){
                 //update
                 $sql=$this->db->query("
@@ -21,15 +23,12 @@ class Item_model extends CI_Model {
                 ITEM_NM='".$row["itemName"]."'
                 ,ITEM_KIND='".$row["itemKind"]."'
                 ,ITEM_CONT='".$row["itemContent"]."'
-                ,ITEM_SALE='".$row["itemSale"]."'
+                ,ITEM_SALE=".$itemSale."
                 ,ITEM_IMAGE='".$row["itemPath"]."'
                 ,ITEM_PRICE='".$row["itemPrice"]."'
                 ,ITEM_TAKE='".$row["itemTake"]."'
                 WHERE ITEM_CD='".$row['itemCd']."';");
             }else{
-                //sale Null 처리
-                log_message('error',$row["itemSale"]);
-                $itemSale=!empty($row["itemSale"])?$row["itemSale"]:'NULL';
                 //insert
                 $sql=$this->db->query('INSERT INTO ITEM_TBL(
                     ITEM_NM

@@ -171,13 +171,13 @@ function removeFunc(obj){
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          swal("Poof! Your imaginary file has been deleted!", {
+          swal("Delete Selected CartList!", {
             icon: "success",
           });
           localStorage.removeItem($(obj).parents('#trRow').find('#itemCd').val());
           initFunc(1);    
         }
-      });
+    });
 }
 
 //checkOut page
@@ -188,6 +188,26 @@ function checkOut(){
         window.location='/pharmaShop/main/checkout/';
     }
 }
+
+//cartList Delete All
+function deleteCartList(){
+    swal({
+        title: "Are you sure?",
+        text: "Delete All CartList!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          swal("Delete success!!", {
+            icon: "success",
+          });
+          localStorage.clear();
+          initFunc(1);    
+        }
+    });
+}
+
 
 
 

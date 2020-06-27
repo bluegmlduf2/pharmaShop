@@ -4,12 +4,13 @@ var lastBlock="";
 
 //OnLoad 초기화
 $(function () {
-	pageFunc(1);
+	pageFunc(1,kindCd);
 });
 
-function pageFunc(curPage){
+function pageFunc(curPage,kindCd){
 	var obj = {
-		"pageNum":curPage
+		"pageNum":curPage,
+		"kindCd":kindCd
 	};
 
 	obj = JSON.stringify(obj);
@@ -70,31 +71,18 @@ function pageFunc(curPage){
 			
 			//블록 값 이벤트 주기
 		   	$('.selectClass').bind('click',function(){
-				pageFunc($(this).text());
+				pageFunc($(this).text(),kindCd);
 			});
 
 			//다음 이전 태그 이벤트 주기
 			$('.backBlock,.nextBlock').bind('click',function(){
 				//alert($(this).attr('class'));
 				if($(this).attr('class')=="backBlock"){
-					pageFunc(startBlock-1);
+					pageFunc(startBlock-1,kindCd);
 				}else{
-					pageFunc(lastBlock+1);
+					pageFunc(lastBlock+1,kindCd);
 				}
 			});
-			
-			console.log(result['nextBtn']);
-			//debugger
-			var chkCnt=0;
-			var chkBool=false;
-
-			//게시물 수가 5페이지 미만일시 >버튼 보여주지 않음
-			// for(var i=startBlock;i<=lastBlock;i++){
-			// 	chkCnt++
-			// } 
-			// if(result['post'].length<12||chkCnt<6){
-			// 	chkBool=true;
-			// }
 
 			//다음 이전 태그 숨기기
 			if(startBlock==0){
@@ -105,13 +93,6 @@ function pageFunc(curPage){
 				$('.nextBlock').css('visibility','visible');
 				$('.backBlock').css('visibility','visible');
 			}
-
-			//게시물 수가 5페이지 미만일시 >버튼 보여주지 않음
-			// if(chkBool){
-			// 	$('.nextBlock').css('visibility','hidden');
-			// }else{
-			// 	$('.nextBlock').css('visibility','visible');
-			// }
 			
 			//게시물 수가 5페이지 미만일시 >버튼 보여주지 않음
 			if(result['nextBtn']){
