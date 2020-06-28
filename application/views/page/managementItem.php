@@ -1,3 +1,11 @@
+<!--li태그는 block 속성임, inline은 width가 안먹음. inline-block으로 하면 한줄차지안함,width가 먹음  -->
+<div style='text-align:center; margin:20px 10px 20px 10px; font-size:1.5em;'>
+	<li style='display:inline-block; margin-left:30px;'><a href="/pharmaShop/main/managementItem">Item Management</a></li>
+	<li style='display:inline-block; margin-left:30px;'><a href="/pharmaShop/main/managementShip">Ship Management</a></li>
+	<li style='display:inline-block; margin-left:30px;'><a href="/pharmaShop/main/managementCoupon">Coupon Management</a></li>
+</div>
+
+  <!-- 1번째 행 -->
 <div class="row">
   <!-- 1번째 열 -->
 	<div class="col-md-6 mb-5 mb-md-0">
@@ -164,4 +172,4 @@
 </div>
 
 
-<script src="/pharmaShop/static/libraries/js/pharma_management.js"></script>
+<script src="/pharmaShop/static/libraries/js/pharma_managementItem.js"></script>

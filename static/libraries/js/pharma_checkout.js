@@ -165,8 +165,8 @@ function placeOrder(){
     if (validationChk(obj)) {
         //insert value
         swal({
-            title: "Info",
-            text: "Would you order?",
+            title: "Order!!",
+            text: "Would you like to order?",
             icon: "info",
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',

@@ -117,22 +117,46 @@ class Main extends CI_Controller {
 		/**
 	 * 상품관리화면
 	 */
-	public function management() {
+	public function managementItem() {
+		$default_data=array('title'=> "Wally's Portfolio");
+		//$data=array('memName'=>$this->uri->segment(3));
+		$data=array('memName'=>rawurldecode($this->uri->segment(3))); //rawurldecode() url이깨질때,디코딩필요
+
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/managementItem',$data);
+		$this->load->view('layout/footer', $default_data);
+	}
+	
+
+	
+		/**
+	 * 배송관리화면
+	 */
+	public function managementShip() {
+		$default_data=array('title'=> "Wally's Portfolio");
+		//$data=array('memName'=>$this->uri->segment(3));
+		$data=array('memName'=>rawurldecode($this->uri->segment(3))); //rawurldecode() url이깨질때,디코딩필요
+
+		$this->load->view('layout/header', $default_data);
+		$this->load->view('page/managementShip',$data);
+		$this->load->view('layout/footer', $default_data);
+	}
+
+	
+		/**
+	 * 쿠폰관리화면
+	 */
+	public function managementCoupon() {
 		$default_data=array('title'=> "Wally's Portfolio");
 		//$data=array('memName'=>$this->uri->segment(3));
 		$data=array('memName'=>rawurldecode($this->uri->segment(3))); //rawurldecode() url이깨질때,디코딩필요
 		
-		
-		// $this->load->model('Order_model');
-
-		// $json_result= $this->Order_model->GetOrderList($this->uri->segment(3));
-		// $orderList=array('orderList'=> json_encode($json_result, JSON_UNESCAPED_UNICODE));
-
 		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/management',$data);
+		$this->load->view('page/managementCoupon',$data);
 		$this->load->view('layout/footer', $default_data);
 	}
-	
+
+
 	/**
 	 * 상품목록 리스트 데이터
 	 */
@@ -195,6 +219,68 @@ class Main extends CI_Controller {
 
 	}
 	
+
+		/**
+	 * 배송목록 리스트 데이터
+	 */
+	public function shipList() {
+		$default_data=array('title'=> "Wally's Portfolio");
+		
+		$this->load->model('Ship_model');
+		
+		$data = $this->input->post('data', true);
+		$json_curPage = json_decode( $data,true)['pageNum'];
+		$json_kindCd = json_decode( $data,true)['kindCd'];
+		//$json_curPage = 6;
+
+		//게시물
+		$postCnt=$this->Ship_model->GetPageCnt($json_kindCd);//총게시물수
+		$pageShowitemCnt=12;//한화면당 노출 상품수 
+		$pageCnt=ceil($postCnt/$pageShowitemCnt);// 총페이지수 실수가 존재할 경우 반올림한다
+		$startPost=($json_curPage*$pageShowitemCnt)-$pageShowitemCnt;//시작게시물
+		$endPost=$pageShowitemCnt;//종료게시물
+
+		//블록
+		$block=5;//기본블록수
+		$curBlock=ceil($json_curPage/$block);//현재블록
+		$blockCnt=ceil($postCnt/$pageShowitemCnt);//마지막블록 
+		$startBlock=($curBlock*5)-$block;//시작블록페이지
+		$lastBlock=$curBlock*$block;//마지막블록페이지
+
+		//마지막 블록 유무
+		$lastYN=false;
+
+		//마지막 블록일시 블록값 설정
+		if($blockCnt<=$lastBlock){
+			$lastBlock = $blockCnt;
+			$lastYN=true;
+		}
+
+		//>버튼의 표시여부
+		$cnt=$lastBlock*$pageShowitemCnt;
+		$nextBtn=false;
+		
+		if($cnt<$postCnt){
+			$nextBtn=true;
+		}
+
+		$json_Post= $this->Ship_model->GetPage($startPost,$endPost,$json_kindCd);
+
+
+		/**배송상태 초기화 */
+		//$this->Member_model->mngInfoInsert($json_data);//관리자암호화입력
+		$shipState=$this->Ship_model->initState();//배송상태 리스트
+
+		echo json_encode(array(
+		'post' => $json_Post
+		,'lastYN' => $lastYN
+		,'startBlock' => $startBlock
+		,'lastBlock' => $lastBlock
+		,'shipState' =>$shipState
+		,'nextBtn'=>$nextBtn), JSON_UNESCAPED_UNICODE);
+
+	}
+
 	/**
 	 * 쿠폰 확인
 	 */
@@ -216,9 +302,11 @@ class Main extends CI_Controller {
 		$this->db = $this->load->database('default', true);
 		$this->load->model('Coupon_model');
 		$this->load->model('Order_model');
+		$this->load->model('Ship_model');
 		
 		$data = $this->input->post('data', true);
 		$json_data = json_decode( $data,true);
+
 		try{
 			if(!empty($json_data['c_code'])){
 				$coupon_yn=$this->Coupon_model->GetCouponCnt($json_data['c_code']);
@@ -231,7 +319,7 @@ class Main extends CI_Controller {
 				}
 			}else{
 				$json_data['c_code']="NULL";
-				//여기서 $this를 붙여서 에러가 났는데.. $this는 현재객체(클래스)를 가르킨다.
+				//여기서 $this를 붙여서 에러가 났는데.. $this는 현재객체(클래스->Main클래스)를 가르킨다.
 				//만약 $this->$json_data['c_code']라고 하면 Main클래스의 $json_data멤버변수(프라퍼티)를 찾는다
 			}
 			//log_message("error",print_r($json_data['item_list']));
@@ -239,8 +327,9 @@ class Main extends CI_Controller {
 			$this->db->trans_start();
 			$order_cd=$this->Order_model->insertOrderList($json_data);
 			$this->Order_model->insertOrderDetailList($json_data['item_list'],$order_cd);
+			$this->Ship_model->insertShipping($order_cd);
+			
 			//쿠폰사용처리추가
-
 			if($this->db->trans_status() === FALSE){
 				$this->db->trans_rollback();
 			}else{
@@ -304,6 +393,7 @@ class Main extends CI_Controller {
 		$this->db = $this->load->database('default', true);
 		$this->load->model('Order_model');
 		$this->load->model('Coupon_model');
+		$this->load->model('Ship_model');
 
 		try{
 			$data = $this->input->post('data', true);
@@ -316,6 +406,7 @@ class Main extends CI_Controller {
 			
 			$this->Order_model->deleteOrderDetailList($json_data['ORDER_CD']);//주문상세 삭제
 			$this->Order_model->deleteOrderList($json_data['ORDER_CD']);//주문 삭제
+			$this->Ship_model->deleteShipping($json_data['ORDER_CD']);//배송 삭제
 
 			if($this->db->trans_status() === FALSE){
 				$this->db->trans_rollback();
@@ -509,5 +600,32 @@ class Main extends CI_Controller {
 		echo json_encode(array('medicineList'=>$returnData));
 	}
 	
-	
+			/**
+	 * 배송상태 저장
+	 */
+	public function saveShipping() {
+		$this->load->model('Ship_model');
+		try{
+			$data = $this->input->post('data', true);
+			$json_data = json_decode( $data,true);
+
+			$this->db->trans_start();
+			
+			//배송 정보 변경
+			$this->Ship_model->saveShipping($json_data);
+			
+			if($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+			}else{
+				$this->db->trans_complete();
+			}
+
+		}catch(Exception $e){
+			log_message("error",$e);
+			$this->output->set_status_header('500');
+			//echo json_encode(array('result'=>'_error','message'=>$e+' Please Contact Administator'));
+		}finally{
+			$this->db->close();
+		}
+	}
 }

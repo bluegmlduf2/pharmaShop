@@ -14,7 +14,10 @@ $(function () {
 	$('#ORDER_AMOUNT').val('$' + orderList[0].ORDER_AMOUNT);
 	$('#ORDER_DATE').val(orderList[0].ORDER_DATE);
 	$('#ORDER_WANT').val(orderList[0].ORDER_WANT==null?null:orderList[0].ORDER_WANT);
+	$('#SHIPPING_STATE').val(orderList[0].SHIP_STATE);
+	$('#SHIPPING_DATE').val(orderList[0].SHIP_DATE);
 
+	
 	var toggle = true;
 	//제이쿼리에서 html을 생성하고 생성된 html에 이벤트를 적용하기때문에 여기에 위치해야한다
 	$('#showMoreBtn').click(function () {

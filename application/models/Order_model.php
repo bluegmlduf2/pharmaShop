@@ -97,10 +97,14 @@ class Order_model extends CI_Model {
             ,IT.ITEM_NM
             ,OD.ITEM_CNT
             ,CAST(((IT.ITEM_PRICE*OD.ITEM_CNT)/100)*IFNULL(100-IT.ITEM_SALE,100) AS SIGNED INTEGER) AS AMT
+            ,C.CODE_NAME AS SHIP_STATE
+            ,S.SHIP_DATE
         FROM ORDER_TBL AS OT
         JOIN ORDER_DETAIL_TBL AS OD ON OT.ORDER_CD = OD.ORDER_CD
         JOIN ITEM_TBL AS IT ON OD.ITEM_CD=IT.ITEM_CD
+        JOIN SHIP_TBL AS S ON OT.ORDER_CD=S.ORDER_CD
         LEFT JOIN COUPON_TBL AS CT ON OT.COUPON_CD=CT.COUPON_NUM
+        LEFT JOIN CODE_TBL AS C ON S.SHIP_STATE=C.CODE
         WHERE OT.ORDER_CD='.$oNum.'')->result();
 
         log_message('error', $this->db->last_query());

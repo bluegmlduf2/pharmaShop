@@ -57,7 +57,7 @@ $(function () {
                 $('#modalBox').modal('hide');
 				swal("Welcome!", "Welcome to Login [ "+result["memObj"]+" ] !", "success");
 				memName=result["memObj"];
-                location.href = '/pharmaShop/main/management/'+memName;
+                location.href = '/pharmaShop/main/managementItem/'+memName;
                 // if (result.order_cd[0].CNT == 1) {
                 // 	swal("Thanks!", "Successfully Checked!", "success");
                 // 	var rUrl = "/pharmaShop/main/orderList/" + value;

@@ -47,5 +47,6 @@
         </div>
       </div>
     </div>
+    <!-- 종류별 검색을 위함 전체 검색일 경우 : 0 -->
     <script> var kindCd = <?php echo empty($kindCd)?0:$kindCd ?>;</script>
     <script src="/pharmaShop/static/libraries/js/pharma_store.js"></script>

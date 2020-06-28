@@ -75,6 +75,17 @@
                 </div>
 
                 <div class="form-group row">
+                  <div class="col-md-7">
+                    <label for="SHIPPING_STATE" class="text-black" >Shipping State</label>
+                    <input type="text" class="form-control" disabled="disabled" id="SHIPPING_STATE" name="SHIPPING_STATE">
+                  </div>
+                  <div class="col-md-5">
+                    <label for="SHIPPING_DATE" class="text-black">ShippingDate</label>
+                    <input type="date" class="form-control" disabled="disabled" id="SHIPPING_DATE" name="SHIPPING_DATE">
+                  </div>
+                </div>
+
+                <div class="form-group row">
                   <div class="col-md-12">
                     <label for="ORDER_WANT" class="text-black">Message </label>
                     <textarea name="ORDER_WANT" id="ORDER_WANT" cols="30" rows="7" class="form-control"></textarea>
@@ -99,7 +110,7 @@
                 </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" style='margin-top:30px;'>
                   <div class="col-lg-6">
                     <input type="button" id="btnSaveOrder" class="btn btn-primary btn-lg btn-block" value="Save Order">
                   </div>
