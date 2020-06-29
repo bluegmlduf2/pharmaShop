@@ -129,13 +129,13 @@ function applyCoupon(chk) {
 		dataType: "json",
 		success: function (result) {
 			if (result[0].COUPON_USE == 1) {
-				swal('Sorry! it is used coupon');
+				swal('Sorry!', 'it is used coupon','warning');
 				$('#c_code').val('');
 				calculateTotal();
 				return;
 			}
 			if (result[0].CNT == 0) {
-				swal('Please check the coupon Number.');
+				swal('Check!','Please check the coupon Number.','info');
 				$('#c_code').val('');
 				calculateTotal();
 				return;

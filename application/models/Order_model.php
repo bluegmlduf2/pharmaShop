@@ -11,8 +11,10 @@ class Order_model extends CI_Model {
     }
    
 
-    public function insertOrderList($data)
+    public function insertOrderList($data,$coupon_cd)
     {
+        $cNum=empty($coupon_cd)?'NULL':$coupon_cd;
+
         $this->db->query("INSERT INTO ORDER_TBL(
         ORDER_NATION
         ,ORDER_NM
@@ -37,7 +39,7 @@ class Order_model extends CI_Model {
         ,'".$data['c_order_notes']."'
         ,".$data['tot']."
         ,DATE_FORMAT(NOW(),'%Y-%m-%d')
-        ,".$data['c_code'].")");
+        ,'".$cNum."')");
 
         return $this->db->insert_id();
     }

@@ -315,7 +315,7 @@ class Main extends CI_Controller {
 					return;
 				}else{
 					//쿠폰사용처리
-					$this->Coupon_model->updateCoupon($json_data['c_code']);
+					$this->Coupon_model->updateCoupon($json_data['c_code'],$coupon_yn[0]->COUPON_CD);
 				}
 			}else{
 				$json_data['c_code']="NULL";
@@ -325,7 +325,7 @@ class Main extends CI_Controller {
 			//log_message("error",print_r($json_data['item_list']));
 
 			$this->db->trans_start();
-			$order_cd=$this->Order_model->insertOrderList($json_data);
+			$order_cd=$this->Order_model->insertOrderList($json_data,$coupon_yn[0]->COUPON_CD);
 			$this->Order_model->insertOrderDetailList($json_data['item_list'],$order_cd);
 			$this->Ship_model->insertShipping($order_cd);
 			

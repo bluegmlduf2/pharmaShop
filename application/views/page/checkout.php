@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-md-6">
                   <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number" numberonly="true">
+                  <input type="text" class="form-control" id="c_phone" name="c_phone" numberonly="true" placeholder="Phone Number" >
                 </div>
               </div>
     
