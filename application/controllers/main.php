@@ -628,4 +628,127 @@ class Main extends CI_Controller {
 			$this->db->close();
 		}
 	}
+
+
+			/**
+	 * 쿠폰목록 리스트 데이터
+	 */
+	public function couponList() {
+		$default_data=array('title'=> "Wally's Portfolio");
+		
+		$this->load->model('Coupon_model');
+		
+		$data = $this->input->post('data', true);
+		$json_curPage = json_decode( $data,true)['pageNum'];
+		//$json_curPage = 6;
+
+		//게시물
+		$postCnt=$this->Coupon_model->GetCouponListCnt();//총게시물수
+		$pageShowitemCnt=12;//한화면당 노출 상품수 
+		$pageCnt=ceil($postCnt/$pageShowitemCnt);// 총페이지수 실수가 존재할 경우 반올림한다
+		$startPost=($json_curPage*$pageShowitemCnt)-$pageShowitemCnt;//시작게시물
+		$endPost=$pageShowitemCnt;//종료게시물
+
+		//블록
+		$block=5;//기본블록수
+		$curBlock=ceil($json_curPage/$block);//현재블록
+		$blockCnt=ceil($postCnt/$pageShowitemCnt);//마지막블록 
+		$startBlock=($curBlock*5)-$block;//시작블록페이지
+		$lastBlock=$curBlock*$block;//마지막블록페이지
+
+		//마지막 블록 유무
+		$lastYN=false;
+
+		//마지막 블록일시 블록값 설정
+		if($blockCnt<=$lastBlock){
+			$lastBlock = $blockCnt;
+			$lastYN=true;
+		}
+
+		//>버튼의 표시여부
+		$cnt=$lastBlock*$pageShowitemCnt;
+		$nextBtn=false;
+		
+		if($cnt<$postCnt){
+			$nextBtn=true;
+		}
+
+		$json_Post= $this->Coupon_model->GetPage($startPost,$endPost);
+
+		echo json_encode(array(
+		'post' => $json_Post
+		,'lastYN' => $lastYN
+		,'startBlock' => $startBlock
+		,'lastBlock' => $lastBlock
+		,'nextBtn'=>$nextBtn), JSON_UNESCAPED_UNICODE);
+
+	}
+
+
+		/**
+	 * 쿠폰리스트 저장
+	 */
+	public function saveCouponList() {
+		$this->load->model('Coupon_model');
+		try{
+			$data = $this->input->post('data', true);
+			$json_data = json_decode( $data,true);
+
+			$this->db->trans_start();
+
+			//아이템  리스트삭제
+			$this->Coupon_model->saveCouponList($json_data);
+			
+			if($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+			}else{
+				$this->db->trans_complete();
+			}
+
+		}catch(Exception $e){
+			log_message("error",$e);
+			$this->output->set_status_header('500');
+			//echo json_encode(array('result'=>'_error','message'=>$e+' Please Contact Administator'));
+		}finally{
+			$this->db->close();
+		}
+	}
+
+
+			/**
+	 * 쿠폰리스트 삭제
+	 */
+	public function deleteCouponList() {
+		$this->load->model('Coupon_model');
+
+		try{
+
+			$data = $this->input->post('data', true);
+			$json_data = json_decode( $data,true);
+
+			$this->db->trans_start();
+			
+			$order_cnt=$this->Coupon_model->GetOrderCouponCnt($json_data);
+
+			if($order_cnt[0]->CNT==0){
+				$this->Coupon_model->deleteCouponList($json_data);
+			}else{
+				throw new Exception( 'it is Coupon Used by Order Item! please Chek order' ); //msg설정을 오버라이딩한 예외처리
+			}
+
+			if($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+			}else{
+				$this->db->trans_complete();
+			}
+			
+			$this->db->close();
+			$this->output->set_status_header('200');
+		}catch(Exception $e){
+			$this->db->close();
+			log_message("error",$e);
+			$this->output->set_status_header('500');
+			echo $e->getMessage();
+		}
+	}
 }

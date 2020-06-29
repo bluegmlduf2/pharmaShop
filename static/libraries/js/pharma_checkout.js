@@ -201,10 +201,10 @@ function placeOrder(){
                             .then((willDelete) => {
                                 if (willDelete) {
                                     localStorage.clear();
-                                    swal("Successfully Deleted");
-                                    location.reload();
+                                    swal("Success","CartList Deleted!!","info");
+                                    location.reload('/pharmaShop/main/checkout/');
                                 }else{
-                                    location.reload();
+                                    location.reload('/pharmaShop/main/checkout/');
                                 }
                             });  
                             //최종 실행 location.reload();

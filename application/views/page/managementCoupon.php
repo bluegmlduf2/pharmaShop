@@ -5,29 +5,29 @@
 	<li style='display:inline-block; margin-left:30px;'><a href="/pharmaShop/main/managementCoupon">Coupon Management</a></li>
 </div>
 
-<!-- 2번째 행 -->
-<div class="row" style="margin-top:60px;">
+  <!-- 1번째 행 -->
+<div class="row">
   <!-- 1번째 열 -->
-	<div class="col-md-12 mb-5 mb-md-0">
-  	<h2 class="h3 mb-3 text-black">&nbsp&nbsp Shipping List</h2>
+	<div class="col-md-6 mb-5 mb-md-0">
+  <h2 class="h3 mb-3 text-black">&nbsp&nbsp Coupon List</h2>
           <form class="col-md-12" method="post">
             <div class="site-blocks-table">
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th class="ship-code">Ship Code</th>
-                    <th class="order-code">Order Code</th>
-                    <th class="ship-state">Ship State</th>
-                    <th class="ship-date">Ship Date</th>
+                    <th class="coupon-code">Coupon Code</th>
+                    <th class="coupon-num">Coupon Num</th>
+                    <th class="coupon-use">Use</th>
+                    <th class="coupon-amount">Amount ($)</th>
                   </tr>
                 </thead>
-                <tbody id="shipList">
+                <tbody id="couponList">
                 <!-- CartRow -->
                 </tbody>
               </table>
                 <div class="col-md-12 text-center">
                   <div class="site-block-27">
-                    <ul class="shipSelect">
+                    <ul class="couponSelect">
                         <!-- Navigator List -->
                     </ul>
                   </div>
@@ -35,7 +35,42 @@
             </div>
           </form>
 	</div>
+	<!-- 2번째 열 -->
+	<div class="col-md-6 mb-5 mb-md-0">
+		<h2 class="h3 mb-3 text-black">Coupon Details</h2>
+		<div class="p-3 p-lg-5 border">
+			<div class="form-group row">
+				<div class="col-md-6">
+					<label for="couponcd" class="text-black">Coupon Code</label>
+					<input type="text" class="form-control" id="couponcd" disabled="disabled">
+				</div>
+				<div class="col-md-6">
+					<label for="couponNum" class="text-black">Coupon Num <span class="text-danger">*</span></label>
+					<input type="text" class="form-control" id="couponNum" >
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6">
+					<label for="couponUse" class="text-black">Use <span class="text-danger">*</span></label>
+					<select id="couponUse" class="form-control">
+						<option id="UNUSED" value="0">UNUSED</option>
+						<option id="USED" value="1">USED</option>
+					</select>
+				</div>
+				<div class="col-md-6">
+					<label for="couponAmt" class="text-black">Amount($) <span class="text-danger">*</span></label>
+					<input type="text" class="form-control" id="couponAmt" numberonly="true">
+				</div>
+			</div>
+			<div style='float:left;'>
+				<div class="btn btn-primary btn-md px-2" type="button" id='btnInit'>INIT VALUE</div>
+			</div>
+			<div style='float:right;'>
+				<div class="btn btn-primary btn-md px-2" type="button" id='btnDelete'>DELETE</div>
+				<div class="btn btn-primary btn-md px-2" type="button" id='btnSave'>SAVE</div>			
+			</div>
+		</div>
+	</div>
 </div>
 
-
-<script src="/pharmaShop/static/libraries/js/pharma_management.js"></script>
+<script src="/pharmaShop/static/libraries/js/pharma_managementCoupon.js"></script>

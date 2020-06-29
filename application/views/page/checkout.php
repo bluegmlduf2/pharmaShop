@@ -299,6 +299,7 @@
      if ( empty( $couponCd ) ) {
         echo 'undefined';
       } else {
-        echo $couponCd;
+        echo "'".$couponCd."'";
       }?>;
+      console.log(couponCd);
     </script><!-- php->json->js  -->
