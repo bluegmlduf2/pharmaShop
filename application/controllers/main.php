@@ -17,14 +17,14 @@ class Main extends CI_Controller {
 		$default_data=array('title'=> "pharmaShop");	
 		$this->load->model('Index_model');
 
-		$item_detail= $this->Index_model->GetPopularItem();
+		$popularItem= $this->Index_model->GetPopularItem();
 		$newItem= $this->Index_model->GetNewItem();
 
 		$data = array(
 			'popularItem' => $popularItem,
 			'newItem' => $newItem
 		);
-
+		//log_message("error",var_dump($data));
 		$this->load->view('layout/header', $default_data);
 		$this->load->view('page/index',$data);
 		$this->load->view('layout/footer');

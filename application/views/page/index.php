@@ -63,41 +63,13 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-sm-6 col-lg-4 text-center item mb-4">
-            <span class="tag">Sale</span>
-            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_01.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Bioderma</a></h3>
-            <p class="price"><del>95.00</del> &mdash; $55.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4">
-            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_02.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Chanca Piedra</a></h3>
-            <p class="price">$70.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4">
-            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_03.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-            <p class="price">$120.00</p>
-          </div>
-
-          <div class="col-sm-6 col-lg-4 text-center item mb-4">
-
-            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_04.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Cetyl Pure</a></h3>
-            <p class="price"><del>45.00</del> &mdash; $20.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4">
-            <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_05.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">CLA Core</a></h3>
-            <p class="price">$38.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4">
+        <div class="row itemList">
+          <!-- <div class="col-sm-6 col-lg-4 text-center item mb-4">
             <span class="tag">Sale</span>
             <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_06.png" alt="Image"></a>
             <h3 class="text-dark"><a href="shop-single.html">Poo Pourri</a></h3>
             <p class="price"><del>$89</del> &mdash; $38.00</p>
-          </div>
+          </div> -->
         </div>
         <div class="row mt-5">
           <div class="col-12 text-center">
@@ -117,32 +89,14 @@
         </div>
         <div class="row">
           <div class="col-md-12 block-3 products-wrap">
-            <div class="nonloop-block-3 owl-carousel">
+            <div class="nonloop-block-3 owl-carousel itemListNew">
 
-              <div class="text-center item mb-4">
+              <!-- <div class="text-center item mb-4">
                 <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_03.png" alt="Image"></a>
                 <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
                 <p class="price">$120.00</p>
-              </div>
-
-              <div class="text-center item mb-4">
-                <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_01.png" alt="Image"></a>
-                <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                <p class="price">$120.00</p>
-              </div>
-
-              <div class="text-center item mb-4">
-                <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_02.png" alt="Image"></a>
-                <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                <p class="price">$120.00</p>
-              </div>
-
-              <div class="text-center item mb-4">
-                <a href="shop-single.html"> <img src="/pharmaShop/static/libraries/images/product_04.png" alt="Image"></a>
-                <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                <p class="price">$120.00</p>
-              </div>
-
+              </div>-->
+        
             </div>
           </div>
         </div>
@@ -210,3 +164,12 @@
 
     
   </div>
+
+  <script src="/pharmaShop/static/libraries/js/pharma_index.js"></script>
+
+<script>
+//처음에 받을시 nativeCode이다 그러므로 Json을 이용해서 SourceCode형식으로 변경함 --> nativeCode->compile(json)->SourceCode
+  var popularItem=<?php echo json_encode($popularItem)?>;//PHP->JS 
+	var newItem = <?php echo json_encode($newItem) ?>;
+
+</script>
