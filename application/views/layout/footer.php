@@ -46,10 +46,10 @@
           <div class="col-lg-3 mx-auto mb-5 mb-lg-0">
             <h3 class="footer-heading mb-4">Quick Links</h3>
             <ul class="list-unstyled">
-              <li><a href="#">Supplements</a></li>
-              <li><a href="#">Vitamins</a></li>
-              <li><a href="#">Diet &amp; Nutrition</a></li>
-              <li><a href="#">Tea &amp; Coffee</a></li>
+              <li><a href="/pharmaShop/main/shop/1">Supplements</a></li>
+              <li><a href="/pharmaShop/main/shop/2">Vitamins</a></li>
+              <li><a href="/pharmaShop/main/shop/3">Diet &amp; Nutrition</a></li>
+              <li><a href="/pharmaShop/main/shop/4">Tea &amp; Coffee</a></li>
             </ul>
           </div>
 

@@ -1,6 +1,3 @@
-var lastYN="";
-var startBlock="";
-var lastBlock="";
 
 //OnLoad 초기화
 $(function () {
@@ -24,11 +21,6 @@ function pageFunc(curPage,kindCd){
 		async: false,
 		dataType: "json",
 		success: function (result) {
-            console.log(result);
-            //console.log(result['post'][0].ITEM_CD);//JS에서 객체의 멤버변수를 접근할때는 .을 사용
-			lastYN=result['lastYN'];
-			startBlock=result['startBlock'];
-			lastBlock=result['lastBlock'];
 
 			var listHtml="";
 			var selectHtml="";
@@ -69,37 +61,6 @@ function pageFunc(curPage,kindCd){
 			selectHtml+="<li><a href='#' class='nextBlock'>&gt;</a></li>";
 			$('.itemSelect').append(selectHtml);
 			
-			//블록 값 이벤트 주기
-		   	$('.selectClass').bind('click',function(){
-				pageFunc($(this).text(),kindCd);
-			});
-
-			//다음 이전 태그 이벤트 주기
-			$('.backBlock,.nextBlock').bind('click',function(){
-				//alert($(this).attr('class'));
-				if($(this).attr('class')=="backBlock"){
-					pageFunc(startBlock-1,kindCd);
-				}else{
-					pageFunc(lastBlock+1,kindCd);
-				}
-			});
-
-			//다음 이전 태그 숨기기
-			if(startBlock==0){
-				$('.backBlock').css('visibility','hidden');
-			}else if(lastYN==true){
-				$('.nextBlock').css('visibility','hidden');
-			}else{
-				$('.nextBlock').css('visibility','visible');
-				$('.backBlock').css('visibility','visible');
-			}
-			
-			//게시물 수가 5페이지 미만일시 >버튼 보여주지 않음
-			if(result['nextBtn']){
-				$('.nextBlock').css('visibility','visible');
-			}else{
-				$('.nextBlock').css('visibility','hidden');
-			}
 		},
 		error: function (request, status, error) {
 			//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);

@@ -14,10 +14,19 @@ class Main extends CI_Controller {
 	 * 메인화면
 	 */
 	public function index() {
-		$default_data=array('title'=> "pharmaShop");
+		$default_data=array('title'=> "pharmaShop");	
+		$this->load->model('Index_model');
+
+		$item_detail= $this->Index_model->GetPopularItem();
+		$newItem= $this->Index_model->GetNewItem();
+
+		$data = array(
+			'popularItem' => $popularItem,
+			'newItem' => $newItem
+		);
 
 		$this->load->view('layout/header', $default_data);
-		$this->load->view('page/index');
+		$this->load->view('page/index',$data);
 		$this->load->view('layout/footer');
 	}
 

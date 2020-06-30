@@ -102,7 +102,7 @@ $(function () {
 								//dataType: "json",//서버에서 받을 데이터 형식을 지적한다.그러나 반환값이 없으므로 에러가 발생하므로 주석처리
 								success: function (result) {
 									swal("Thanks!", "Successfully Updated!", "success");
-									location.href='/pharmaShop/main/checkout';
+
 									// if (result.order_cd[0].CNT == 1) {
 									// 	swal("Thanks!", "Successfully Checked!", "success");
 									// 	var rUrl = "/pharmaShop/main/orderList/" + value;
@@ -153,7 +153,7 @@ $(function () {
 						//dataType: "json",//서버에서 받을 데이터 형식을 지적한다.그러나 반환값이 없으므로 에러가 발생하므로 주석처리
 						success: function (result) {
 							swal("Thanks!", "Successfully Canceled!", "success");  
-							location.href='/pharmaShop/main/checkout';                
+							location.reload('/pharmaShop/main/checkout');             
 						},
 						error: function (request, status, error) {
 							//console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);

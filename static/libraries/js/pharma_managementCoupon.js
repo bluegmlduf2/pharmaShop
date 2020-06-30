@@ -187,7 +187,7 @@ function pageFunc(curPage){
             $('.couponSelect').append(selectHtml);
 
 			//블록 값 이벤트 주기
-		   	$('.couponSelect').bind('click',function(){
+		   	$('.selectClass').bind('click',function(){
 				pageFunc($(this).text());
 			});
 

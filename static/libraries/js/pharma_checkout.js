@@ -183,13 +183,7 @@ function placeOrder(){
                     async: false,
                     dataType: "json",
                     success: function (result) {
-                        //콜백함수-->동기적으로 동작 location.reload();가 비동기적으로 실행되버리기때문
-                        var syncFunc=function(lastCall){
-            
-                            //주문번호 
-                            swal("Successfully Ordered!", "Check Your Order Number!  \n Youu OrderNumber Is : ", "success");
 
-                            //로컬스토리지 비우기 확인
                             swal({
                                 title: "Successfully Ordered!",
                                 text: "Check Your Order Number! [ "+result.order_cd+" ]  \n  Would you delete Cart List?",
@@ -200,21 +194,14 @@ function placeOrder(){
                             })
                             .then((willDelete) => {
                                 if (willDelete) {
+                                    window.location.href = '/pharmaShop/main/checkout/';
                                     localStorage.clear();
+                                    //swal()이 window.location.href보다 먼저 나오면 window.location.href가 동작을 안함..
                                     swal("Success","CartList Deleted!!","info");
-                                    location.reload('/pharmaShop/main/checkout/');
                                 }else{
-                                    location.reload('/pharmaShop/main/checkout/');
+                                    window.location.href = '/pharmaShop/main/checkout/';
                                 }
                             });  
-                            //최종 실행 location.reload();
-                            lastCall();
-                        }
-
-                        syncFunc(function lastCall(){
-                          //  location.reload(); //동기함수에 매개변수로 lastCall()을 넣음. 가장 마지막에 실행
-                        });      
-                                     
                     },
                     error: function (request, status, error) {
                         //console.log("code:"+request.status+ ", message: "+request.responseText+", error:"+error);
@@ -281,6 +268,13 @@ function validationChk(obj) {
     return chk;
 }
 
+//url init for removing couponNum
+function urlInit(){
+    location.href="/pharmaShop/main/checkout";
+    window.location='/pharmaShop/main/checkout';
+    location.reload('/pharmaShop/main/checkout');
+    debugger
+};
 
 
 
