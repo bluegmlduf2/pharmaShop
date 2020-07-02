@@ -1,15 +1,23 @@
-*진입점
-dev.php (개발환경)
-index.php (실서버)
+## About Program 
+This is a sales site for drug
 
-*개발환경 
-http://localhost:8080/nutritionChk/dev.php/nutritionMon/member
-->개발환경설정 파일인 config/development/config.php 사용
+### Client 
+frontend technologies used in this project:
 
-*실서버환경
-http://localhost:8080/nutritionChk/index.php/nutritionMon/member
--> 수정된 경로http://localhost:8080/nutritionChk/nutritionMon/member4
-->실제서버설정 파일인 config/production/config.php 사용
+* HTML
+* CSS
+* BootStrap
+* JS
+* jquery
+* BootStrap-font-awesome
+* sweetalert
 
-//
-..그냥 실서버환경으로 개발할거임.. 일단 설정만 저렇다는거
+### Server 
+backend technologies used in this project:
+
+* PHP
+* Codeigniter FrameWork
+* MySQL (AWS-RDS)
+
+###if you want to see more click this 
+https://www.youtube.com/watch?v=oChkMVCP5YU&feature=youtu.be
